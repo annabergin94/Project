@@ -1,19 +1,16 @@
 package com.example.pracitcingrecievingbtc;
 
 import android.content.Context; // connection between Android System and App Project https://www.geeksforgeeks.org/what-is-context-in-android/
-import android.icu.lang.UScript;
-import android.util.Log;
-import android.widget.Toast;  // short notifications
-import com.google.common.base.Joiner;
+import android.util.Log; // helps debugging by printing statements in the logcat
+import com.google.common.base.Joiner; // part of Guava, central to BitcoinJ, appends results ie., skips spaces and returns a string
 
-import org.bitcoinj.core.*;
-import org.bitcoinj.core.listeners.BlocksDownloadedEventListener;
-import org.bitcoinj.core.listeners.PeerDisconnectedEventListener;
-import org.bitcoinj.core.listeners.PeerDiscoveredEventListener;
-import org.bitcoinj.net.discovery.DnsDiscovery;
+import org.bitcoinj.core.*; // contains classes for network messages like Block and Transaction, peer connectivity via PeerGroup, and block chain management
+import org.bitcoinj.core.listeners.BlocksDownloadedEventListener; // listen to blocks being downloaded
+import org.bitcoinj.core.listeners.PeerDisconnectedEventListener; // listen to peer disconnections
+import org.bitcoinj.core.listeners.PeerDiscoveredEventListener; // list to peer connections
+import org.bitcoinj.net.discovery.DnsDiscovery; // supports peer discovery through DNS
 
-import org.bitcoinj.params.TestNet3Params;
-import org.bitcoinj.script.Script;
+import org.bitcoinj.params.TestNet3Params; // testing network for blockchain developers
 import org.bitcoinj.store.BlockStore;
 import org.bitcoinj.store.BlockStoreException;
 import org.bitcoinj.store.SPVBlockStore;
@@ -31,18 +28,17 @@ import java.net.UnknownHostException;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
-import static org.bitcoinj.script.Script.*;
-
 public class BitcoinExample {
 
     private static final String TAG = BitcoinExample.class.getSimpleName();
-    NetworkParameters networkParams;
-    File walletFile;
-    File spvBlockChainFile;
-    Wallet wallet;
-    PeerGroup peerGroup;
-    Context context;
-    int peerCount;
+    private NetworkParameters networkParams;
+    private File walletFile;
+    private File spvBlockChainFile;
+    private Wallet wallet;
+    private PeerGroup peerGroup; // tries to maintain a constant num of connections to a set of distinct peers
+    private Context context;
+    private int peerCount;
+
 
     // passing the connection between the project and android app
     public BitcoinExample(Context context) {
@@ -56,38 +52,34 @@ public class BitcoinExample {
         initWalletFromNetwork(); // syncing the blockchain
     }
 
+    // A wallet "knows how to find and save transactions relevant to a set of keys or scripts, calculate balances, and spend money"
+
     public Wallet initWallet() {
         Wallet myWallet;
-        // if wallet file exists then load it otherwise create it
+        // checking if a wallet file exists
         if(walletFile.exists()){
-            myWallet = loadWallet();
+            myWallet = loadingWallet(); // exists so load it
+            Log.d(TAG, "we've loaded the wallet");
         } else {
-            myWallet = createWallet();
+            myWallet = creatingWallet(); // doesn't exist so create it
+            Log.d(TAG, "we've created the wallet");
         }
-        System.out.println("Now we have loaded or created the wallet");
-        System.out.println("Next we save the file and state its name and what it includes");
-
-        // specify this wallet should be autosaved as needed
-        myWallet.autosaveToFile(walletFile, 200, TimeUnit.MILLISECONDS, null);
-        Log.d(TAG, "wallet file name: " + walletFile.getName());
-            Log.d(TAG, "Number of keys in wallet: " + myWallet.getKeyChainGroupSize());
-        Log.d(TAG, "wallet contents: " + myWallet);
-
+        // the wallet must be autosaved
+        myWallet.autosaveToFile(walletFile, 200, TimeUnit.MILLISECONDS, null); // saving the file by passing its name and what it includes
+        // not sure getKeyChainGroupSize() is the right method come back to this****
+        Log.d(TAG, "A wallet" + walletFile.getName() + "with" + myWallet.getKeyChainGroupSize() + "keys.");
+        Log.d(TAG, "The contents of the wallet include " + myWallet);
         return myWallet;
     }
 
-    public Wallet loadWallet() {
+    // once a wallet has been created, it is stored locally
+    public Wallet loadingWallet() {
         System.out.println("load wallet");
-        Wallet loadedWallet = null;
+        Wallet loadedWallet = null; // intelliji underlines reassigned local variables
         try {
-            Log.d(TAG, "existing wallet file name: " + walletFile.getName());
-            Log.d(TAG, "existing wallet file size " + walletFile.length() + "bytes");
+            Log.d(TAG, "the current wallet file: " + walletFile.getName() + "has a size" + walletFile.length() + "bytes");
             loadedWallet = Wallet.loadFromFile(walletFile);
             Log.d(TAG, "Loaded wallet file from disk");
-            CharSequence text = "Loaded wallet";
-            int duration = Toast.LENGTH_LONG;
-            Toast toast = Toast.makeText(context, text, duration);
-            toast.show();
         } catch (UnreadableWalletException e) {
             Log.e(TAG, "Could not parse existing wallet");
             e.printStackTrace();
@@ -95,33 +87,31 @@ public class BitcoinExample {
         return loadedWallet;
     }
 
-    public Wallet createWallet() {
-        System.out.println("create wallet");
 
-        // NOT SURE WHERE THE SCRIPT COMES FROM BUT ITS MEANT OT BE
-        Wallet createdWallet = Wallet.createDeterministic(networkParams, ScriptType);
-        createdWallet.setDescription("Testing Example Code");
+    public Wallet creatingWallet() {
+        Log.d(TAG, "Creating a new wallet");
+        // the documentation says to create a wallet like this https://bitcoinj.org/working-with-the-wallet#introduction
+        // but API says it has been depreciated and use createDeterministc(newtworkParams, ScriptType) instead
+        // ** not sure where the output scrypt is coming from
+        Wallet createdWallet = new Wallet(networkParams);
+     //   createdWallet.setDescription("Project Wallet Test");
         try {
             createdWallet.saveToFile(walletFile);
-            Log.d(TAG, "Created new wallet");
-            CharSequence text = "Created new wallet";
-            int duration = Toast.LENGTH_LONG;
-            Toast toast = Toast.makeText(context, text, duration);
-            toast.show();
+            Log.d(TAG, "Created new wallet ");
+            // add some UI notification
         } catch (IOException e) {
-            Log.e(TAG, "Could not save wallet");
+            Log.e(TAG, "Could not save wallet ");
             e.printStackTrace();
         }
-
-        // Recovery information
+        // the seeds and mnemonic codes return keys and addresses derived deterministically from a seed
+        //using the algorithms laid out in BIP 32 and BIP 39 (a standard uses when defining 12 words mnemonic code
+        // from https://bitcoinj.org/working-with-the-wallet
         DeterministicSeed seed = createdWallet.getKeyChainSeed();
         String recoverySeedWords = Joiner.on(" ").join(seed.getMnemonicCode());
-        Log.d(TAG, "Recovery Seed words are: " + recoverySeedWords);
-        Log.d(TAG, "Recovery Seed birthday is: " + seed.getCreationTimeSeconds());
-//        createNotification("Please back up your new wallet",
-//                "Touch to view recovery mnemonic",
-//                "WalletRecoveryFragment");
+        long seedBirthday = seed.getCreationTimeSeconds();
 
+        Log.d(TAG, "The recovery seed birthday is " + seedBirthday);
+        Log.d(TAG, "The recovery seed words include " + recoverySeedWords);
         return createdWallet;
     }
 
@@ -130,47 +120,69 @@ public class BitcoinExample {
         BlockStore blockStore = null;
         BlockChain chain = null;
 
+        // SPV is specific to Bitcoin
+        // it allows a user to verify that the transaction has been included in the blockchain
+        // without downloading the entire blockchain
         if (spvBlockChainFile.exists()) {
-            Log.d(TAG, "Found existing blockchain file of size " + spvBlockChainFile.length() + "bytes");
+            Log.d(TAG, "An existing blockchain file has been located and is of size" + spvBlockChainFile.length() + " bytes");
         } else {
             Log.d(TAG, "No existing blockchain data found it may take a while to scan the blockchain ledger");
         }
         try {
             blockStore = new SPVBlockStore(networkParams, spvBlockChainFile);
             chain = new BlockChain(networkParams, this.wallet, blockStore);
+            //  best known height of the chain, short for getChainHead().getHeight()
+            // NOT SURE IF THIS SHOULD BE 0, need to look into this more
             Log.d(TAG, "Known blockchain height: " + chain.getBestChainHeight());
         } catch (BlockStoreException e) {
             e.printStackTrace();
         }
+        //"Creates a PeerGroup for the given context and chain. Blocks will be passed to the chain as they are broadcast and downloaded.
+        // This is probably the constructor you want to use.
+        // https://bitcoinj.org/javadoc/0.14/org/bitcoinj/core/PeerGroup.html#PeerGroup-org.bitcoinj.core.Context-org.bitcoinj.core.AbstractBlockChain-"
+        peerGroup = new PeerGroup(networkParams, chain);
 
-        PeerGroup peerGroup = new PeerGroup(networkParams, chain);
+        // registering a listener that is invoked when blocks are downloaded
         peerGroup.addBlocksDownloadedEventListener(new BlocksDownloadedEventListener() {
             @Override
             public void onBlocksDownloaded(Peer peer, Block block, @Nullable FilteredBlock filteredBlock, int blocksLeft) {
-                Log.d(TAG, "Received block from " + peer.getAddress());
+                Log.d(TAG, "Peer address from block is " + peer.getAddress());
             }
         });
 
+        // listening to events of peers being discovered
         peerGroup.addDiscoveredEventListener(new PeerDiscoveredEventListener() {
             @Override
+            // peers are nodes on the network
             public void onPeersDiscovered(Set<PeerAddress> peerAddresses) {
-                Log.d(TAG, peerCount + " peers, new peer: " + peerAddresses);
+                Log.d(TAG, "There are currently " + peerCount + " peers. The new peer is " + peerAddresses);
             }
         });
 
+        // listening to events and indicating when a peer disconnects
         peerGroup.addDisconnectedEventListener(new PeerDisconnectedEventListener() {
             @Override
             public void onPeerDisconnected(Peer peer, int peerCount) {
-                Log.d(TAG, peerCount + " peers, lost peer: " + peer.getAddress());
+                Log.d(TAG, "There are currently " + peerCount + " peers connected. The peer lost is " + peer.getAddress());
             }
         });
 
+        // "A PeerAddress holds an IP address and port number representing the network location
+        // of a peer in the Bitcoin P2P network. It exists primarily for serialization purposes.
+        //Instances of this class are not safe for use by multiple threads."
+        // https://bitcoinj.org/javadoc/0.15/org/bitcoinj/core/PeerAddress.html
+
+        // IP address
         InetAddress localPeer = null;
         try {
+            // I put in my own IP address here, but I think this may be wrong
+            // Need to work out which IP address goes there
             localPeer = InetAddress.getByName("192.168.1.67");
         } catch (UnknownHostException e) {
             e.printStackTrace();
         }
+        // https://bitcoinj.org/javadoc/0.15.10/org/bitcoinj/core/PeerGroup.html#addAddress-java.net.InetAddress-
+        // short hand adding peer address
         peerGroup.addAddress(localPeer);
         peerGroup.addPeerDiscovery(new DnsDiscovery(networkParams));
         peerGroup.startAsync();
