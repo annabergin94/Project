@@ -1,0 +1,78 @@
+
+// plugins needed to build the module
+plugins{
+// sets up Android-specific settings of the build process
+    id'com.android.application'
+// lets you use Java 8 lambda expressions, might not need this
+    ///  apply plugin: 'me.tatarka.retrolambda'
+}
+
+// plaform-specific options for the module
+android{
+// API level the app will be compiled with
+    compileSdkVersion 31
+// Version of the compiler
+    buildToolsVersion"31.0.0"
+
+// options that will be applied to the build version by default
+    defaultConfig{
+// identifier of the app, must be unique to publish on playstore
+        applicationId"com.example.practicingrecievingbtc"
+// lowest API level supported chosen based on BitcoinJ documentation
+        minSdkVersion 23
+// maximum API level the app has been tested on
+        targetSdkVersion 31
+// app version number
+        versionCode 1
+// user-friendly string for app version
+        versionName"1.0"
+
+// enabling multidex support
+        multiDexEnabled = true
+
+        testInstrumentationRunner"androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes{
+        release{
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'),'proguard-rules.pro'
+        }
+    }
+    compileOptions{
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies{
+
+// already here?
+    implementation'androidx.appcompat:appcompat:1.3.1'
+    implementation'com.google.android.material:material:1.4.0'
+    implementation'androidx.constraintlayout:constraintlayout:2.1.1'
+    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
+
+// bitcoinj uses any version after 4
+    testImplementation'junit:junit:4.12'
+    androidTestImplementation'androidx.test.ext:junit:1.1.3'
+    androidTestImplementation'androidx.test.espresso:espresso-core:3.4.0'
+
+    implementation'com.android.support:multidex:1.0.3'
+
+// BitcoinJ SDK
+    implementation'org.bitcoinj:bitcoinj-core:0.15.10'
+
+// local binary dependency https://developer.android.com/studio/build/dependencies
+    // depends on whatever is inside libs directory and of type jar
+    // implementation so har classes are not accessible in the dependent module
+    implementation fileTree(dir:'libs',include: ['*.jar'])
+
+    // to fix error Android Studio class file for com.google.common.util.concurrent.ListenableFuture not found
+    implementation 'com.google.guava:guava:29.0-android'
+
+// Runtime dependency (logging) https://mvnrepository.com/artifact/org.slf4j/slf4j-api/1.7.30
+    implementation 'org.slf4j:slf4j-api:1.7.12'
+ //   implementation 'org.slf4j:slf4j-simple:1.7.12'
+
+}
