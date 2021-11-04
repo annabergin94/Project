@@ -4,18 +4,43 @@ Wallet-App Kit is highly recommended for anyone who does not have much programmi
 
 I tried working with some old code from 2015 and trying to create a wallet from it just changing out some depreciated methods etc. It seems to have actually done something compared to all the examples and my code with the wallet app kit. 
 
-
-**The Logcat is below. There are some error messages, but it actually creates a wallet, connects to the test net, but it is not able to find any peers. This could be an issue with what I'm doing with the code.  **
-
-Peer group is defined in the API as 
-
-_Running a set of connections to the P2P network, brings up connections to replace disconnected nodes and manages the interaction between them all. Most applications will want to use one of these.
-PeerGroup tries to maintain a constant number of connections to a set of distinct peers. Each peer runs a network listener in its own thread. When a connection is lost, a new peer will be tried after a delay as long as the number of connections less than the maximum.
-Connections are made to addresses from a provided list. When that list is exhausted, we start again from the head of the list.
-The PeerGroup can broadcast a transaction to the currently connected set of peers. It can also handle download of the blockchain from peers, restarting the process when peers die.
-PeerGroup implements the Service interface. This means before it will do anything, you must call the Service.start() method (which returns a future) or Service.startAndWait() method, which will block until peer discovery is completed and some outbound connections have been initiated (it will return before handshaking is done, however). You should call Service.stop() when finished. Note that not all methods of PeerGroup are safe to call from a UI thread as some may do network IO, but starting and stopping the service should be fine._
+New Logcat:
 
 
+11-04 23:23:33.316 12860-13109/com.example.practicingrecievingbtc W/System.err: [Wallet autosave thread] INFO org.bitcoinj.wallet.WalletFiles - Save completed in 12.30 ms
+11-04 23:23:33.512 12860-13109/com.example.practicingrecievingbtc W/System.err: [Wallet autosave thread] INFO org.bitcoinj.wallet.WalletFiles - Background saving wallet; last seen block is height 2101543, date 2021-10-30T07:56:42Z, hash 000000000000003b8c916cd5809c206c8ad0f697721a2c1c4ed213746345fc59
+11-04 23:23:33.521 12860-13109/com.example.practicingrecievingbtc W/System.err: [Wallet autosave thread] INFO org.bitcoinj.wallet.WalletFiles - Save completed in 7.970 ms
+11-04 23:23:33.752 12860-13109/com.example.practicingrecievingbtc W/System.err: [Wallet autosave thread] INFO org.bitcoinj.wallet.WalletFiles - Background saving wallet; last seen block is height 2101618, date 2021-10-30T17:21:21Z, hash 000000000000000d08bf5ec8c4091f4305f76cfdc890bfead373424dba0a265a
+11-04 23:23:33.761 12860-13109/com.example.practicingrecievingbtc W/System.err: [Wallet autosave thread] INFO org.bitcoinj.wallet.WalletFiles - Save completed in 8.792 ms
+11-04 23:23:34.016 12860-12965/com.example.practicingrecievingbtc W/System.err: [PeerGroup Thread] INFO org.bitcoinj.core.PeerGroup$ChainDownloadSpeedCalculator - 628 blocks/sec, 0 tx/sec, 18864 pre-filtered tx/sec, avg/last 64.09/49.06 kilobytes per sec, chain/common height 2101757/2102642, not stalled (threshold <0.78 KB/sec for 10 seconds)
+11-04 23:23:34.058 12860-13109/com.example.practicingrecievingbtc W/System.err: [Wallet autosave thread] INFO org.bitcoinj.wallet.WalletFiles - Background saving wallet; last seen block is height 2101787, date 2021-10-31T15:07:13Z, hash 00000000000000271fd7da35821e2b51aee96c351392f2617f50388e8044e665
+11-04 23:23:34.068 12860-13109/com.example.practicingrecievingbtc W/System.err: [Wallet autosave thread] INFO org.bitcoinj.wallet.WalletFiles - Save completed in 9.534 ms
+11-04 23:23:34.292 12860-13109/com.example.practicingrecievingbtc W/System.err: [Wallet autosave thread] INFO org.bitcoinj.wallet.WalletFiles - Background saving wallet; last seen block is height 2102022, date 2021-11-01T23:36:26Z, hash 000000000000af8a09974db4d426e8387446d08ef2896928879f9615311e47bc
+11-04 23:23:34.301 12860-13109/com.example.practicingrecievingbtc W/System.err: [Wallet autosave thread] INFO org.bitcoinj.wallet.WalletFiles - Save completed in 7.825 ms
+11-04 23:23:34.541 12860-13109/com.example.practicingrecievingbtc W/System.err: [Wallet autosave thread] INFO org.bitcoinj.wallet.WalletFiles - Background saving wallet; last seen block is height 2102118, date 2021-11-02T08:32:00Z, hash 000000000000001bf2a91c041fac897f4a960c1f337fe0299a566149f99aecb7
+11-04 23:23:34.548 12860-13109/com.example.practicingrecievingbtc W/System.err: [Wallet autosave thread] INFO org.bitcoinj.wallet.WalletFiles - Save completed in 6.649 ms
+11-04 23:23:34.878 12860-13109/com.example.practicingrecievingbtc W/System.err: [Wallet autosave thread] INFO org.bitcoinj.wallet.WalletFiles - Background saving wallet; last seen block is height 2102288, date 2021-11-03T03:37:57Z, hash 000000000000002c18a4ff34503f717a976a75c81a8cc92bdcf333a1939c7a18
+11-04 23:23:34.886 12860-13109/com.example.practicingrecievingbtc W/System.err: [Wallet autosave thread] INFO org.bitcoinj.wallet.WalletFiles - Save completed in 8.056 ms
+11-04 23:23:35.017 12860-12965/com.example.practicingrecievingbtc W/System.err: [PeerGroup Thread] INFO org.bitcoinj.core.PeerGroup$ChainDownloadSpeedCalculator - 657 blocks/sec, 1 tx/sec, 18870 pre-filtered tx/sec, avg/last 60.32/51.55 kilobytes per sec, chain/common height 2102413/2102642, not stalled (threshold <0.78 KB/sec for 10 seconds)
+11-04 23:23:35.115 12860-13109/com.example.practicingrecievingbtc W/System.err: [Wallet autosave thread] INFO org.bitcoinj.wallet.WalletFiles - Background saving wallet; last seen block is height 2102525, date 2021-11-04T08:56:22Z, hash 0000000000000003f5a9e449032e8a22b5eb59baf8d2c0e9499c528c15715610
+11-04 23:23:35.126 12860-13109/com.example.practicingrecievingbtc W/System.err: [Wallet autosave thread] INFO org.bitcoinj.wallet.WalletFiles - Save completed in 10.32 ms
+11-04 23:23:35.362 12860-13109/com.example.practicingrecievingbtc W/System.err: [Wallet autosave thread] INFO org.bitcoinj.wallet.WalletFiles - Background saving wallet; last seen block is height 2102618, date 2021-11-04T20:22:29Z, hash 00000000000000069facb65324281cec31aaae14fb35d31c3b7b0a8d0d302905
+11-04 23:23:35.368 12860-13109/com.example.practicingrecievingbtc W/System.err: [Wallet autosave thread] INFO org.bitcoinj.wallet.WalletFiles - Save completed in 6.227 ms
+11-04 23:23:35.465 12860-12967/com.example.practicingrecievingbtc W/System.err: [NioClientManager] INFO org.bitcoinj.core.AbstractBlockChain - Connected orphan 00000000000000237757918b4591dd37ae89af21d192f5c985f3b0e1eca1c0a7
+11-04 23:23:35.465 12860-12967/com.example.practicingrecievingbtc W/System.err: [NioClientManager] INFO org.bitcoinj.core.AbstractBlockChain - Connected orphan 00000000000000379d90561068defcca01c461fa4600aebbc3d028f656bf727e
+11-04 23:23:35.465 12860-12967/com.example.practicingrecievingbtc W/System.err: [NioClientManager] INFO org.bitcoinj.core.AbstractBlockChain - Connected orphan 000000000000002b85c7053d27717e66077dd2143453c3364e686232a9f5b28c
+11-04 23:23:35.466 12860-12967/com.example.practicingrecievingbtc W/System.err: [NioClientManager] INFO org.bitcoinj.core.AbstractBlockChain - Connected 3 orphan blocks.
+11-04 23:23:35.466 12860-12967/com.example.practicingrecievingbtc W/System.err: [NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 100% done with 0 blocks to go, block date 2021-11-04T23:10:47Z
+11-04 23:23:35.602 12860-13121/com.example.practicingrecievingbtc W/OpenGLRenderer: Failed to choose config with EGL_SWAP_BEHAVIOR_PRESERVED, retrying without...
+11-04 23:23:35.603 12860-13109/com.example.practicingrecievingbtc W/System.err: [Wallet autosave thread] INFO org.bitcoinj.wallet.WalletFiles - Background saving wallet; last seen block is height 2102642, date 2021-11-04T23:16:29Z, hash 000000000000002b85c7053d27717e66077dd2143453c3364e686232a9f5b28c
+11-04 23:23:35.609 12860-13109/com.example.practicingrecievingbtc W/System.err: [Wallet autosave thread] INFO org.bitcoinj.wallet.WalletFiles - Save completed in 5.478 ms
+11-04 23:23:36.016 12860-12965/com.example.practicingrecievingbtc W/System.err: [PeerGroup Thread] INFO org.bitcoinj.core.PeerGroup$ChainDownloadSpeedCalculator - End of sync detected at height 2102642.
+
+
+
+
+
+Old error message:
 
 11/04 10:26:20: Launching 'MainActivity' on Pixel 2 XL API 23.
 Install successfully finished in 14 s 234 ms.
