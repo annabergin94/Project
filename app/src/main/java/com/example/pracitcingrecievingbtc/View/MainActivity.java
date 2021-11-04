@@ -1,32 +1,37 @@
-package com.example.pracitcingrecievingbtc;
+package com.example.pracitcingrecievingbtc.View;
 
 import android.app.Activity;
-import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import com.example.pracitcingrecievingbtc.Presenter.BitcoinWalletPresenter;
+import com.example.pracitcingrecievingbtc.R;
+import org.bitcoinj.store.BlockStoreException;
+
+import java.util.concurrent.ExecutionException;
 
 
 public class MainActivity extends Activity {
 
     private static final String TAG = MainActivity.class.getSimpleName();
     public static Context context;
-    public BitcoinExample btcService;
+    public BitcoinWalletPresenter btcService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         context = getApplicationContext();
         Log.d(TAG, "creating btcService...");
-        btcService = new BitcoinExample(context);
+        btcService = new BitcoinWalletPresenter(context);
         Log.d(TAG, "completed creating btcService");
         setContentView(R.layout.activity_main);
         String fragmentName = getIntent().getStringExtra("fragmentName");
         Log.d(TAG, "specified fragment name is: " + fragmentName);
         System.out.println("got here");
+    }
+
+    public void showToastMessage(String message) {
+
     }
 }
 
@@ -69,7 +74,7 @@ public class MainActivity extends Activity {
 
 /*    *//** Called in fragments to access the btcService created above. you can use
      * ((MainActivity)this.getActivity()).getBTCService() to access object from fragments **//*
-    public BitcoinExample getBTCService(){
+    public BitcoinWalletPresenter getBTCService(){
         return btcService;
     }
 
