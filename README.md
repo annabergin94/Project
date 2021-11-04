@@ -17,7 +17,7 @@ PeerGroup implements the Service interface. This means before it will do anythin
 
 
 
-
+<code>
 11/04 00:54:48: Launching 'MainActivity' on Pixel 2 XL API 23.
 Install successfully finished in 11 s 528 ms.
 $ adb shell am start -n "com.example.practicingrecievingbtc/com.example.pracitcingrecievingbtc.MainActivity" -a android.intent.action.MAIN -c android.intent.category.LAUNCHER
@@ -95,4 +95,4 @@ D/BitcoinExample: 0 peers, lost peer: [192.168.1.67]:18333
 D/BitcoinExample: 0 peers, lost peer: [192.168.1.67]:18333
 D/BitcoinExample: 0 peers, lost peer: [192.168.1.67]:18333
 D/BitcoinExample: 0 peers, lost peer: [192.168.1.67]:18333
-D/BitcoinExample: 0 peers, lost peer: [192.168.1.67]:18333
+D/BitcoinExample: 0 peers, lost peer: [192.168.1.67]:18333 </code>
