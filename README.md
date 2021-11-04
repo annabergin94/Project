@@ -17,11 +17,10 @@ PeerGroup implements the Service interface. This means before it will do anythin
 
 
 
-<code>
-11/04 00:54:48: Launching 'MainActivity' on Pixel 2 XL API 23.
-Install successfully finished in 11 s 528 ms.
+11/04 10:26:20: Launching 'MainActivity' on Pixel 2 XL API 23.
+Install successfully finished in 14 s 234 ms.
 $ adb shell am start -n "com.example.practicingrecievingbtc/com.example.pracitcingrecievingbtc.MainActivity" -a android.intent.action.MAIN -c android.intent.category.LAUNCHER
-Connected to process 5140 on device 'emulator-5554'.
+Connected to process 6796 on device 'Pixel_2_XL_API_23 [emulator-5554]'.
 Capturing and displaying logcat messages from application. This behavior can be disabled in the "Logcat output" section of the "Debugger" settings page.
 W/System: ClassLoader referenced unknown path: /data/app/com.example.practicingrecievingbtc-2/lib/x86
 D/MainActivity: creating btcService...
@@ -29,18 +28,13 @@ W/System.err: SLF4J: Failed to load class "org.slf4j.impl.StaticLoggerBinder".
     SLF4J: Defaulting to no-operation (NOP) logger implementation
     SLF4J: See http://www.slf4j.org/codes.html#StaticLoggerBinder for further details.
 I/System.out: setting up test network
-    load wallet
-D/BitcoinExample: existing wallet file name: TestNet3.wallet
-D/BitcoinExample: existing wallet file size 693bytes
+I/System.out: load wallet
+D/BitcoinExample: the current wallet file: TestWallet.wallethas a size685bytes
 W/UnsafeUtil: platform method missing - proto runtime falling back to safer methods: java.lang.NoSuchMethodException: getByte [class java.lang.Object, long]
-I/art: Background sticky concurrent mark sweep GC freed 24626(1286KB) AllocSpace objects, 0(0B) LOS objects, 34% free, 2MB/3MB, paused 6.416ms total 12.967ms
 D/BitcoinExample: Loaded wallet file from disk
-W/art: Suspending all threads took: 34.963ms
-I/art: Background sticky concurrent mark sweep GC freed 71153(3MB) AllocSpace objects, 0(0B) LOS objects, 32% free, 2MB/3MB, paused 36.235ms total 241.186ms
-I/System.out: Now we have loaded or created the wallet
-    Next we save the file and state its name and what it includes
-D/BitcoinExample: wallet file name: TestNet3.wallet
-D/BitcoinExample: wallet contents: Wallet
+    we've loaded the wallet
+    A walletTestWallet.walletwith270keys.
+D/BitcoinExample: The contents of the wallet include Wallet
     Balances:
       0.00 BTC ESTIMATED
       0.00 BTC AVAILABLE
@@ -54,45 +48,42 @@ D/BitcoinExample: wallet contents: Wallet
     Last seen best block: -1 (time unknown): null
     
     Keys:
-    Earliest creation time: 2021-11-03T23:20:35Z
-    Seed birthday:     1635981635  [2021-11-03T23:20:35Z]
+    Earliest creation time: 2021-11-04T01:16:32Z
+    Seed birthday:     1635988592  [2021-11-04T01:16:32Z]
     Ouput script type: P2PKH
-    Key to watch:      tpubDA62op2RUmRCQ7AXMFEStxhm6wBcgAP3cjD5jsGasqQdXuP5qPHnyk4MBfXQYx8RgrxtjFUpn7xiMYjfF1bVseK8PBGmTvkXdHymawSA4dM
+    Key to watch:      tpubDA6fHUB9pmGWEp9spds9bVqTCbZiw1wBddTjGo7Xos7kigg1Ngr8ogArUf9rYbCU5RM5vLuoCvz6KX36q6ZnJXrHjiXmmUQyzq3QV9nSY8t
     Lookahead siz/thr: 100/33
-      addr:n4AUvwZZLcFb1PzyBF6PEmWoNYgCszck7G  hash160:f86bbb416e738e192ef3ae09bd525199d990413d  (M, root)
-      addr:miG2qrZZfWYv3FuprrFpU9SBJnCXMozMff  hash160:1e15ef4566dc661c80a5802701f5cf2e0729bdd8  (M/0H, account)
-      addr:mriNC7BMJVwKpYME2JLZB3DGZSc3eq17s7  hash160:7ad1e865f04799fd04ab1617e71a3737c311bd57  (M/0H/0, external)
-      addr:mnDkR3SupLN1MgR7EVPmkhnf9LBvCMAjJh  hash160:4987e4834dd2c8c5bd88fc4e3ec270b6cacafc56  (M/0H/1, internal)
+      addr:n4JHMMvX85hgnCvMaZkqC9ifuLpHJgHUZ3  hash160:f9e564be42fdb9b1008af9b99aa8cf2991531b6e  (M, root)
+      addr:miSHG7Ls8F1mh8gQKn1mjp24Xt83JcgwP1  hash160:2006214584c689f8cd48c4bec0194443cb090cdc  (M/0H, account)
+      addr:mkNUZas9AVzE9fvVkbpc1jn2VTmZhJyF2w  hash160:353e26ca557ba0a3adf2185cfcede323758942b9  (M/0H/0, external)
+      addr:muvrkhWrED4KeRHeJY1qPnfEnEghoNfoDy  hash160:9e171e76a13b5038ec982bba141aaaae3213f3f2  (M/0H/1, internal)
 I/System.out: Now we are going to create or load a wallet
-D/BitcoinExample: No existing blockchain data found it may take a while to scan the blockchain ledger
+D/BitcoinExample: An existing blockchain file has been located and is of size641024 bytes
 D/BitcoinExample: Known blockchain height: 0
 D/MainActivity: completed creating btcService
+D/BitcoinExample: There are currently 0 peers connected. The peer lost is [192.168.1.67]:18333
 D/MainActivity: specified fragment name is: null
 I/System.out: got here
-D/BitcoinExample: 0 peers, lost peer: [192.168.1.67]:18333
 D/OpenGLRenderer: Use EGL_SWAP_BEHAVIOR_PRESERVED: true
-D/: HostConnection::get() New Host Connection established 0xaa1fe900, tid 5140
-D/: HostConnection::get() New Host Connection established 0xaa1feb80, tid 5192
+D/: HostConnection::get() New Host Connection established 0xaaac6600, tid 6796
+D/: HostConnection::get() New Host Connection established 0xaaac68c0, tid 6845
 I/OpenGLRenderer: Initialized EGL, version 1.4
 W/OpenGLRenderer: Failed to choose config with EGL_SWAP_BEHAVIOR_PRESERVED, retrying without...
-D/EGL_emulation: eglCreateContext: 0xae5547e0: maj 2 min 0 rcv 2
-D/EGL_emulation: eglMakeCurrent: 0xae5547e0: ver 2 0 (tinfo 0xae552ba0)
-D/EGL_emulation: eglMakeCurrent: 0xae5547e0: ver 2 0 (tinfo 0xae552ba0)
-D/EGL_emulation: eglMakeCurrent: 0xae5547e0: ver 2 0 (tinfo 0xae552ba0)
-D/EGL_emulation: eglMakeCurrent: 0xae5547e0: ver 2 0 (tinfo 0xae552ba0)
-D/EGL_emulation: eglMakeCurrent: 0xae5547e0: ver 2 0 (tinfo 0xae552ba0)
-V/RenderScript: 0xae6bc000 Launching thread(s), CPUs 4
-D/BitcoinExample: 0 peers, lost peer: [192.168.1.67]:18333
-D/EGL_emulation: eglMakeCurrent: 0xae5547e0: ver 2 0 (tinfo 0xae552ba0)
-E/Surface: getSlotFromBufferLocked: unknown buffer: 0xaab098c0
-D/BitcoinExample: 0 peers, lost peer: [192.168.1.67]:18333
-D/BitcoinExample: 0 peers, lost peer: [192.168.1.67]:18333
-D/BitcoinExample: 0 peers, lost peer: [192.168.1.67]:18333
-D/BitcoinExample: 0 peers, lost peer: [192.168.1.67]:18333
-D/BitcoinExample: 0 peers, lost peer: [192.168.1.67]:18333
-D/BitcoinExample: 0 peers, lost peer: [192.168.1.67]:18333
-D/BitcoinExample: 0 peers, lost peer: [192.168.1.67]:18333
-D/BitcoinExample: 0 peers, lost peer: [192.168.1.67]:18333
-D/BitcoinExample: 0 peers, lost peer: [192.168.1.67]:18333
-D/BitcoinExample: 0 peers, lost peer: [192.168.1.67]:18333
-D/BitcoinExample: 0 peers, lost peer: [192.168.1.67]:18333 </code>
+D/EGL_emulation: eglCreateContext: 0xae5548a0: maj 2 min 0 rcv 2
+D/EGL_emulation: eglMakeCurrent: 0xae5548a0: ver 2 0 (tinfo 0xae552d70)
+D/EGL_emulation: eglMakeCurrent: 0xae5548a0: ver 2 0 (tinfo 0xae552d70)
+D/BitcoinExample: There are currently 0 peers connected. The peer lost is [192.168.1.67]:18333
+D/BitcoinExample: There are currently 0 peers connected. The peer lost is [192.168.1.67]:18333
+D/BitcoinExample: There are currently 0 peers connected. The peer lost is [192.168.1.67]:18333
+D/BitcoinExample: There are currently 0 peers connected. The peer lost is [192.168.1.67]:18333
+D/BitcoinExample: There are currently 0 peers connected. The peer lost is [192.168.1.67]:18333
+D/BitcoinExample: There are currently 0 peers connected. The peer lost is [192.168.1.67]:18333
+D/BitcoinExample: There are currently 0 peers connected. The peer lost is [192.168.1.67]:18333
+D/BitcoinExample: There are currently 0 peers connected. The peer lost is [192.168.1.67]:18333
+D/BitcoinExample: There are currently 0 peers connected. The peer lost is [192.168.1.67]:18333
+D/BitcoinExample: There are currently 0 peers connected. The peer lost is [192.168.1.67]:18333
+D/BitcoinExample: There are currently 0 peers connected. The peer lost is [192.168.1.67]:18333
+D/BitcoinExample: There are currently 0 peers connected. The peer lost is [192.168.1.67]:18333
+D/BitcoinExample: There are currently 0 peers connected. The peer lost is [192.168.1.67]:18333
+D/BitcoinExample: There are currently 0 peers connected. The peer lost is [192.168.1.67]:18333
+D/BitcoinExample: There are currently 0 peers connected. The peer lost is [192.168.1.67]:18333
