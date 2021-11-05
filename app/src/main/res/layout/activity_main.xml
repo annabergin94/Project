@@ -51,8 +51,7 @@
                     android:layout_marginBottom="4dp"
                     android:gravity="center"
                     android:textColor="@color/black"
-                    android:textStyle="bold"
-                    tools:text="42342fwefwr98"/>
+                    android:textStyle="bold"/>
 
             <ImageView
                     android:id="@+id/ivCopy_AM"

@@ -1,7 +1,6 @@
 package com.example.pracitcingrecievingbtc.Presenter;
 
 import android.content.Context; // connection between Android System and App Project https://www.geeksforgeeks.org/what-is-context-in-android/
-import android.graphics.Bitmap;
 import android.util.Log; // helps debugging by printing statements in the logcat
 import com.example.pracitcingrecievingbtc.Contracts.Contract;
 import com.google.common.base.Joiner; // part of Guava, central to BitcoinJ, appends results ie., skips spaces and returns a string
@@ -10,13 +9,13 @@ import org.bitcoinj.core.*; // contains classes for network messages like Block 
 import org.bitcoinj.core.listeners.BlocksDownloadedEventListener; // listen to blocks being downloaded
 import org.bitcoinj.core.listeners.PeerDisconnectedEventListener; // listen to peer disconnections
 import org.bitcoinj.core.listeners.PeerDiscoveredEventListener; // list to peer connections
+import org.bitcoinj.crypto.DeterministicKey;
 import org.bitcoinj.net.discovery.DnsDiscovery; // supports peer discovery through DNS
 
 import org.bitcoinj.params.TestNet3Params; // testing network for blockchain developers
 import org.bitcoinj.script.Script;
 import org.bitcoinj.store.BlockStore;
 import org.bitcoinj.store.BlockStoreException;
-import org.bitcoinj.store.MemoryBlockStore;
 
 import org.bitcoinj.store.SPVBlockStore;
 import org.bitcoinj.utils.BriefLogFormatter;
@@ -45,7 +44,6 @@ public class BitcoinWalletPresenter implements Contract.Presenter {
     private int peerCount;
     private Script.ScriptType outputScriptType;
     private Contract.View view;
-
 
     // passing the connection between the project and android app
     public BitcoinWalletPresenter(Context context) {
@@ -104,6 +102,7 @@ public class BitcoinWalletPresenter implements Contract.Presenter {
         Wallet createdWallet = null;
         createdWallet = Wallet.createDeterministic(networkParams, outputScriptType); // ****** WRONG
         createdWallet.setDescription("Project Wallet Test");
+        System.out.println(createdWallet.getIssuedReceiveAddresses());
         try {
             createdWallet.saveToFile(walletFile);
             Log.d(TAG, "Created new wallet ");
@@ -210,5 +209,15 @@ public class BitcoinWalletPresenter implements Contract.Presenter {
             }
         });
     }
+
+    public String printWalletAddress(){
+            Address address =  myWallet.currentReceiveAddress();
+            Log.d(TAG, "key address on the TestNet blockchain is " + address);
+
+//        DeterministicKey key =  myWallet.currentReceiveKey();
+//        Log.d(TAG, "key address on the TestNet blockchain is " + key);
+        return null;
+    }
 }
+
 
