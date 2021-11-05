@@ -9,6 +9,7 @@ public interface Contract {
     interface View extends BaseView {
 
         void displayMyBalance(String myBalance);
+        void displayMyWalletAddress(String myAddress);
         void displayMyAddress(String myAddress);
         void refresh();
 

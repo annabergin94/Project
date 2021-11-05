@@ -1,6 +1,7 @@
 package com.example.pracitcingrecievingbtc.Presenter;
 
 import android.content.Context; // connection between Android System and App Project https://www.geeksforgeeks.org/what-is-context-in-android/
+import android.graphics.Bitmap;
 import android.util.Log; // helps debugging by printing statements in the logcat
 import com.example.pracitcingrecievingbtc.Contracts.Contract;
 import com.google.common.base.Joiner; // part of Guava, central to BitcoinJ, appends results ie., skips spaces and returns a string
@@ -18,6 +19,7 @@ import org.bitcoinj.store.BlockStoreException;
 import org.bitcoinj.store.MemoryBlockStore;
 
 import org.bitcoinj.store.SPVBlockStore;
+import org.bitcoinj.utils.BriefLogFormatter;
 import org.bitcoinj.wallet.DeterministicSeed;
 import org.bitcoinj.wallet.UnreadableWalletException;
 import org.bitcoinj.wallet.Wallet;
@@ -47,6 +49,9 @@ public class BitcoinWalletPresenter implements Contract.Presenter {
 
     // passing the connection between the project and android app
     public BitcoinWalletPresenter(Context context) {
+
+        // Activating BitcoinJ's logging using a Java logging formatter that writes more compact output than default
+        BriefLogFormatter.init();
         this.view = view;
         this.context = context;
         networkParams = TestNet3Params.get(); // request testnet
@@ -72,7 +77,7 @@ public class BitcoinWalletPresenter implements Contract.Presenter {
         // the wallet must be autosaved
         myWallet.autosaveToFile(walletFile, 200, TimeUnit.MILLISECONDS, null); // saving the file by passing its name and what it includes
         // not sure getKeyChainGroupSize() is the right method come back to this****
-        Log.d(TAG, "A wallet" + walletFile.getName() + "with " + myWallet.getKeyChainGroupSize() + " keys.");
+        Log.d(TAG, "A wallet " + walletFile.getName() + "with " + myWallet.getKeyChainGroupSize() + " keys.");
         Log.d(TAG, "The contents of the wallet include " + myWallet);
         return myWallet;
     }
@@ -82,9 +87,10 @@ public class BitcoinWalletPresenter implements Contract.Presenter {
         System.out.println("load wallet");
         Wallet loadedWallet = null; // intelliji underlines reassigned local variables
         try {
-            Log.d(TAG, "the current wallet file: " + walletFile.getName() + "has a size" + walletFile.length() + "bytes");
+            Log.d(TAG, "the current wallet file: " + walletFile.getName() + " has a size " + walletFile.length() + " bytes");
             loadedWallet = Wallet.loadFromFile(walletFile);
             Log.d(TAG, "Loaded wallet file from disk");
+            System.out.println(loadedWallet.getIssuedReceiveAddresses()); // printed wallet address
         } catch (UnreadableWalletException e) {
             Log.e(TAG, "Could not parse existing wallet");
             e.printStackTrace();
@@ -125,7 +131,7 @@ public class BitcoinWalletPresenter implements Contract.Presenter {
 
         // SPV is specific to Bitcoin it allows a user to verify that the transaction has been included in the blockchain without downloading the entire blockchain
         if (spvBlockChainFile.exists()) {
-            Log.d(TAG, "An existing blockchain file has been located and is of size" + spvBlockChainFile.length() + " bytes");
+            Log.d(TAG, "An existing blockchain file has been located and is of size " + spvBlockChainFile.length() + " bytes");
         } else {
             Log.d(TAG, "No existing blockchain data found it may take a while to scan the blockchain ledger");
         }
