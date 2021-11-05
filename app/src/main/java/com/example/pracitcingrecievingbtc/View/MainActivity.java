@@ -42,9 +42,7 @@ public class MainActivity extends Activity {
         btnViewAddress.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                String address = "XXXXX";
-
+                String address = btcService.printWalletAddress();
                 // use intent to open a new activity and convey the message to the system to start a new activity
                 Intent intent = new Intent(MainActivity.this, com.example.pracitcingrecievingbtc.View.ViewWalletAddress.class);
                 intent.putExtra("walletAddress", address); // key value pair

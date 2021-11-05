@@ -10,7 +10,6 @@ import com.example.pracitcingrecievingbtc.R;
 public class ViewWalletAddress extends AppCompatActivity {
 
     TextView tvMyAddress;
-    BitcoinWalletPresenter p;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,6 +17,6 @@ public class ViewWalletAddress extends AppCompatActivity {
         setContentView(R.layout.activity_view_wallet_address);
         tvMyAddress = findViewById(R.id.tvMyAddress);
         String address = getIntent().getStringExtra("walletAddress");
-        tvMyAddress.setText("Wallet address: " + address);
+        tvMyAddress.setText(address);
     }
 }

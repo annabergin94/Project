@@ -211,12 +211,11 @@ public class BitcoinWalletPresenter implements Contract.Presenter {
     }
 
     public String printWalletAddress(){
-            Address address =  myWallet.currentReceiveAddress();
+            String address =  myWallet.currentReceiveAddress().toString();
             Log.d(TAG, "key address on the TestNet blockchain is " + address);
-
+            return address;
 //        DeterministicKey key =  myWallet.currentReceiveKey();
 //        Log.d(TAG, "key address on the TestNet blockchain is " + key);
-        return null;
     }
 }
 
