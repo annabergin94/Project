@@ -3,7 +3,6 @@ package com.example.pracitcingrecievingbtc.View;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import com.example.pracitcingrecievingbtc.Presenter.BitcoinWalletPresenter;
 import com.example.pracitcingrecievingbtc.R;
 
 // an intent always starts an activity

@@ -71,7 +71,7 @@
                   android:layout_marginTop="10dp"
                   android:paddingRight="20dp"/>
 
-        <Button android:layout_height="wrap_content"
+        <Button android:layout_height="38dp"
                 android:layout_width="match_parent"
                 android:id="@+id/btnViewAddress"
                 android:text="VIEW ADDRESS"
@@ -79,10 +79,9 @@
                 android:layout_marginRight="20dp"
                 android:layout_marginTop="150dp"
                 android:textColor="@color/white"
-                android:backgroundTint="@color/dark_primary_color"
                 android:layout_gravity="center_horizontal"
-                android:textStyle="bold"/>
-
+                android:textStyle="bold"
+                android:background="@color/black"/>
         <Button android:layout_height="wrap_content"
                 android:layout_width="match_parent"
                 android:id="@+id/btnSendBitcoin"
@@ -91,7 +90,7 @@
                 android:layout_marginRight="20dp"
                 android:layout_marginTop="10dp"
                 android:textColor="@color/white"
-                android:backgroundTint="@color/dark_primary_color"
+                android:backgroundTint="@color/primary_colour"
                 android:layout_gravity="center_horizontal"
                 android:textStyle="bold"/>
 
@@ -103,7 +102,7 @@
                 android:layout_marginRight="20dp"
                 android:layout_marginTop="10dp"
                 android:textColor="@color/white"
-                android:backgroundTint="@color/dark_primary_color"
+                android:backgroundTint="@color/primary_colour"
                 android:layout_gravity="center_horizontal"
                 android:textStyle="bold"/>
 

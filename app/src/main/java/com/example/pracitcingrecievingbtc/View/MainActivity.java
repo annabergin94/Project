@@ -1,13 +1,17 @@
 package com.example.pracitcingrecievingbtc.View;
 
 import android.app.Activity;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 import com.example.pracitcingrecievingbtc.Presenter.BitcoinWalletPresenter;
 import com.example.pracitcingrecievingbtc.R;
 
@@ -16,11 +20,14 @@ public class MainActivity extends Activity {
     private static final String TAG = MainActivity.class.getSimpleName();
     public static Context context;
     public BitcoinWalletPresenter btcService;
+    protected ClipboardManager clipboardManager;
 
     TextView tvMyAddress;
     Button btnViewAddress;
     Button btnSendBitcoin;
     Button btnReceiveBitcoin;
+    ImageView ivCopy; // xml from sample
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,19 +71,13 @@ public class MainActivity extends Activity {
             }
         });
 
-   //     btcService.printWalletAddress();
-
-    }
-
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
-
-    // indication the user is leaving the activity/fragment
-    @Override
-    protected void onPause() {
-        super.onPause();
+        // listener to copy the wallet address
+        ivCopy.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                ClipData clip = ClipData.newPlainText("My wallet address", tvMyAddress.getText().toString());
+                clipboardManager.setPrimaryClip(clip);
+                Toast.makeText(MainActivity.this, "Copied", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }
