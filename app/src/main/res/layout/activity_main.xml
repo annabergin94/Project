@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout
+<RelativeLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
+        android:background="@color/black_shade_1"
         tools:context=".View.MainActivity">
 
     <LinearLayout
@@ -29,12 +30,14 @@
             <TextView
                     android:id="@+id/tvMyBalance_AM"
                     android:layout_width="0dp"
+                    android:layout_marginTop="10dp"
+                    android:textColor="@color/white"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_weight="1"
                     android:textSize="17sp"
                     android:textStyle="bold"
-                    tools:text="1.235324234234 BTC" />
+                    tools:text="1.235324234234 BTC"/>
 
         </LinearLayout>
 
@@ -42,21 +45,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:gravity="center">
 
-            <ImageView
-                    android:id="@+id/ivCopy_AM"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:padding="4dp"/>
+                android:gravity="center"/>
 
-        </LinearLayout>
-
-</LinearLayout>
+    </LinearLayout>
 
     <LinearLayout
             tools:context=".Fragement.InitialScreenFragment"
-            android:background="@color/white"
             android:orientation="vertical"
             android:layout_height="match_parent"
             android:layout_width="match_parent">
@@ -65,13 +60,14 @@
                   android:layout_width="match_parent"
                   android:textSize="20dp"
                   android:id="@+id/tvBitcoinPriceLive"
+                  android:textColor="@color/white"
                   android:text="historyofprices"
                   android:layout_marginLeft="20dp"
                   android:layout_marginRight="20dp"
-                  android:layout_marginTop="10dp"
+                  android:layout_marginTop="70dp"
                   android:paddingRight="20dp"/>
 
-        <Button android:layout_height="38dp"
+        <Button android:layout_height="wrap_content"
                 android:layout_width="match_parent"
                 android:id="@+id/btnViewAddress"
                 android:text="VIEW ADDRESS"
@@ -79,9 +75,10 @@
                 android:layout_marginRight="20dp"
                 android:layout_marginTop="150dp"
                 android:textColor="@color/white"
+                android:backgroundTint="@color/yellow"
                 android:layout_gravity="center_horizontal"
-                android:textStyle="bold"
-                android:background="@color/black"/>
+                android:textStyle="bold"/>
+
         <Button android:layout_height="wrap_content"
                 android:layout_width="match_parent"
                 android:id="@+id/btnSendBitcoin"
@@ -90,7 +87,7 @@
                 android:layout_marginRight="20dp"
                 android:layout_marginTop="10dp"
                 android:textColor="@color/white"
-                android:backgroundTint="@color/primary_colour"
+                android:backgroundTint="@color/yellow"
                 android:layout_gravity="center_horizontal"
                 android:textStyle="bold"/>
 
@@ -102,10 +99,9 @@
                 android:layout_marginRight="20dp"
                 android:layout_marginTop="10dp"
                 android:textColor="@color/white"
-                android:backgroundTint="@color/primary_colour"
+                android:backgroundTint="@color/yellow"
                 android:layout_gravity="center_horizontal"
                 android:textStyle="bold"/>
 
     </LinearLayout>
-
-</LinearLayout>
+</RelativeLayout>

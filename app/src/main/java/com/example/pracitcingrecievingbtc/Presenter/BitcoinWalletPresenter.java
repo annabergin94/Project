@@ -9,7 +9,6 @@ import org.bitcoinj.core.*; // contains classes for network messages like Block 
 import org.bitcoinj.core.listeners.BlocksDownloadedEventListener; // listen to blocks being downloaded
 import org.bitcoinj.core.listeners.PeerDisconnectedEventListener; // listen to peer disconnections
 import org.bitcoinj.core.listeners.PeerDiscoveredEventListener; // list to peer connections
-import org.bitcoinj.crypto.DeterministicKey;
 import org.bitcoinj.net.discovery.DnsDiscovery; // supports peer discovery through DNS
 
 import org.bitcoinj.params.TestNet3Params; // testing network for blockchain developers
@@ -64,12 +63,11 @@ public class BitcoinWalletPresenter implements Contract.Presenter {
     // A wallet "knows how to find and save transactions relevant to a set of keys or scripts, calculate balances, and spend money"
     public Wallet initialisingWallet() {
         Wallet myWallet;
-        // checking if a wallet file exists
         if (walletFile.exists()) {
-            myWallet = loadingWallet(); // exists so load it
+            myWallet = loadingWallet(); // wallet exists, load it
             Log.d(TAG, "we've loaded the wallet");
         } else {
-            myWallet = creatingWallet(); // doesn't exist so create it
+            myWallet = creatingWallet(); // wallet doesn't exist so create it
             Log.d(TAG, "we've created the wallet");
         }
         // the wallet must be autosaved
@@ -100,7 +98,7 @@ public class BitcoinWalletPresenter implements Contract.Presenter {
     public Wallet creatingWallet() {
         Log.d(TAG, "Creating a new wallet");
         Wallet createdWallet = null;
-        createdWallet = Wallet.createDeterministic(networkParams, outputScriptType); // ****** WRONG
+        createdWallet = Wallet.createDeterministic(networkParams, outputScriptType);
         createdWallet.setDescription("Project Wallet Test");
         System.out.println(createdWallet.getIssuedReceiveAddresses());
         try {
@@ -135,13 +133,8 @@ public class BitcoinWalletPresenter implements Contract.Presenter {
             Log.d(TAG, "No existing blockchain data found it may take a while to scan the blockchain ledger");
         }
         try {
-           // blockStore = new MemoryBlockStore(networkParams);
             blockStore = new SPVBlockStore(networkParams, spvBlockChainFile);
             chain = new BlockChain(networkParams, this.myWallet, blockStore);
-          //  chain = new BlockChain(networkParams, blockStore);
-
-            //  best known height of the chain, short for getChainHead().getHeight()
-            // NOT SURE IF THIS SHOULD BE 0, need to look into this more
             Log.d(TAG, "Known blockchain height: " + chain.getBestChainHeight());
         } catch (BlockStoreException e) {
             e.printStackTrace();
@@ -217,6 +210,8 @@ public class BitcoinWalletPresenter implements Contract.Presenter {
 //        DeterministicKey key =  myWallet.currentReceiveKey();
 //        Log.d(TAG, "key address on the TestNet blockchain is " + key);
     }
+
+    
 }
 
 

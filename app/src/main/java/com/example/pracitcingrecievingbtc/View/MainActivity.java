@@ -26,6 +26,7 @@ public class MainActivity extends Activity {
     Button btnViewAddress;
     Button btnSendBitcoin;
     Button btnReceiveBitcoin;
+    ImageView imageQrCode;
     ImageView ivCopy; // xml from sample
 
 
@@ -71,13 +72,13 @@ public class MainActivity extends Activity {
             }
         });
 
-        // listener to copy the wallet address
-        ivCopy.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                ClipData clip = ClipData.newPlainText("My wallet address", tvMyAddress.getText().toString());
-                clipboardManager.setPrimaryClip(clip);
-                Toast.makeText(MainActivity.this, "Copied", Toast.LENGTH_SHORT).show();
-            }
-        });
+//        // listener to copy the wallet address
+//        ivCopy.setOnClickListener(new View.OnClickListener() {
+//            public void onClick(View v) {
+//                ClipData clip = ClipData.newPlainText("My wallet address", tvMyAddress.getText().toString());
+//                clipboardManager.setPrimaryClip(clip);
+//                Toast.makeText(MainActivity.this, "Copied", Toast.LENGTH_SHORT).show();
+//            }
+//        });
     }
 }
