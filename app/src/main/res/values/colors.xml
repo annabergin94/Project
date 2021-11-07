@@ -8,11 +8,10 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="primary_colour">#009688</color>
-    <color name="PRIMARYTEXT">#212121</color>
-    <color name="SECONDARYTEXT">#757575</color>
-    <color name="DARKRPIMARYCOLOR">#757575</color>
 
     <color name="black_shade_1">#292036</color>
     <color name="yellow">#ffa500</color>
+    <color name="secondary_text">#757575</color>
+    <color name="primary_text">#212121</color>
 
 </resources>

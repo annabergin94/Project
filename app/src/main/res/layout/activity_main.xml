@@ -28,7 +28,7 @@
                     android:id="@+id/putLogoHere"/>
 
             <TextView
-                    android:id="@+id/tvMyBalance_AM"
+                    android:id="@+id/tvWalletBalance"
                     android:layout_width="0dp"
                     android:layout_marginTop="10dp"
                     android:textColor="@color/white"
@@ -36,8 +36,7 @@
                     android:layout_gravity="center"
                     android:layout_weight="1"
                     android:textSize="17sp"
-                    android:textStyle="bold"
-                    tools:text="1.235324234234 BTC"/>
+                    android:textStyle="bold"/>
 
         </LinearLayout>
 

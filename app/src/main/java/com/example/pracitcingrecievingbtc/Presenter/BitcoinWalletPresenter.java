@@ -26,6 +26,7 @@ import org.bitcoinj.wallet.listeners.WalletCoinsReceivedEventListener;
 import javax.annotation.Nullable;
 import java.io.File;
 import java.io.IOException;
+import java.math.BigInteger;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.Set;
@@ -86,7 +87,9 @@ public class BitcoinWalletPresenter implements Contract.Presenter {
             Log.d(TAG, "the current wallet file: " + walletFile.getName() + " has a size " + walletFile.length() + " bytes");
             loadedWallet = Wallet.loadFromFile(walletFile);
             Log.d(TAG, "Loaded wallet file from disk");
-            System.out.println(loadedWallet.getIssuedReceiveAddresses()); // printed wallet address
+   //         System.out.println(loadedWallet.getIssuedReceiveAddresses()); // printed wallet address
+            System.out.println("Current wallet address is: " + loadedWallet.currentReceiveAddress());
+            System.out.println("Current wallet balance is: " + loadedWallet.getBalance());
         } catch (UnreadableWalletException e) {
             Log.e(TAG, "Could not parse existing wallet");
             e.printStackTrace();
@@ -98,9 +101,11 @@ public class BitcoinWalletPresenter implements Contract.Presenter {
     public Wallet creatingWallet() {
         Log.d(TAG, "Creating a new wallet");
         Wallet createdWallet = null;
+        // creating an empty wallet with a randomly chosen seed and no transactions
+        // keys will be derived from the seed
         createdWallet = Wallet.createDeterministic(networkParams, outputScriptType);
         createdWallet.setDescription("Project Wallet Test");
-        System.out.println(createdWallet.getIssuedReceiveAddresses());
+        System.out.println(createdWallet.getIssuedReceiveAddresses()); // returns the keys issued
         try {
             createdWallet.saveToFile(walletFile);
             Log.d(TAG, "Created new wallet ");
@@ -211,7 +216,26 @@ public class BitcoinWalletPresenter implements Contract.Presenter {
 //        Log.d(TAG, "key address on the TestNet blockchain is " + key);
     }
 
-    
+    public String getBalance() {
+        return myWallet.getBalance().toFriendlyString();
+    }
+
+//    public void privateKey(){
+//        String dumpPrivKey = "";
+//        ECKey key;
+//        if (args[0].length() == 51 || args[0].length() == 52) {
+//            // dumped private key parses and generates private keys in the form used by the Bitcoin "dumpprivkey" command.
+//            // toBase58() Returns the base58-encoded textual form, including version and checksum bytes.
+//            DumpedPrivateKey dumpedPrivateKey = DumpedPrivateKey.fromBase58(networkParams, args[0]);
+//            key = dumpedPrivateKey.getKey();
+//        } else {
+//            BigInteger privKey = Base58.decodeToBigInteger(args[0]);
+//            key = ECKey.fromPrivate(privKey);
+//        }
+//        System.out.println("Address from private key is: " + LegacyAddress.fromKey(networkParams, key).toString());
+//        // And the address ...
+//        Address destination = LegacyAddress.fromBase58(networkParams, args[1]);
+//    }
 }
 
 
