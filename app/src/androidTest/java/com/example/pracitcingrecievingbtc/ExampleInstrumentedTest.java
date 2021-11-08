@@ -4,8 +4,13 @@ import android.content.Context;
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
+import com.example.pracitcingrecievingbtc.Presenter.BitcoinWalletPresenter;
+import org.bitcoinj.wallet.Wallet;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import java.io.File;
+import java.io.IOException;
 
 import static org.junit.Assert.*;
 
@@ -16,10 +21,20 @@ import static org.junit.Assert.*;
  */
 @RunWith(AndroidJUnit4.class)
 public class ExampleInstrumentedTest {
+
+    BitcoinWalletPresenter p;
+
     @Test
     public void useAppContext() {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
         assertEquals("com.example.pracitcingrecievingbtc", appContext.getPackageName());
     }
+
+    public void createWalletTest() throws IOException {
+        Wallet wallet = p.creatingWallet();
+        wallet.saveToFile(new File("src/test/resources/wallets").getAbsoluteFile());
+        assertEquals(wallet.getKeyChainSeed(), walletSeed(wallet));
+    }
+
 }

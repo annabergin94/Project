@@ -9,6 +9,7 @@ import org.bitcoinj.core.*; // contains classes for network messages like Block 
 import org.bitcoinj.core.listeners.BlocksDownloadedEventListener; // listen to blocks being downloaded
 import org.bitcoinj.core.listeners.PeerDisconnectedEventListener; // listen to peer disconnections
 import org.bitcoinj.core.listeners.PeerDiscoveredEventListener; // list to peer connections
+import org.bitcoinj.crypto.DeterministicKey;
 import org.bitcoinj.net.discovery.DnsDiscovery; // supports peer discovery through DNS
 
 import org.bitcoinj.params.TestNet3Params; // testing network for blockchain developers
@@ -26,7 +27,6 @@ import org.bitcoinj.wallet.listeners.WalletCoinsReceivedEventListener;
 import javax.annotation.Nullable;
 import java.io.File;
 import java.io.IOException;
-import java.math.BigInteger;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.Set;
@@ -44,12 +44,12 @@ public class BitcoinWalletPresenter implements Contract.Presenter {
     private int peerCount;
     private Script.ScriptType outputScriptType;
     private Contract.View view;
+    private ECKey key;
 
     // passing the connection between the project and android app
     public BitcoinWalletPresenter(Context context) {
 
-        // Activating BitcoinJ's logging using a Java logging formatter that writes more compact output than default
-        BriefLogFormatter.init();
+        BriefLogFormatter.init(); // Activating BitcoinJ's logging using a Java logging formatter that writes more compact output than default
         this.view = view;
         this.context = context;
         networkParams = TestNet3Params.get(); // request testnet
@@ -59,9 +59,9 @@ public class BitcoinWalletPresenter implements Contract.Presenter {
         myWallet = initialisingWallet(); // create or load wallet
         System.out.println("Now we are going to create or load a wallet");
         initWalletFromNetwork(); // syncing the blockchain
+        printWalletAddress();
     }
 
-    // A wallet "knows how to find and save transactions relevant to a set of keys or scripts, calculate balances, and spend money"
     public Wallet initialisingWallet() {
         Wallet myWallet;
         if (walletFile.exists()) {
@@ -73,7 +73,6 @@ public class BitcoinWalletPresenter implements Contract.Presenter {
         }
         // the wallet must be autosaved
         myWallet.autosaveToFile(walletFile, 200, TimeUnit.MILLISECONDS, null); // saving the file by passing its name and what it includes
-        // not sure getKeyChainGroupSize() is the right method come back to this****
         Log.d(TAG, "A wallet " + walletFile.getName() + "with " + myWallet.getKeyChainGroupSize() + " keys.");
         Log.d(TAG, "The contents of the wallet include " + myWallet);
         return myWallet;
@@ -82,12 +81,13 @@ public class BitcoinWalletPresenter implements Contract.Presenter {
     // once a wallet has been created, it is stored locally
     public Wallet loadingWallet() {
         System.out.println("load wallet");
-        Wallet loadedWallet = null; // intelliji underlines reassigned local variables
+        Wallet loadedWallet = null;
         try {
             Log.d(TAG, "the current wallet file: " + walletFile.getName() + " has a size " + walletFile.length() + " bytes");
             loadedWallet = Wallet.loadFromFile(walletFile);
             Log.d(TAG, "Loaded wallet file from disk");
    //         System.out.println(loadedWallet.getIssuedReceiveAddresses()); // printed wallet address
+            // wallet address is the hashed version of the public key, like an e-mail which is used to receive funds
             System.out.println("Current wallet address is: " + loadedWallet.currentReceiveAddress());
             System.out.println("Current wallet balance is: " + loadedWallet.getBalance());
         } catch (UnreadableWalletException e) {
@@ -97,12 +97,10 @@ public class BitcoinWalletPresenter implements Contract.Presenter {
         return loadedWallet;
     }
 
-
     public Wallet creatingWallet() {
         Log.d(TAG, "Creating a new wallet");
         Wallet createdWallet = null;
-        // creating an empty wallet with a randomly chosen seed and no transactions
-        // keys will be derived from the seed
+        // creating an empty wallet with a randomly chosen seed and no transactions keys will be derived from the seed
         createdWallet = Wallet.createDeterministic(networkParams, outputScriptType);
         createdWallet.setDescription("Project Wallet Test");
         System.out.println(createdWallet.getIssuedReceiveAddresses()); // returns the keys issued
@@ -114,9 +112,6 @@ public class BitcoinWalletPresenter implements Contract.Presenter {
             Log.e(TAG, "Could not save wallet ");
             e.printStackTrace();
         }
-        // the seeds and mnemonic codes return keys and addresses derived deterministically from a seed
-        //using the algorithms laid out in BIP 32 and BIP 39 (a standard uses when defining 12 words mnemonic code
-        // from https://bitcoinj.org/working-with-the-wallet
         DeterministicSeed seed = createdWallet.getKeyChainSeed();
         String recoverySeedWords = Joiner.on(" ").join(seed.getMnemonicCode());
         long seedBirthday = seed.getCreationTimeSeconds();
@@ -182,14 +177,10 @@ public class BitcoinWalletPresenter implements Contract.Presenter {
         // IP address
         InetAddress localPeer = null;
         try {
-            // I put in my own IP address here, but I think this may be wrong
-            // Need to work out which IP address goes there
             localPeer = InetAddress.getByName("192.168.1.66"); // return an instance of local host
         } catch (UnknownHostException e) {
             e.printStackTrace();
         }
-        // https://bitcoinj.org/javadoc/0.15.10/org/bitcoinj/core/PeerGroup.html#addAddress-java.net.InetAddress-
-        // short hand adding peer address
         peerGroup.addAddress(localPeer);
         peerGroup.addPeerDiscovery(new DnsDiscovery(networkParams));
         peerGroup.addWallet(myWallet);
@@ -208,34 +199,24 @@ public class BitcoinWalletPresenter implements Contract.Presenter {
         });
     }
 
+    // printing the wallet addresses
     public String printWalletAddress(){
-            String address =  myWallet.currentReceiveAddress().toString();
-            Log.d(TAG, "key address on the TestNet blockchain is " + address);
-            return address;
-//        DeterministicKey key =  myWallet.currentReceiveKey();
-//        Log.d(TAG, "key address on the TestNet blockchain is " + key);
+            String currentReceiveaddress =  myWallet.currentReceiveAddress().toString();
+            Log.d(TAG, "Key address on the TestNet blockchain is " + currentReceiveaddress); // 32 chars: mzg1ZfMDiaSFPLME11mGCCM6h7ivoJXPHA
+            ECKey currentReceiveKey = myWallet.currentReceiveKey();
+            String privateKey = currentReceiveKey.getPrivateKeyEncoded(networkParams).toBase58();
+            String publicKey = Utils.HEX.encode(currentReceiveKey.getPubKeyHash());
+            Log.d(TAG, "Private key is: " + privateKey); // 52 chars: cNKyvSXaiJYzHbNLnJJw7kd8XDvWTyuWJ3dXF2jacGMczKGaCmVL
+            Log.d(TAG, "Public key is: " + publicKey); // d220dcca07230dac35dfa9ea4f3683e407e0b004
+            return currentReceiveaddress;
     }
 
+    // printing the wallet balance
     public String getBalance() {
         return myWallet.getBalance().toFriendlyString();
     }
 
-//    public void privateKey(){
-//        String dumpPrivKey = "";
-//        ECKey key;
-//        if (args[0].length() == 51 || args[0].length() == 52) {
-//            // dumped private key parses and generates private keys in the form used by the Bitcoin "dumpprivkey" command.
-//            // toBase58() Returns the base58-encoded textual form, including version and checksum bytes.
-//            DumpedPrivateKey dumpedPrivateKey = DumpedPrivateKey.fromBase58(networkParams, args[0]);
-//            key = dumpedPrivateKey.getKey();
-//        } else {
-//            BigInteger privKey = Base58.decodeToBigInteger(args[0]);
-//            key = ECKey.fromPrivate(privKey);
-//        }
-//        System.out.println("Address from private key is: " + LegacyAddress.fromKey(networkParams, key).toString());
-//        // And the address ...
-//        Address destination = LegacyAddress.fromBase58(networkParams, args[1]);
-//    }
+
 }
 
 

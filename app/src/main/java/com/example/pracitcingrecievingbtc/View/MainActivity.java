@@ -7,11 +7,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import androidx.fragment.app.Fragment;
 import com.example.pracitcingrecievingbtc.Presenter.BitcoinWalletPresenter;
 import com.example.pracitcingrecievingbtc.R;
 
@@ -74,7 +77,7 @@ public class MainActivity extends Activity {
 
     }
 
-    public void registeringUIComponents(){
+    public void registeringUIComponents() {
         tvMyAddress = findViewById(R.id.tvMyAddress);
         btnViewAddress = findViewById(R.id.btnViewAddress);
         btnSendBitcoin = findViewById(R.id.btnSendBitcoin);
@@ -83,4 +86,16 @@ public class MainActivity extends Activity {
         //  ivCopy = findViewById(R.id.ivCopy);
     }
 
+
+    // static fragment as a placeholder on the main UI
+    public static class PlaceholderFragment extends Fragment {
+
+        public PlaceholderFragment(){
+        }
+
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+            return inflater.inflate(R.layout.fragment_main_activity, container, false);
+        }
+    }
 }
