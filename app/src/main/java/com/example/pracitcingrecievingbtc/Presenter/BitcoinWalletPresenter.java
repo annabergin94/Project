@@ -22,6 +22,7 @@ import org.bitcoinj.utils.BriefLogFormatter;
 import org.bitcoinj.wallet.DeterministicSeed;
 import org.bitcoinj.wallet.UnreadableWalletException;
 import org.bitcoinj.wallet.Wallet;
+import org.bitcoinj.wallet.WalletTransaction;
 import org.bitcoinj.wallet.listeners.WalletCoinsReceivedEventListener;
 
 import javax.annotation.Nullable;
@@ -29,7 +30,8 @@ import java.io.File;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.util.Set;
+import java.text.SimpleDateFormat;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 public class BitcoinWalletPresenter implements Contract.Presenter {
@@ -46,7 +48,8 @@ public class BitcoinWalletPresenter implements Contract.Presenter {
     private Contract.View view;
     private ECKey key;
 
-    // passing the connection between the project and android app
+
+
     public BitcoinWalletPresenter(Context context) {
 
         BriefLogFormatter.init(); // Activating BitcoinJ's logging using a Java logging formatter that writes more compact output than default
@@ -86,7 +89,7 @@ public class BitcoinWalletPresenter implements Contract.Presenter {
             Log.d(TAG, "the current wallet file: " + walletFile.getName() + " has a size " + walletFile.length() + " bytes");
             loadedWallet = Wallet.loadFromFile(walletFile);
             Log.d(TAG, "Loaded wallet file from disk");
-   //         System.out.println(loadedWallet.getIssuedReceiveAddresses()); // printed wallet address
+            //         System.out.println(loadedWallet.getIssuedReceiveAddresses()); // printed wallet address
             // wallet address is the hashed version of the public key, like an e-mail which is used to receive funds
             System.out.println("Current wallet address is: " + loadedWallet.currentReceiveAddress());
             System.out.println("Current wallet balance is: " + loadedWallet.getBalance());
@@ -143,37 +146,19 @@ public class BitcoinWalletPresenter implements Contract.Presenter {
         // This is probably the constructor you want to use.
         // https://bitcoinj.org/javadoc/0.14/org/bitcoinj/core/PeerGroup.html#PeerGroup-org.bitcoinj.core.Context-org.bitcoinj.core.AbstractBlockChain-"
         peerGroup = new PeerGroup(networkParams, chain);
-
         // registering a listener that is invoked when blocks are downloaded
-        peerGroup.addBlocksDownloadedEventListener(new BlocksDownloadedEventListener() {
-            @Override
-            public void onBlocksDownloaded(Peer peer, Block block, @Nullable FilteredBlock filteredBlock, int blocksLeft) {
-                Log.d(TAG, "Peer address from block is " + peer.getAddress());
-            }
-        });
-
-        // listening to events of peers being discovered
-        peerGroup.addDiscoveredEventListener(new PeerDiscoveredEventListener() {
-            @Override
-            // peers are nodes on the network
-            public void onPeersDiscovered(Set<PeerAddress> peerAddresses) {
-                Log.d(TAG, "There are currently " + peerCount + " peers. The new peer is " + peerAddresses);
-            }
-        });
-
+        peerGroup.addBlocksDownloadedEventListener((peer, block, filteredBlock, blocksLeft) ->
+                Log.d(TAG, "Peer address from block is " + peer.getAddress()));
+        // listening to events of peers being discovered peers are nodes on the network
+        peerGroup.addDiscoveredEventListener(peerAddresses ->
+                Log.d(TAG, "There are currently " + peerCount + " peers. The new peer is " + peerAddresses));
         // listening to events and indicating when a peer disconnects
-        peerGroup.addDisconnectedEventListener(new PeerDisconnectedEventListener() {
-            @Override
-            public void onPeerDisconnected(Peer peer, int peerCount) {
-                Log.d(TAG, "There are currently " + peerCount + " peers connected. The peer lost is " + peer.getAddress());
-            }
-        });
-
+        peerGroup.addDisconnectedEventListener((peer, peerCount) ->
+                Log.d(TAG, "There are currently " + peerCount + " peers connected. The peer lost is " + peer.getAddress()));
         // "A PeerAddress holds an IP address and port number representing the network location
         // of a peer in the Bitcoin P2P network. It exists primarily for serialization purposes.
         //Instances of this class are not safe for use by multiple threads."
         // https://bitcoinj.org/javadoc/0.15/org/bitcoinj/core/PeerAddress.html
-
         // IP address
         InetAddress localPeer = null;
         try {
@@ -183,32 +168,23 @@ public class BitcoinWalletPresenter implements Contract.Presenter {
         }
         peerGroup.addAddress(localPeer);
         peerGroup.addPeerDiscovery(new DnsDiscovery(networkParams));
-        peerGroup.addWallet(myWallet);
+        peerGroup.setMaxConnections(10); // setting max num of peers to connect too
+        peerGroup.addWallet(myWallet); // adding wallet with keys before downloading the blockchain to make sure relevant parts are downloaded (if add wallet keys earlier than the current chain head, the relevant parts of the chain won't be downloaded
         peerGroup.startAsync();
         peerGroup.downloadBlockChain();
-
-        this.myWallet.addCoinsReceivedEventListener(new WalletCoinsReceivedEventListener() {
-            @Override
-            public void onCoinsReceived(Wallet wallet, Transaction tx, Coin prevBalance, Coin newBalance) {
-                Log.d(TAG, "Wallet Event: onCoinsReceived");
-                Log.d(TAG, "Wallet received tx " + tx.getTxId());
-                Log.d(TAG, "Wallet previous balance " + prevBalance);
-                Log.d(TAG, "Wallet new balance " + newBalance);
-                Log.d(TAG, tx.toString());
-            }
-        });
+        peerGroup.stopAsync();
     }
 
     // printing the wallet addresses
     public String printWalletAddress(){
-            String currentReceiveaddress =  myWallet.currentReceiveAddress().toString();
-            Log.d(TAG, "Key address on the TestNet blockchain is " + currentReceiveaddress); // 32 chars: mzg1ZfMDiaSFPLME11mGCCM6h7ivoJXPHA
-            ECKey currentReceiveKey = myWallet.currentReceiveKey();
-            String privateKey = currentReceiveKey.getPrivateKeyEncoded(networkParams).toBase58();
-            String publicKey = Utils.HEX.encode(currentReceiveKey.getPubKeyHash());
-            Log.d(TAG, "Private key is: " + privateKey); // 52 chars: cNKyvSXaiJYzHbNLnJJw7kd8XDvWTyuWJ3dXF2jacGMczKGaCmVL
-            Log.d(TAG, "Public key is: " + publicKey); // d220dcca07230dac35dfa9ea4f3683e407e0b004
-            return currentReceiveaddress;
+        String currentReceiveaddress =  myWallet.currentReceiveAddress().toString();
+        Log.d(TAG, "Key address on the TestNet blockchain is " + currentReceiveaddress); // 32 chars: mzg1ZfMDiaSFPLME11mGCCM6h7ivoJXPHA
+        ECKey currentReceiveKey = myWallet.currentReceiveKey();
+        String privateKey = currentReceiveKey.getPrivateKeyEncoded(networkParams).toBase58();
+        String publicKey = Utils.HEX.encode(currentReceiveKey.getPubKeyHash());
+        Log.d(TAG, "Private key is: " + privateKey); // 52 chars: cNKyvSXaiJYzHbNLnJJw7kd8XDvWTyuWJ3dXF2jacGMczKGaCmVL
+        Log.d(TAG, "Public key is: " + publicKey); // d220dcca07230dac35dfa9ea4f3683e407e0b004
+        return currentReceiveaddress;
     }
 
     // printing the wallet balance
@@ -216,7 +192,39 @@ public class BitcoinWalletPresenter implements Contract.Presenter {
         return myWallet.getBalance().toFriendlyString();
     }
 
+    // recommend disclosing these to user
+    public String getMnemonic() {
+        DeterministicSeed seed = myWallet.getKeyChainSeed();
+        String recoverySeedWords = Joiner.on(" ").join(seed.getMnemonicCode());
+        Log.d(TAG, "Recovery Seed words are: " + recoverySeedWords);
+        return recoverySeedWords;
+    }
 
+//    // code from git
+//    public void monitor() {
+//        SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd HH:mm z");
+//
+//        while (true) {
+//            Log.d(TAG, "Printing all transactions on network that are associated with keys in your wallet: " + f.format(new Date()));
+//            List<WalletTransaction> txs = new ArrayList();
+//            for (WalletTransaction t : myWallet.getWalletTransactions()) {
+//                txs.add(t);
+//            }
+//            Collections.sort(txs, (o1, o2) ->o1.getTransaction().getUpdateTime().compareTo(o2.getTransaction().getUpdateTime()));
+//            int i = 1;
+//            for (WalletTransaction t : txs) {
+//                Log.d(TAG, "TxHash=" + t.getTransaction().getTxId() + " LastUpdated=[" + f.format(t.getTransaction().getUpdateTime()) + "] Confidence: \"" + t.getTransaction().getConfidence() + "\"");
+//                i++;
+//            }
+//            try {
+//                Thread.sleep(20000);
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//    }
 }
+
+
 
 

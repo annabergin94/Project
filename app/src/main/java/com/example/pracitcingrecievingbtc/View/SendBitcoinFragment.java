@@ -27,13 +27,13 @@ public class SendBitcoinFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View v = inflater.inflate(R.layout.activity_view_wallet_address, container, false);
+        View v = inflater.inflate(R.layout.fragement_send_bitcoin, container, false);
         init(v);
         return v;
     }
 
     private void init(View view) {
-        ivCopy = view.findViewById(R.id.ivCopy);
+        ivCopy = view.findViewById(R.id.copy);
     }
 
     private void copyWalletAddress() {
