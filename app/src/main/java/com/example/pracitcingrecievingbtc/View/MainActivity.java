@@ -7,6 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import com.example.pracitcingrecievingbtc.Presenter.BitcoinWalletPresenter;
@@ -20,6 +22,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ViewAddressFragment viewAddressFrag;
 
     Button btnCallingViewAddressFrag;
+    EditText etMyAddress;
 
     // called when the activity is first created
     // where you should do all of the normal static set up
@@ -57,17 +60,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Log.d(TAG, "completed updating wallet from blockchain");
         }
     }
-    public BitcoinWalletPresenter getBtcService () {
-            return btcService;
-    }
 
+    public BitcoinWalletPresenter getBtcService() {
+        return btcService;
+    }
 
 
     public void onClick(View view) {
-        if(view.getId()==R.id.btnCallingViewAddressFrag){
+        if (view.getId() == R.id.btnCallingViewAddressFrag) {
             viewAddress(view);
+            etMyAddress = findViewById(R.id.etMyAddress);
+        }
+        if(view.getId()==R.id.backToMainMenu){
+            backToMainMenu(view);
         }
     }
+
 
 //
 //        tvWalletBalance.setOnClickListener(v -> {
@@ -92,7 +100,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //            clipboardManager.setPrimaryClip(clip);
 //            Toast.makeText(MainActivity.this, "Copied", Toast.LENGTH_SHORT).show();
 //        });
-
 
 
     //   https://coderanch.com/t/632507/Error-fix-static-reference-static
@@ -121,8 +128,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .replace(R.id.container, viewAddressFrag)
                 .commit(); // perform the transaction as soon as its available on the UI thread
     }
-}
 
+    // back to main menu from all UIs
+    @Override
+    public void onBackPressed() {
+        if (getSupportFragmentManager().getBackStackEntryCount() > 0 ){
+            getSupportFragmentManager().popBackStack();
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    // called when a user presses back to main menu on any UI
+    public void backToMainMenu(View view) {
+        getSupportFragmentManager().beginTransaction() // display fragment on main
+                .setReorderingAllowed(true)
+                .replace(R.id.container, new PlaceholderFragment())
+                .commit();
+    }
+}
 
 
 
@@ -148,26 +172,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //    Button ivCopy; // xml from sample
 //
 //
-//    @Override
-//    protected void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        context = getApplicationContext();
-//        Log.d(TAG, "creating btcService...");
-//        btcService = new BitcoinWalletPresenter(context);
-//        Log.d(TAG, "completed creating btcService");
-//        setContentView(R.layout.activity_main);
-//        registeringUIComponents(); // registering UI components
-//
-//        String fragmentName = getIntent().getStringExtra("fragmentName");
-//        Log.d(TAG, "specified fragment name is: " + fragmentName);
-//
-////        btnViewAddress.setOnClickListener(v -> {
-////            String address = btcService.printWalletAddress();
-////            // use intent to open a new activity and convey the message to the system to start a new activity
-////            Intent intent = new Intent(MainActivity.this, ViewWalletAddress.class);
-////            intent.putExtra("walletAddress", address); // key value pair
-////            startActivity(intent);
-////        });
 ////
 ////        tvWalletBalance.setOnClickListener(v -> {
 ////            String balance = btcService.getBalance();
@@ -196,7 +200,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //
 //    public void registeringUIComponents() {
 //        tvMyAddress = findViewById(R.id.tvMyAddress);
-//        btnViewAddress = findViewById(R.id.btnViewAddress);
+//
 //        btnSendBitcoin = findViewById(R.id.btnSendBitcoin);
 //        btnReceiveBitcoin = findViewById(R.id.btnReceiveBitcoin);
 //        tvWalletBalance = findViewById(R.id.tvWalletBalance);
@@ -204,15 +208,4 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //    }
 //
 //
-//    // static fragment as a placeholder on the main UI
-//    public static class PlaceholderFragment extends Fragment {
-//
-//        public PlaceholderFragment(){
-//        }
-//
-//        @Override
-//        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-//            return inflater.inflate(R.layout.fragment_main_activity, container, false);
-//        }
-//    }
-//}
+

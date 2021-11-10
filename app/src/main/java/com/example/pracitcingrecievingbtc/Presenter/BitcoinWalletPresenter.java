@@ -62,7 +62,7 @@ public class BitcoinWalletPresenter implements Contract.Presenter {
         myWallet = initialisingWallet(); // create or load wallet
         System.out.println("Now we are going to create or load a wallet");
         initWalletFromNetwork(); // syncing the blockchain
-        printWalletAddress();
+        //printWalletAddress();
     }
 
     public Wallet initialisingWallet() {
@@ -175,17 +175,26 @@ public class BitcoinWalletPresenter implements Contract.Presenter {
         peerGroup.stopAsync();
     }
 
-    // printing the wallet addresses
-    public String printWalletAddress(){
+//    // printing the wallet addresses
+//    public String printWalletAddress(){
+//        String currentReceiveaddress =  myWallet.currentReceiveAddress().toString();
+//        Log.d(TAG, "Key address on the TestNet blockchain is " + currentReceiveaddress); // 32 chars: mzg1ZfMDiaSFPLME11mGCCM6h7ivoJXPHA
+//        ECKey currentReceiveKey = myWallet.currentReceiveKey();
+//        String privateKey = currentReceiveKey.getPrivateKeyEncoded(networkParams).toBase58();
+//        String publicKey = Utils.HEX.encode(currentReceiveKey.getPubKeyHash());
+//        Log.d(TAG, "Private key is: " + privateKey); // 52 chars: cNKyvSXaiJYzHbNLnJJw7kd8XDvWTyuWJ3dXF2jacGMczKGaCmVL
+//        Log.d(TAG, "Public key is: " + publicKey); // d220dcca07230dac35dfa9ea4f3683e407e0b004
+//        return currentReceiveaddress;
+//    }
+
+    public String printMyWalletAddress(){
         String currentReceiveaddress =  myWallet.currentReceiveAddress().toString();
-        Log.d(TAG, "Key address on the TestNet blockchain is " + currentReceiveaddress); // 32 chars: mzg1ZfMDiaSFPLME11mGCCM6h7ivoJXPHA
-        ECKey currentReceiveKey = myWallet.currentReceiveKey();
-        String privateKey = currentReceiveKey.getPrivateKeyEncoded(networkParams).toBase58();
-        String publicKey = Utils.HEX.encode(currentReceiveKey.getPubKeyHash());
-        Log.d(TAG, "Private key is: " + privateKey); // 52 chars: cNKyvSXaiJYzHbNLnJJw7kd8XDvWTyuWJ3dXF2jacGMczKGaCmVL
-        Log.d(TAG, "Public key is: " + publicKey); // d220dcca07230dac35dfa9ea4f3683e407e0b004
         return currentReceiveaddress;
     }
+
+
+
+
 
     // printing the wallet balance
     public String getBalance() {
