@@ -19,9 +19,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private static final String TAG = MainActivity.class.getSimpleName();
     public static Context context;
     public BitcoinWalletPresenter btcService;
-    private ViewAddressFragment viewAddressFrag;
 
-    Button btnCallingViewAddressFrag;
+    private ViewAddressFragment viewAddressFrag;
+    private SendBitcoinFragment sendBitcoinFrag;
+
     EditText etMyAddress;
 
     // called when the activity is first created
@@ -74,6 +75,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if(view.getId()==R.id.backToMainMenu){
             backToMainMenu(view);
         }
+        if(view.getId()==R.id.btnCallingSendBitcoinFrag){
+            sendBitcoin(view);
+        }
     }
 
 
@@ -87,18 +91,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //        });
 //
 //
-//        btnSendBitcoin.setOnClickListener(v -> {
-//        });
 //
 //        btnReceiveBitcoin.setOnClickListener(v -> {
 //
-//        });
-
-//        // listener to copy the wallet address
-//        ivCopy.setOnClickListener(v -> {
-//            ClipData clip = ClipData.newPlainText("My wallet address", tvMyAddress.getText().toString());
-//            clipboardManager.setPrimaryClip(clip);
-//            Toast.makeText(MainActivity.this, "Copied", Toast.LENGTH_SHORT).show();
 //        });
 
 
@@ -127,6 +122,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .setReorderingAllowed(true)
                 .replace(R.id.container, viewAddressFrag)
                 .commit(); // perform the transaction as soon as its available on the UI thread
+    }
+
+    public void sendBitcoin(View view) {
+        sendBitcoinFrag = new SendBitcoinFragment();
+        getSupportFragmentManager().beginTransaction()
+                .setReorderingAllowed(true)
+                .replace(R.id.container, sendBitcoinFrag)
+                .commit();
     }
 
     // back to main menu from all UIs

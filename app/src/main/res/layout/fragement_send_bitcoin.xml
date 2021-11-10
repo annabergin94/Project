@@ -64,21 +64,22 @@
             android:id="@+id/imageView"
             android:layout_marginTop="300dp"
             android:layout_marginLeft="100dp"/>
+
     <TextView android:layout_height="wrap_content"
               android:layout_width="wrap_content"
               android:layout_centerHorizontal="true"
               android:id="@+id/textViewBalance"
               android:textAppearance="?android:attr/textAppearanceMedium"
               android:layout_marginBottom="20dp"
-              android:layout_above="@+id/button7"/>
+              android:layout_above="@+id/backToMainMenu"/>
 
     <Button android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:layout_centerHorizontal="true"
-            android:id="@+id/button7"
+            android:id="@+id/backToMainMenu"
             android:text="return to main menu"
             android:layout_marginBottom="18dp"
-            android:onClick="mainMenu"
+            android:onClick="backToMainMenu"
             android:layout_alignParentBottom="true"/>
 
 </RelativeLayout>
