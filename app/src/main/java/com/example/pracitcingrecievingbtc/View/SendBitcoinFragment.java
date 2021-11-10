@@ -43,7 +43,6 @@ public class SendBitcoinFragment extends Fragment {
 
     @Override
     public void onPause() {
-
         super.onPause();
     }
 

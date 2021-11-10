@@ -22,6 +22,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private ViewAddressFragment viewAddressFrag;
     private SendBitcoinFragment sendBitcoinFrag;
+    private ReceiveBitcoinFragment receiveBitcoinFrag;
 
     EditText etMyAddress;
 
@@ -78,6 +79,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if(view.getId()==R.id.btnCallingSendBitcoinFrag){
             sendBitcoin(view);
         }
+        if(view.getId()==R.id.btnCallingReceiveBitcoinFrag){
+            sendBitcoin(view);
+        }
     }
 
 
@@ -129,6 +133,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         getSupportFragmentManager().beginTransaction()
                 .setReorderingAllowed(true)
                 .replace(R.id.container, sendBitcoinFrag)
+                .commit();
+    }
+
+    public void receiveBitcoin(View view) {
+        receiveBitcoinFrag = new ReceiveBitcoinFragment();
+        getSupportFragmentManager().beginTransaction()
+                .setReorderingAllowed(true)
+                .replace(R.id.container, receiveBitcoinFrag)
                 .commit();
     }
 

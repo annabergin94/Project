@@ -20,6 +20,7 @@
             app:layout_constraintBottom_toTopOf="parent"/>
     <TextView
             android:text="Address"
+            android:textAllCaps="false"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/addressHeader"
@@ -49,7 +50,8 @@
              android:layout_width="wrap_content"
              android:layout_marginBottom="18dp"
              android:layout_centerHorizontal="true"
-             android:text="copy"
+             android:text="Copy address"
+             android:textAllCaps="false"
              android:textColor="@color/white"
              android:padding="10dp"
              android:layout_marginTop="100dp"
@@ -62,6 +64,7 @@
             android:layout_marginBottom="18dp"
             android:layout_centerHorizontal="true"
             android:layout_alignParentBottom="true"
+            android:textAllCaps="false"
             android:text="Back to main menu"/>
 
 </RelativeLayout>

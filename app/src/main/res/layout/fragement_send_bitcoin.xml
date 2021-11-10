@@ -55,6 +55,7 @@
             android:layout_marginStart="20dp"
             android:id="@+id/buttonScanQR"
             android:text="Scan QR"
+            android:textAllCaps="false"
             android:layout_below="@+id/buttonSendTransaction"/>
 
     <ImageView
@@ -77,9 +78,10 @@
             android:layout_width="wrap_content"
             android:layout_centerHorizontal="true"
             android:id="@+id/backToMainMenu"
-            android:text="return to main menu"
+            android:text="Main menu"
             android:layout_marginBottom="18dp"
             android:onClick="backToMainMenu"
+            android:textAllCaps="false"
             android:layout_alignParentBottom="true"/>
 
 </RelativeLayout>
