@@ -11,20 +11,20 @@
               android:paddingRight="10dp"
               android:paddingTop="10dp" >
 
-    <Button
-            android:id="@+id/btnCallHistoricalPriceFrag"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:onClick="viewPrices"
-            tools:onClick="ignore"
-            android:background="@android:color/holo_orange_dark"
-            android:textAllCaps="false"
-            android:text="View Price History" />
-
     <com.jjoe64.graphview.GraphView
             android:id="@+id/graph"
             android:layout_width="match_parent"
-            android:layout_height="465dp"
+            android:layout_height="550dp"
             android:layout_marginTop="24dp" />
+
+    <Button android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/backToMainMenu"
+            android:text="Main menu"
+            android:layout_marginBottom="18dp"
+            android:onClick="backToMainMenu"
+            android:textAllCaps="false"
+            android:layout_alignParentBottom="true"/>
 
 </LinearLayout>

@@ -110,13 +110,12 @@
             app:layout_constraintEnd_toEndOf="parent"
             android:textStyle="bold"/>
 
-    <Button android:layout_height="wrap_content"
-            android:layout_width="0dp"
-            android:id="@+id/btnCallingPricesFrag"
+    <Button
+            android:id="@+id/btnCallHistoricalPriceFrag"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:onClick="viewPrices"
-            tools:ignore="onClick"
-            android:text="View Price History"
-            android:textAllCaps="false"
+            tools:onClick="ignore"
             android:layout_marginTop="10dp"
             android:layout_marginStart="20dp"
             android:textColor="@color/white"
@@ -125,10 +124,13 @@
             android:layout_marginEnd="20dp"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintVertical_bias="0.6"
+            android:background="@android:color/holo_orange_dark"
             app:layout_constraintTop_toBottomOf="@+id/flFragment"
             app:layout_constraintBottom_toTopOf="@+id/btnCallingReceiveBitcoinFrag"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:textStyle="bold"/>
+            android:textAllCaps="false"
+            android:text="View Price History" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

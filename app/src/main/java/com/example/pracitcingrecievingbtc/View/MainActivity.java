@@ -82,7 +82,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if(view.getId()==R.id.btnCallingReceiveBitcoinFrag){
             sendBitcoin(view);
         }
-        if (view.getId() == R.id.btnCallingPricesFrag) {
+        if (view.getId() == R.id.btnCallHistoricalPriceFrag) {
             viewPrices(view);
         }
     }
