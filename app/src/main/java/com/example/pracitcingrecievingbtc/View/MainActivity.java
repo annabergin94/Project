@@ -82,6 +82,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if(view.getId()==R.id.btnCallingReceiveBitcoinFrag){
             sendBitcoin(view);
         }
+        if (view.getId() == R.id.btnCallingPricesFrag) {
+            viewPrices(view);
+        }
     }
 
 
@@ -142,6 +145,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .setReorderingAllowed(true)
                 .replace(R.id.container, receiveBitcoinFrag)
                 .commit();
+    }
+
+        public void viewPrices(View view){
+       getSupportFragmentManager().beginTransaction() // display fragment on main
+                .setReorderingAllowed(true)
+                .replace(R.id.container, new HistoryOfPricesFragment())
+               .commit();
     }
 
     // back to main menu from all UIs

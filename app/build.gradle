@@ -90,4 +90,8 @@ dependencies{
     implementation 'androidx.fragment:fragment:1.4.0-rc01'
     implementation 'androidx.activity:activity:1.4.0'
 
+    // graphs
+    implementation 'com.jjoe64:graphview:4.2.1'
+    implementation 'com.opencsv:opencsv:3.9'
+
 }
