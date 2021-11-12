@@ -208,6 +208,8 @@ public class BitcoinWalletPresenter implements Contract.Presenter {
         Log.d(TAG, "Recovery Seed words are: " + recoverySeedWords);
         return recoverySeedWords;
     }
+
+
 }
 
 

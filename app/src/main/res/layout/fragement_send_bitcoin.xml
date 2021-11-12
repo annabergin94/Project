@@ -66,7 +66,7 @@
             android:layout_marginTop="-99dp"
             android:layout_marginEnd="20dp"
             android:layout_marginStart="20dp"
-            android:id="@+id/buttonScanQR"
+            android:id="@+id/btnScanQR"
             android:text="QR"
             android:textAllCaps="false"
             app:layout_constraintBottom_toTopOf="@+id/tvRecipientAddress"
@@ -80,11 +80,12 @@
             android:layout_marginTop="58dp"
             android:layout_marginEnd="20dp"
             android:layout_marginStart="20dp"
-            android:id="@+id/buttonSendTransaction"
+            android:id="@+id/btnSendBitcoin"
             app:layout_constraintBottom_toTopOf="@+id/etRecipientAddress"
-            android:text="Send Bitcoin"
+            android:text="Send"
             android:textAllCaps="false"
             android:layout_below="@+id/tvRecipientAddress"/>
+
     <Button android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:layout_centerHorizontal="true"
