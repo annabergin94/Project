@@ -10,25 +10,9 @@
     <TextView android:layout_height="wrap_content"
               android:layout_width="wrap_content"
               android:layout_centerHorizontal="true"
-              android:id="@+id/textViewAddress"
-              android:textColor="@color/white"
-              android:textAppearance="?android:attr/textAppearanceMedium"/>
-
-    <TextView android:layout_height="wrap_content"
-              android:layout_width="wrap_content"
-              android:layout_centerHorizontal="true"
               android:layout_marginTop="20dp"
-              android:id="@+id/textViewAmount"
+              android:id="@+id/tvEnterAmount"
               android:text="Enter amount"
-              android:textColor="@color/white"
-              android:textAppearance="?android:attr/textAppearanceMedium"/>
-
-    <TextView android:layout_height="wrap_content"
-              android:layout_width="wrap_content"
-              android:layout_centerHorizontal="true"
-              android:layout_alignParentTop="true"
-              android:layout_marginTop="10dp"
-              android:id="@+id/tvAvailableBalance"
               android:textColor="@color/white"
               android:textAppearance="?android:attr/textAppearanceMedium"/>
 
@@ -36,12 +20,23 @@
               android:layout_width="347dp"
               android:layout_centerHorizontal="true"
               android:layout_marginTop="10dp"
-              android:id="@+id/editTextAmount"
-              android:layout_below="@+id/textViewAmount"
+              android:id="@+id/etAmountToSend"
+              android:layout_below="@+id/tvEnterAmount"
               android:ems="10"
               android:inputType="number"
+              app:layout_constraintBottom_toTopOf="@+id/tvEnterAmount"
               android:hint="Enter amount of BTC"
               android:textColorHint="@color/white"/>
+
+    <TextView android:layout_height="wrap_content"
+              android:layout_width="wrap_content"
+              android:layout_alignParentTop="true"
+              android:id="@+id/tvAvailableBalance"
+              app:layout_constraintBottom_toTopOf="@+id/etAmountToSend"
+              android:textColor="@color/white"
+              android:text="0.005 BTC available"
+              android:layout_marginTop="115dp"
+              android:layout_centerHorizontal="true"/>
 
     <TextView android:layout_height="wrap_content"
               android:layout_width="wrap_content"
@@ -50,16 +45,15 @@
               android:id="@+id/tvRecipientAddress"
               android:layout_centerHorizontal="true"
               android:text="Enter recipient address"
-              app:layout_constraintBottom_toTopOf="@+id/editTextAmount"
+              app:layout_constraintBottom_toTopOf="@+id/tvAvailableBalance"
               android:textColor="@color/white"
               android:textAppearance="?android:attr/textAppearanceMedium"
               android:layout_marginLeft="30dp"/>
 
     <EditText android:layout_height="wrap_content"
               android:layout_width="347dp"
-              android:layout_marginTop="155dp"
+              android:layout_marginTop="200dp"
               android:id="@+id/etRecipientAddress"
-              android:layout_below="@+id/textViewAmount"
               app:layout_constraintBottom_toTopOf="@+id/tvRecipientAddress"
               android:ems="10"
               android:inputType="number"
@@ -69,35 +63,28 @@
 
     <Button android:layout_height="44dp"
             android:layout_width="61dp"
-            android:layout_marginTop="-119dp"
+            android:layout_marginTop="-99dp"
             android:layout_marginEnd="20dp"
             android:layout_marginStart="20dp"
             android:id="@+id/buttonScanQR"
             android:text="QR"
             android:textAllCaps="false"
-            android:layout_below="@+id/buttonSendTransaction"
             app:layout_constraintBottom_toTopOf="@+id/tvRecipientAddress"
-            android:layout_marginLeft="320dp"/>
+            android:layout_marginLeft="320dp"
+            android:layout_alignParentBottom="false"
+            android:layout_centerHorizontal="false"/>
 
     <Button android:layout_height="wrap_content"
             android:layout_width="match_parent"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="170dp"
+            android:layout_marginTop="58dp"
             android:layout_marginEnd="20dp"
             android:layout_marginStart="20dp"
             android:id="@+id/buttonSendTransaction"
+            app:layout_constraintBottom_toTopOf="@+id/etRecipientAddress"
             android:text="Send Bitcoin"
             android:textAllCaps="false"
-            android:layout_below="@+id/editTextAmount"/>
-
-    <TextView android:layout_height="wrap_content"
-              android:layout_width="wrap_content"
-              android:layout_centerHorizontal="true"
-              android:id="@+id/textViewBalance"
-              android:textAppearance="?android:attr/textAppearanceMedium"
-              android:layout_marginBottom="20dp"
-              android:layout_above="@+id/backToMainMenu"/>
-
+            android:layout_below="@+id/tvRecipientAddress"/>
     <Button android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:layout_centerHorizontal="true"
