@@ -207,12 +207,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 ////        });
 ////
 ////
-////        btnSendBitcoin.setOnClickListener(v -> {
-////        });
-////
-////        btnReceiveBitcoin.setOnClickListener(v -> {
-////
-////        });
 //
 ////        // listener to copy the wallet address
 ////        ivCopy.setOnClickListener(v -> {

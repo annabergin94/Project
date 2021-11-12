@@ -26,6 +26,7 @@
               android:inputType="number"
               app:layout_constraintBottom_toTopOf="@+id/tvEnterAmount"
               android:hint="Enter amount of BTC"
+              android:textColor="@color/white"
               android:textColorHint="@color/white"/>
 
     <TextView android:layout_height="wrap_content"
@@ -56,10 +57,10 @@
               android:id="@+id/etRecipientAddress"
               app:layout_constraintBottom_toTopOf="@+id/tvRecipientAddress"
               android:ems="10"
-              android:inputType="number"
               android:layout_marginLeft="30dp"
+              android:textColor="@color/white"
               android:hint="Enter recipient address"
-              android:textColorHint="@color/white"/>
+              android:textColorHint="@color/white" android:inputType="textShortMessage"/>
 
     <Button android:layout_height="44dp"
             android:layout_width="61dp"

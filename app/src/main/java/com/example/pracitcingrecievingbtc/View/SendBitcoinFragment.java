@@ -2,6 +2,7 @@ package com.example.pracitcingrecievingbtc.View;
 
 import android.content.ClipData;
 import android.content.ClipboardManager;
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
@@ -27,13 +28,13 @@ public class SendBitcoinFragment extends Fragment implements View.OnClickListene
     private ImageView ivCopy; // copy address emoji
     protected ClipboardManager clipboardManager;
 
-    TextView tvEnterAmount;
-    TextView tvAvailableBalance;
-    TextView tvRecipientAddress;
     EditText etAmountToSend; // user to enter amount to send
     EditText etRecipientAddress; // user to enter recipient address
     Button btnSendBitcoin; // send bitcoin button
     Button btnScanQR;  // scan recipients QR code
+
+    String amountBeingSent = "0.0";
+    String recipientAddress = "";
 
     NetworkParameters networkParams = TestNet3Params.get();
 
@@ -46,11 +47,11 @@ public class SendBitcoinFragment extends Fragment implements View.OnClickListene
 
         // instantiate the enter amount to send
         etAmountToSend = (EditText) view.findViewById(R.id.etAmountToSend);
-        etAmountToSend.setText("");
+        etAmountToSend.setText(amountBeingSent);
 
         // instantiate the enter recipient address
         etRecipientAddress = (EditText) view.findViewById(R.id.etRecipientAddress);
-        etRecipientAddress.setText("0.0");
+        etRecipientAddress.setText(recipientAddress);
 
         // instantiate button
         btnSendBitcoin = (Button) view.findViewById(R.id.btnSendBitcoin);
@@ -81,43 +82,49 @@ public class SendBitcoinFragment extends Fragment implements View.OnClickListene
 
     public void send() {
 
-        // recipient address
-        String address = etRecipientAddress.getText().toString();
-        Log.d(TAG, "" + address);
-
-        // hard coded
+        // hard coded address and amount
 //        LegacyAddress recipientAddress = LegacyAddress.fromBase58(networkParams, "mupBAFeT63hXfeeT4rnAUcpKHDkz1n4fdw");
 //        System.out.println("Send money to: " + recipientAddress.toString());
-
-
-        // coins to send
-
-        // user input is passed to parseCoin which makes it a readable form
-        String amount = etAmountToSend.getText().toString();
-   //     Coin coinAmount = Coin.parseCoin(amount);
-        Log.d(TAG, "" + amount);
-
-        // hard coded
 //        Coin value = Coin.parseCoin("0.09");
 //        Log.d(TAG, "sending 0.09");
 
+        Context context = ((MainActivity) this.getActivity()).getApplicationContext();
 
+        // setting address and amount to user inputs
+        String address = etRecipientAddress.getText().toString();
+        String amount = etAmountToSend.getText().toString();
 
-        // check the user enters an amount greater than 0
-        // check the user has enough coins
+        // pop up message if user doesn't enter amount or address
+        if (address.isEmpty()) { // If no input for origin then set origin to current location
+            Toast.makeText(getActivity(), "Please enter recipient address!", Toast.LENGTH_SHORT).show();
+        }
+        if (amount.isEmpty()) {
+            Toast.makeText(getActivity(), "Please enter an amount to send!", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
+        Coin coinAmount = Coin.parseCoin(amount);
+        if (coinAmount.isPositive()) {
+            Log.d(TAG, "updating amountEdit textview");
+            etAmountToSend.setText("0.0");
+            Log.d(TAG, "sending transaction start Toast to UI");
 
-        // try to send the coins
+            // check the user enters an amount greater than 0
+            // check the user has enough coins
+            // try to send the coins
+        }
     }
 
+    // switch statement to intercept clicks
     @Override
     public void onClick(View view) {
-        if (view.getId() == R.id.btnSendBitcoin) {
-           // call a send transaction method
-            Toast.makeText(getActivity(), "Bitcoin sent ", Toast.LENGTH_SHORT).show();
-        }
-        if (view.getId() == R.id.btnScanQR){
-            // call a method that will scan QR code
+        switch (view.getId()) {
+            case R.id.btnSendBitcoin:
+                send();
+                break;
+            case R.id.btnScanQR:
+             //   scanQr();
+                break;
         }
     }
 }
