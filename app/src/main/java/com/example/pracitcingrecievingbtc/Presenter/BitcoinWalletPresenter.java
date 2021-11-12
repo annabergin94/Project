@@ -208,30 +208,6 @@ public class BitcoinWalletPresenter implements Contract.Presenter {
         Log.d(TAG, "Recovery Seed words are: " + recoverySeedWords);
         return recoverySeedWords;
     }
-
-//    // code from git
-//    public void monitor() {
-//        SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd HH:mm z");
-//
-//        while (true) {
-//            Log.d(TAG, "Printing all transactions on network that are associated with keys in your wallet: " + f.format(new Date()));
-//            List<WalletTransaction> txs = new ArrayList();
-//            for (WalletTransaction t : myWallet.getWalletTransactions()) {
-//                txs.add(t);
-//            }
-//            Collections.sort(txs, (o1, o2) ->o1.getTransaction().getUpdateTime().compareTo(o2.getTransaction().getUpdateTime()));
-//            int i = 1;
-//            for (WalletTransaction t : txs) {
-//                Log.d(TAG, "TxHash=" + t.getTransaction().getTxId() + " LastUpdated=[" + f.format(t.getTransaction().getUpdateTime()) + "] Confidence: \"" + t.getTransaction().getConfidence() + "\"");
-//                i++;
-//            }
-//            try {
-//                Thread.sleep(20000);
-//            } catch (InterruptedException e) {
-//                e.printStackTrace();
-//            }
-//        }
-//    }
 }
 
 

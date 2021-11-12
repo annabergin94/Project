@@ -50,4 +50,14 @@ public class SendBitcoinFragment extends Fragment {
     public void onResume() {
         super.onResume();
     }
+
+    public void send(){
+
+        // recipient address
+        // coins to send
+        // check the user enters an amount greater than 0
+        // check the user has enough coins
+        // try to send the coins
+
+    }
 }

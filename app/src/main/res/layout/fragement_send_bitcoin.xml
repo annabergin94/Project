@@ -10,8 +10,6 @@
     <TextView android:layout_height="wrap_content"
               android:layout_width="wrap_content"
               android:layout_centerHorizontal="true"
-              android:layout_alignParentTop="true"
-              android:layout_marginTop="10dp"
               android:id="@+id/textViewAddress"
               android:textColor="@color/white"
               android:textAppearance="?android:attr/textAppearanceMedium"/>
@@ -21,7 +19,16 @@
               android:layout_centerHorizontal="true"
               android:layout_marginTop="20dp"
               android:id="@+id/textViewAmount"
-              android:text="Send Amount"
+              android:text="Enter amount"
+              android:textColor="@color/white"
+              android:textAppearance="?android:attr/textAppearanceMedium"/>
+
+    <TextView android:layout_height="wrap_content"
+              android:layout_width="wrap_content"
+              android:layout_centerHorizontal="true"
+              android:layout_alignParentTop="true"
+              android:layout_marginTop="10dp"
+              android:id="@+id/tvAvailableBalance"
               android:textColor="@color/white"
               android:textAppearance="?android:attr/textAppearanceMedium"/>
 
@@ -33,38 +40,55 @@
               android:layout_below="@+id/textViewAmount"
               android:ems="10"
               android:inputType="number"
-              android:hint="Please enter the amount you want to send"
+              android:hint="Enter amount of BTC"
               android:textColorHint="@color/white"/>
+
+    <TextView android:layout_height="wrap_content"
+              android:layout_width="wrap_content"
+              android:layout_alignParentTop="true"
+              android:layout_marginTop="164dp"
+              android:id="@+id/tvRecipientAddress"
+              android:layout_centerHorizontal="true"
+              android:text="Enter recipient address"
+              app:layout_constraintBottom_toTopOf="@+id/editTextAmount"
+              android:textColor="@color/white"
+              android:textAppearance="?android:attr/textAppearanceMedium"
+              android:layout_marginLeft="30dp"/>
+
+    <EditText android:layout_height="wrap_content"
+              android:layout_width="347dp"
+              android:layout_marginTop="155dp"
+              android:id="@+id/etRecipientAddress"
+              android:layout_below="@+id/textViewAmount"
+              app:layout_constraintBottom_toTopOf="@+id/tvRecipientAddress"
+              android:ems="10"
+              android:inputType="number"
+              android:layout_marginLeft="30dp"
+              android:hint="Enter recipient address"
+              android:textColorHint="@color/white"/>
+
+    <Button android:layout_height="44dp"
+            android:layout_width="61dp"
+            android:layout_marginTop="-119dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginStart="20dp"
+            android:id="@+id/buttonScanQR"
+            android:text="QR"
+            android:textAllCaps="false"
+            android:layout_below="@+id/buttonSendTransaction"
+            app:layout_constraintBottom_toTopOf="@+id/tvRecipientAddress"
+            android:layout_marginLeft="320dp"/>
 
     <Button android:layout_height="wrap_content"
             android:layout_width="match_parent"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="170dp"
             android:layout_marginEnd="20dp"
             android:layout_marginStart="20dp"
             android:id="@+id/buttonSendTransaction"
             android:text="Send Bitcoin"
             android:textAllCaps="false"
             android:layout_below="@+id/editTextAmount"/>
-
-    <Button android:layout_height="wrap_content"
-            android:layout_width="match_parent"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginStart="20dp"
-            android:id="@+id/buttonScanQR"
-            android:text="Scan QR"
-            android:textAllCaps="false"
-            android:layout_below="@+id/buttonSendTransaction"/>
-
-    <ImageView
-            android:src="@drawable/qrcode"
-            android:layout_width="215dp"
-            android:layout_height="203dp"
-            android:id="@+id/imageView"
-            android:layout_marginTop="300dp"
-            android:layout_marginLeft="100dp"/>
 
     <TextView android:layout_height="wrap_content"
               android:layout_width="wrap_content"
