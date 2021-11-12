@@ -19,6 +19,7 @@ import org.bitcoinj.core.Coin;
 import org.bitcoinj.core.LegacyAddress;
 import org.bitcoinj.core.NetworkParameters;
 import org.bitcoinj.params.TestNet3Params;
+import org.bitcoinj.utils.BtcFormat;
 import org.bitcoinj.wallet.SendRequest;
 
 
@@ -32,6 +33,8 @@ public class SendBitcoinFragment extends Fragment implements View.OnClickListene
     EditText etRecipientAddress; // user to enter recipient address
     Button btnSendBitcoin; // send bitcoin button
     Button btnScanQR;  // scan recipients QR code
+    TextView tvAvailableBalance;
+    BtcFormat btcFormat = BtcFormat.getInstance();
 
     String amountBeingSent = "0.0";
     String recipientAddress = "";
@@ -52,6 +55,10 @@ public class SendBitcoinFragment extends Fragment implements View.OnClickListene
         // instantiate the enter recipient address
         etRecipientAddress = (EditText) view.findViewById(R.id.etRecipientAddress);
         etRecipientAddress.setText(recipientAddress);
+
+        // wallet balance
+        tvAvailableBalance = (TextView) view.findViewById(R.id.tvAvailableBalance);
+        tvAvailableBalance.setText(((MainActivity) this.getActivity()).getBtcService().getBalance());
 
         // instantiate button
         btnSendBitcoin = (Button) view.findViewById(R.id.btnSendBitcoin);
@@ -88,7 +95,7 @@ public class SendBitcoinFragment extends Fragment implements View.OnClickListene
 //        Coin value = Coin.parseCoin("0.09");
 //        Log.d(TAG, "sending 0.09");
 
-        Context context = ((MainActivity) this.getActivity()).getApplicationContext();
+        //   Context context = ((MainActivity) this.getActivity()).getApplicationContext();
 
         // setting address and amount to user inputs
         String address = etRecipientAddress.getText().toString();
@@ -102,18 +109,37 @@ public class SendBitcoinFragment extends Fragment implements View.OnClickListene
             Toast.makeText(getActivity(), "Please enter an amount to send!", Toast.LENGTH_SHORT).show();
             return;
         }
-
-        Coin coinAmount = Coin.parseCoin(amount);
-        if (coinAmount.isPositive()) {
-            Log.d(TAG, "updating amountEdit textview");
-            etAmountToSend.setText("0.0");
-            Log.d(TAG, "sending transaction start Toast to UI");
-
-            // check the user enters an amount greater than 0
-            // check the user has enough coins
-            // try to send the coins
-        }
     }
+
+//        Coin coinAmount = Coin.parseCoin(amount);
+//        if (coinAmount.isPositive()) {
+//            Log.d(TAG, "updating amountEdit textview");
+//            etAmountToSend.setText("0.0");
+//            Log.d(TAG, "sending transaction start Toast to UI");
+//            CharSequence text = "Sending your transaction";
+//            int duration = Toast.LENGTH_LONG;
+//            Toast toast = Toast.makeText(((MainActivity) this.getActivity()).getApplicationContext(), text, duration);
+//            toast.show();
+//
+//            // performing the transaction
+//            // performing transaction
+//            Log.d(TAG, "invoking sendTransactions on btcService");
+//            String sendResult = ((MainActivity) this.getActivity()).getBtcService().sendTransaction(address, amount);
+//            // updating UI
+//            Log.d(TAG, "displaying wallet content");
+//            tvAvailableBalance = (TextView) view.findViewById(R.id.tvAvailableBalance);
+//            tvAvailableBalance.setText("Wallet Balance: " + btcFormat.format(((MainActivity) this.getActivity()).getBTCService().getBalanceEstimated()));
+//            Log.d(TAG, "sending update complete Toast to UI");
+//            text = "Sending transaction complete";
+//            toast = Toast.makeText(((MainActivity) this.getActivity()).getApplicationContext(), text, duration);
+//            toast.show();
+//            Log.d(TAG, sendResult);
+//
+//            // check the user enters an amount greater than 0
+//            // check the user has enough coins
+//            // try to send the coins
+//        }
+//    }
 
     // switch statement to intercept clicks
     @Override

@@ -30,7 +30,6 @@
             android:layout_gravity="center"
             android:layout_weight="1"
             android:textSize="17sp"
-            android:text="0.000000BTC"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintHorizontal_bias="0.0"

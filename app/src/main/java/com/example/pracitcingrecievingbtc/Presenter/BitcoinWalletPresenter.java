@@ -88,11 +88,12 @@ public class BitcoinWalletPresenter implements Contract.Presenter {
         try {
             Log.d(TAG, "the current wallet file: " + walletFile.getName() + " has a size " + walletFile.length() + " bytes");
             loadedWallet = Wallet.loadFromFile(walletFile);
+            setupWalletListeners(loadedWallet);
             Log.d(TAG, "Loaded wallet file from disk");
             //         System.out.println(loadedWallet.getIssuedReceiveAddresses()); // printed wallet address
             // wallet address is the hashed version of the public key, like an e-mail which is used to receive funds
-            System.out.println("Current wallet address is: " + loadedWallet.currentReceiveAddress());
-            System.out.println("Current wallet balance is: " + loadedWallet.getBalance());
+            Log.d(TAG, "Current wallet address is: " + loadedWallet.currentReceiveAddress());
+            Log.d(TAG, "Current wallet balance is: " + loadedWallet.getBalance());
         } catch (UnreadableWalletException e) {
             Log.e(TAG, "Could not parse existing wallet");
             e.printStackTrace();
@@ -192,13 +193,9 @@ public class BitcoinWalletPresenter implements Contract.Presenter {
         return currentReceiveaddress;
     }
 
-
-
-
-
     // printing the wallet balance
     public String getBalance() {
-        return myWallet.getBalance().toFriendlyString();
+        return myWallet.getBalance().toString();
     }
 
     // recommend disclosing these to user
@@ -209,7 +206,20 @@ public class BitcoinWalletPresenter implements Contract.Presenter {
         return recoverySeedWords;
     }
 
-
+    private void setupWalletListeners(Wallet wallet) {
+        wallet.addCoinsReceivedEventListener((wallet1, tx, prevBalance, newBalance) -> {
+            view.displayMyBalance(wallet.getBalance().toFriendlyString());
+            Log.d(TAG, "HERE");
+         //   if(tx.getPurpose() == Transaction.Purpose.UNKNOWN)
+        //        view.showToastMessage("Receive " + newBalance.minus(prevBalance).toFriendlyString());
+        });
+        wallet.addCoinsSentEventListener((wallet12, tx, prevBalance, newBalance) -> {
+        //    view.displayMyBalance(wallet.getBalance().toFriendlyString());
+        //    view.clearAmount();
+        //    view.displayRecipientAddress(null);
+        //    view.showToastMessage("Sent " + prevBalance.minus(newBalance).minus(tx.getFee()).toFriendlyString());
+        });
+    }
 }
 
 

@@ -25,6 +25,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ReceiveBitcoinFragment receiveBitcoinFrag;
 
     EditText etMyAddress;
+    TextView tvWalletBalance;
 
     // called when the activity is first created
     // where you should do all of the normal static set up
@@ -86,23 +87,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             viewPrices(view);
         }
     }
-
-
-//
-//        tvWalletBalance.setOnClickListener(v -> {
-//            String balance = btcService.getBalance();
-//            // use intent to open a new activity and convey the message to the system to start a new activity
-//            Intent intent = new Intent(MainActivity.this, ViewWalletAddress.class);
-//            intent.putExtra("walletAddress", balance); // key value pair
-//            startActivity(intent);
-//        });
-//
-//
-//
-//        btnReceiveBitcoin.setOnClickListener(v -> {
-//
-//        });
-
 
     //   https://coderanch.com/t/632507/Error-fix-static-reference-static
     //   Called in fragments to access the btcService created above. you can use
