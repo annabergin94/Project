@@ -5,7 +5,7 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:orientation="vertical"
-              android:background="@color/black_shade_1"
+              android:background="?attr/background_color"
               tools:context=".View.SendBitcoinFragment">
 
     <TextView android:layout_height="wrap_content"

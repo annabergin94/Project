@@ -8,12 +8,23 @@
         android:layout_height="match_parent"
         tools:context=".View.MainActivity">
 
-<FrameLayout tools:ignore="MergeRootFrame"
-             android:id="@+id/container"
-             tools:layout_editor_absoluteX="168dp"
-             tools:layout_editor_absoluteY="223dp"
-             android:layout_height="match_parent"
-             android:layout_width="match_parent">
+    <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/btnSwitchTheme"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:textColor="?attr/text_color"
+            android:text="Switch Theme"
+            tools:ignore="MissingConstraints"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:layout_editor_absoluteX="20dp"
+            android:layout_marginTop="5dp"/>
 
-</FrameLayout>
+    <FrameLayout tools:ignore="MergeRootFrame"
+                 android:id="@+id/container"
+                 tools:layout_editor_absoluteX="0dp"
+                 android:layout_height="match_parent"
+                 android:layout_width="match_parent" app:layout_constraintTop_toTopOf="parent"
+                 android:layout_marginTop="68dp">
+
+    </FrameLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -88,6 +88,7 @@ public class BitcoinWalletPresenter implements Contract.Presenter {
         try {
             Log.d(TAG, "the current wallet file: " + walletFile.getName() + " has a size " + walletFile.length() + " bytes");
             loadedWallet = Wallet.loadFromFile(walletFile);
+            // add listeners to receive bitcoin and send bitcoin
             setupWalletListeners(loadedWallet);
             Log.d(TAG, "Loaded wallet file from disk");
             //         System.out.println(loadedWallet.getIssuedReceiveAddresses()); // printed wallet address
