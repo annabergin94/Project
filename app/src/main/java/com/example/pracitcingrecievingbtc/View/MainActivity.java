@@ -27,26 +27,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private SendBitcoinFragment sendBitcoinFrag;
     private ReceiveBitcoinFragment receiveBitcoinFrag;
 
-    public Button btnCallingViewAddressFrag;
-
     EditText etMyAddress;
     TextView tvWalletBalance;
     SwitchCompat btnSwitchTheme;
 
-    // called when the activity is first created
-    // where you should do all of the normal static set up
+    // called when the activity is first created to do all of the normal static setup
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-        // check condition
+        // checking if the app is in light or dark mode
         checkingDayOrNightMode();
-
         super.onCreate(savedInstanceState);
         context = getApplicationContext();
-        Log.d(TAG, "Creating BitcoinWalletPresenter");
+        Log.d(TAG, "1. Create a BitcoinWalletPresenter object that creates or loads the wallet and syncs the blockchain");
         btcService = new BitcoinWalletPresenter(context);
-        Log.d(TAG, "Now the wallet has been created/loaded and blockchain synced");
+        Log.d(TAG, "2. The wallet has been created/loaded and blockchain synced");
         setContentView(R.layout.activity_main);
+        Log.d(TAG, "3. Launch the main user interface");
 
         String fragmentName = getIntent().getStringExtra("fragmentName");
         Log.d(TAG, "specified fragment name is: " + fragmentName);
@@ -109,6 +105,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public static class PlaceholderFragment extends Fragment {
 
         SwitchCompat btnSwitchTheme;
+        TextView tvAvailableBalance;
 
         public PlaceholderFragment() {
         }
@@ -116,6 +113,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             View view = inflater.inflate(R.layout.fragment_main_activity, container, false);
+
+            // do view.find because its in a frag
+            tvAvailableBalance = (TextView) view.findViewById(R.id.tvAvailableBalance);
+            tvAvailableBalance.setText("Balance: " + ((MainActivity) this.getActivity()).getBtcService().getBalance() + " BTC");
 
             btnSwitchTheme = (SwitchCompat) view.findViewById(R.id.btnSwitchTheme);
             btnSwitchTheme.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -198,8 +199,5 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Log.d(TAG, "theme is light");
         }
     }
-
-
-
 }
 
