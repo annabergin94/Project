@@ -7,9 +7,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.appcompat.widget.SwitchCompat;
 import androidx.fragment.app.Fragment;
 import com.example.pracitcingrecievingbtc.Presenter.BitcoinWalletPresenter;
 import com.example.pracitcingrecievingbtc.R;
@@ -28,11 +31,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     EditText etMyAddress;
     TextView tvWalletBalance;
+    SwitchCompat btnSwitchTheme;
 
     // called when the activity is first created
     // where you should do all of the normal static set up
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        // check condition
+        checkingDayOrNightMode();
+
         super.onCreate(savedInstanceState);
         context = getApplicationContext();
         Log.d(TAG, "Creating BitcoinWalletPresenter");
@@ -66,6 +74,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+
     public BitcoinWalletPresenter getBtcService() {
         return btcService;
     }
@@ -91,6 +100,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+
     //   https://coderanch.com/t/632507/Error-fix-static-reference-static
     //   Called in fragments to access the btcService created above. you can use
     //   ((MainActivity)this.getActivity()).getBTCService() to access object from fragments **/
@@ -98,12 +108,30 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     // must be static to be properly recreated from instance state
     public static class PlaceholderFragment extends Fragment {
 
+        SwitchCompat btnSwitchTheme;
+
         public PlaceholderFragment() {
         }
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             View view = inflater.inflate(R.layout.fragment_main_activity, container, false);
+
+            btnSwitchTheme = (SwitchCompat) view.findViewById(R.id.btnSwitchTheme);
+            btnSwitchTheme.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    // checking conditions
+                    if (isChecked) {
+                        // when switch button is click
+                        // set night mode
+                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                    } else {
+                        // unchecked set light mode
+                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                    }
+                }
+            });
             return view;
         }
     }
@@ -159,5 +187,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .replace(R.id.container, new PlaceholderFragment())
                 .commit();
     }
+
+    public void checkingDayOrNightMode() {
+        if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) {
+            // when night mode is equal to yes set dark theme
+            setTheme(R.style.Theme_Dark); //when dark mode is enabled, we use the dark theme
+            Log.d(TAG, "theme is dark");
+        } else {
+            setTheme(R.style.Theme_Light);  //default app theme
+            Log.d(TAG, "theme is light");
+        }
+    }
+
+
+
 }
 
