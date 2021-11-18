@@ -1,30 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"   xmlns:tools="http://schemas.android.com/tools"
-
-              android:id="@+id/activity_main"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical"
-              android:gravity="center"
-              android:paddingBottom="10dp"
-              android:paddingLeft="10dp"
-              android:paddingRight="10dp"
-              android:paddingTop="10dp" >
+<androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/history_of_prices"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
     <com.jjoe64.graphview.GraphView
             android:id="@+id/graph"
             android:layout_width="match_parent"
-            android:layout_height="550dp"
-            android:layout_marginTop="24dp" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_height="400dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            app:layout_constraintBottom_toTopOf="@+id/callingPlaceholderFrag"
+            android:layout_marginBottom="52dp"
+            app:layout_constraintHorizontal_bias="0.6"/>
 
-    <Button android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:id="@+id/backToMainMenu"
-            android:text="Main menu"
-            android:layout_marginBottom="18dp"
+    <Button
+            android:text="@string/main_menu"
             android:onClick="backToMainMenu"
-            android:textAllCaps="false"
-            android:layout_alignParentBottom="true"/>
+            android:layout_height="47dp"
+            android:id="@+id/callingPlaceholderFrag"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginLeft="150dp"
+            android:layout_marginRight="150dp"
+            android:layout_width="127dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="52dp"/>
 
-</LinearLayout>
+    <TextView
+            android:text="@string/the_history_of_bitcoin_prices_2014_2021"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/graphTitle"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="32dp"
+            app:layout_constraintBottom_toTopOf="@+id/graph"
+            app:layout_constraintVertical_bias="0.125"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintHorizontal_bias="0.516"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

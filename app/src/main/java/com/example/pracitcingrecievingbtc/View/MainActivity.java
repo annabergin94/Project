@@ -1,21 +1,20 @@
 package com.example.pracitcingrecievingbtc.View;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.*;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
-import androidx.appcompat.widget.SwitchCompat;
 import androidx.fragment.app.Fragment;
 import com.example.pracitcingrecievingbtc.Presenter.BitcoinWalletPresenter;
 import com.example.pracitcingrecievingbtc.R;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener, CompoundButton.OnCheckedChangeListener{
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static final String TAG = MainActivity.class.getSimpleName();
     public static Context context;
@@ -25,18 +24,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private SendBitcoinFragment sendBitcoinFrag;
     private ReceiveBitcoinFragment receiveBitcoinFrag;
 
+    public Button btnCallingViewAddressFrag;
+
     EditText etMyAddress;
+    TextView tvWalletBalance;
+
     // called when the activity is first created
     // where you should do all of the normal static set up
-
-
-    SwitchCompat btnSwitchTheme;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-        checkingDayOrNightMode();
-
         super.onCreate(savedInstanceState);
         context = getApplicationContext();
         Log.d(TAG, "Creating BitcoinWalletPresenter");
@@ -44,32 +40,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Log.d(TAG, "Now the wallet has been created/loaded and blockchain synced");
         setContentView(R.layout.activity_main);
 
-        btnSwitchTheme = (SwitchCompat) findViewById(R.id.btnSwitchTheme);
-        btnSwitchTheme.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                // checking conditions
-                if (isChecked) {
-                    // when switch button is click
-                    // set night mode
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                } else {
-                    // unchecked set light mode
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                }
-            }
-        });
-
         String fragmentName = getIntent().getStringExtra("fragmentName");
         Log.d(TAG, "specified fragment name is: " + fragmentName);
 
-        // can't get it to print the balance for some reason but works on fragment send
-        //     String balance = btcService.getBalance();
-        TextView tvWalletBalance = (TextView) findViewById(R.id.tvAvailableBalance);
-        System.out.println(tvWalletBalance);
-
-
-        // adding a placeholder fragment to the main activity containing the buttons
+        // adding the placeholder fragment at run time
+        // check the container is available
         if ((savedInstanceState == null) && (fragmentName == null)) {
             Log.d(TAG, "Adding the placeholder fragment to main activity with buttons");
             getSupportFragmentManager().beginTransaction()
@@ -91,16 +66,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-
-    public void checkingDayOrNightMode() {
-        if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) {
-            // when night mode is equal to yes set dark theme
-            setTheme(R.style.Theme_Dark); //when dark mode is enabled, we use the dark theme
-        } else {
-            setTheme(R.style.Theme_Light);  //default app theme
-        }
-    }
-
     public BitcoinWalletPresenter getBtcService() {
         return btcService;
     }
@@ -108,36 +73,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public void onClick(View view) {
         if (view.getId() == R.id.btnCallingViewAddressFrag) {
+            Log.d(TAG, "clicks view address");
             viewAddress(view);
             etMyAddress = findViewById(R.id.etMyAddress);
         }
-        if (view.getId() == R.id.backToMainMenu) {
+        if(view.getId()==R.id.backToMainMenu){
             backToMainMenu(view);
         }
-        if (view.getId() == R.id.btnCallingSendBitcoinFrag) {
+        if(view.getId()==R.id.btnCallingSendBitcoinFrag){
             sendBitcoin(view);
         }
-        if (view.getId() == R.id.btnCallingReceiveBitcoinFrag) {
-            sendBitcoin(view);
+        if(view.getId()==R.id.btnCallingReceiveBitcoinFrag){
+            receiveBitcoin(view);
         }
         if (view.getId() == R.id.btnCallHistoricalPriceFrag) {
             viewPrices(view);
         }
     }
-
-    @Override
-    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-        // checking conditions
-        if (isChecked) {
-            // when switch button is click
-            // set night mode
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-        } else {
-            // unchecked set light mode
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-        }
-    }
-
 
     //   https://coderanch.com/t/632507/Error-fix-static-reference-static
     //   Called in fragments to access the btcService created above. you can use
@@ -146,17 +98,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     // must be static to be properly recreated from instance state
     public static class PlaceholderFragment extends Fragment {
 
-        SwitchCompat btnSwitchTheme;
-
         public PlaceholderFragment() {
         }
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-            return inflater.inflate(R.layout.fragment_main_activity, container, false);
+            View view = inflater.inflate(R.layout.fragment_main_activity, container, false);
+            return view;
         }
     }
-
 
     // called when the user clicks the Wallet Balance button
     public void viewAddress(View view) {
@@ -185,11 +135,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .commit();
     }
 
-        public void viewPrices(View view){
-       getSupportFragmentManager().beginTransaction() // display fragment on main
+    public void viewPrices(View view){
+        getSupportFragmentManager().beginTransaction() // display fragment on main
                 .setReorderingAllowed(true)
                 .replace(R.id.container, new HistoryOfPricesFragment())
-               .commit();
+                .commit();
     }
 
     // back to main menu from all UIs
@@ -210,55 +160,4 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .commit();
     }
 }
-
-
-
-
-
-
-
-
-// mon morning
-//public class MainActivity extends Activity {
-//
-//    private static final String TAG = MainActivity.class.getSimpleName();
-//    public static Context context;
-//    public BitcoinWalletPresenter btcService;
-//    protected ClipboardManager clipboardManager;
-//
-//    TextView tvMyAddress;
-//    TextView tvWalletBalance;
-//    Button btnViewAddress;
-//    Button btnSendBitcoin;
-//    Button btnReceiveBitcoin;
-//    ImageView imageQrCode;
-//    Button ivCopy; // xml from sample
-//
-//
-////
-////        tvWalletBalance.setOnClickListener(v -> {
-////
-////        });
-////
-////
-//
-////        // listener to copy the wallet address
-////        ivCopy.setOnClickListener(v -> {
-////            ClipData clip = ClipData.newPlainText("My wallet address", tvMyAddress.getText().toString());
-////            clipboardManager.setPrimaryClip(clip);
-////            Toast.makeText(MainActivity.this, "Copied", Toast.LENGTH_SHORT).show();
-////        });
-//
-//    }
-//
-//    public void registeringUIComponents() {
-//        tvMyAddress = findViewById(R.id.tvMyAddress);
-//
-//        btnSendBitcoin = findViewById(R.id.btnSendBitcoin);
-//        btnReceiveBitcoin = findViewById(R.id.btnReceiveBitcoin);
-//        tvWalletBalance = findViewById(R.id.tvWalletBalance);
-//        //  ivCopy = findViewById(R.id.ivCopy);
-//    }
-//
-//
 

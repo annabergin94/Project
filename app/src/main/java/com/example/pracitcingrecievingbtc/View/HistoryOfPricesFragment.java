@@ -85,9 +85,6 @@ public class HistoryOfPricesFragment extends Fragment {
                             }}});
 
 
-                // setting title
-                graph.setTitle("BTC/USD prices December 2020 - 2021");
-
                 // adding labels
                 graph.getGridLabelRenderer().setVerticalAxisTitle("Bitcoin prices (USD)");
                 graph.getGridLabelRenderer().setHorizontalAxisTitle("Dates");

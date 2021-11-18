@@ -36,7 +36,7 @@ public class ViewAddressFragment extends Fragment {
         // need to use view because frag
         copy = (Button) view.findViewById(R.id.copy);
         etMyAddress = (EditText) view.findViewById(R.id.etMyAddress);
-        addressHeader = (TextView) view.findViewById(R.id.addressHeader);
+        addressHeader = (TextView) view.findViewById(R.id.tvTitle);
 
         etMyAddress.setText(((MainActivity)getActivity()).getBtcService().printMyWalletAddress());
 
