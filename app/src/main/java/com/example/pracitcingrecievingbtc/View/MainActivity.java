@@ -6,8 +6,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,15 +19,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private static final String TAG = MainActivity.class.getSimpleName();
     public static Context context;
-    public BitcoinWalletPresenter btcService;
+    public BitcoinWalletPresenter bitcoinWalletPresenter;
 
     private ViewAddressFragment viewAddressFrag;
     private SendBitcoinFragment sendBitcoinFrag;
     private ReceiveBitcoinFragment receiveBitcoinFrag;
 
     EditText etMyAddress;
-    TextView tvWalletBalance;
-    SwitchCompat btnSwitchTheme;
 
     // called when the activity is first created to do all of the normal static setup
     @Override
@@ -39,46 +35,37 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         context = getApplicationContext();
         Log.d(TAG, "1. Create a BitcoinWalletPresenter object that creates or loads the wallet and syncs the blockchain");
-        btcService = new BitcoinWalletPresenter(context);
+        bitcoinWalletPresenter = new BitcoinWalletPresenter(context);
         Log.d(TAG, "2. The wallet has been created/loaded and blockchain synced");
         setContentView(R.layout.activity_main);
         Log.d(TAG, "3. Launch the main user interface");
 
-        String fragmentName = getIntent().getStringExtra("fragmentName");
-        Log.d(TAG, "specified fragment name is: " + fragmentName);
+        // return the intent that start the activity and the fragment
+        String nameOfFragment = getIntent().getStringExtra("fragmentName");
+        Log.d(TAG, "specified fragment name is: " + nameOfFragment);
 
-        // adding the placeholder fragment at run time
-        // check the container is available
-        if ((savedInstanceState == null) && (fragmentName == null)) {
-            Log.d(TAG, "Adding the placeholder fragment to main activity with buttons");
+        // adding the placeholder fragment at run time to the container, checking container available first
+        if ((savedInstanceState == null) && (nameOfFragment == null)) {
+            Log.d(TAG, "4. Adding the placeholder fragment to main activity with buttons");
             getSupportFragmentManager().beginTransaction()
                     .setReorderingAllowed(true)
-                    // add fragement to container defined in xml
                     .add(R.id.container, new PlaceholderFragment())
                     .commit();
         }
-        if (fragmentName != null) {
-            if (fragmentName.equals("WalletRecoveryFragment")) {
-                getSupportFragmentManager().beginTransaction()
-                        .setReorderingAllowed(true)
-                        .add(R.id.container, new WalletRecoveryFragment())  // add fragement to container defined in xml
-                        .commit();
-            }
-            Log.d(TAG, "starting to update wallet from blockchain...");
-            btcService.initWalletFromNetwork();
-            Log.d(TAG, "completed updating wallet from blockchain");
+            Log.d(TAG, "5. Updating the wallet from the blockchain");
+            bitcoinWalletPresenter.myWalletInitialisedFromNetwork();
+            Log.d(TAG, "6. Finished updating the wallet from the blockchain");
         }
-    }
 
 
-    public BitcoinWalletPresenter getBtcService() {
-        return btcService;
+
+    public BitcoinWalletPresenter getBitcoinWalletPresenter() {
+        return bitcoinWalletPresenter;
     }
 
 
     public void onClick(View view) {
         if (view.getId() == R.id.btnCallingViewAddressFrag) {
-            Log.d(TAG, "clicks view address");
             viewAddress(view);
             etMyAddress = findViewById(R.id.etMyAddress);
         }
@@ -96,10 +83,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-
-    //   https://coderanch.com/t/632507/Error-fix-static-reference-static
-    //   Called in fragments to access the btcService created above. you can use
-    //   ((MainActivity)this.getActivity()).getBTCService() to access object from fragments **/
     // static fragment as a placeholder on the main UI
     // must be static to be properly recreated from instance state
     public static class PlaceholderFragment extends Fragment {
@@ -114,40 +97,35 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             View view = inflater.inflate(R.layout.fragment_main_activity, container, false);
 
-            // do view.find because its in a frag
+            // view. used to call the id because we are in a fragment
             tvAvailableBalance = (TextView) view.findViewById(R.id.tvAvailableBalance);
-            tvAvailableBalance.setText("Balance: " + ((MainActivity) this.getActivity()).getBtcService().getBalance() + " BTC");
+            tvAvailableBalance.setText("Balance: " + ((MainActivity) this.getActivity()).getBitcoinWalletPresenter().getBalance() + " BTC");
 
             btnSwitchTheme = (SwitchCompat) view.findViewById(R.id.btnSwitchTheme);
-            btnSwitchTheme.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    // checking conditions
-                    if (isChecked) {
-                        // when switch button is click
-                        // set night mode
-                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                    } else {
-                        // unchecked set light mode
-                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                    }
+            btnSwitchTheme.setOnCheckedChangeListener((buttonView, isChecked) -> {
+                // checking conditions
+                if (isChecked) {
+                    // when switch button is click set night mode
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                } else {
+                    // unchecked set light mode
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
                 }
             });
             return view;
         }
     }
 
-    // called when the user clicks the Wallet Balance button
+    // replace container fragment with the view wallet address fragment
     public void viewAddress(View view) {
         viewAddressFrag = new ViewAddressFragment();
-        // display fragment as main
-        //need to do getActivity because static  https://coderanch.com/t/632507/Error-fix-static-reference-static
-        getSupportFragmentManager().beginTransaction() // display fragment on main
+        getSupportFragmentManager().beginTransaction()
                 .setReorderingAllowed(true)
                 .replace(R.id.container, viewAddressFrag)
                 .commit(); // perform the transaction as soon as its available on the UI thread
     }
 
+    // replace container fragment with the sending Bitcoin fragment
     public void sendBitcoin(View view) {
         sendBitcoinFrag = new SendBitcoinFragment();
         getSupportFragmentManager().beginTransaction()
@@ -156,6 +134,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .commit();
     }
 
+    // replace container fragment with the receiving Bitcoin fragment
     public void receiveBitcoin(View view) {
         receiveBitcoinFrag = new ReceiveBitcoinFragment();
         getSupportFragmentManager().beginTransaction()
@@ -164,14 +143,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .commit();
     }
 
+    // replace container fragment with the history of bitcoin prices fragment
     public void viewPrices(View view){
-        getSupportFragmentManager().beginTransaction() // display fragment on main
+        getSupportFragmentManager().beginTransaction()
                 .setReorderingAllowed(true)
                 .replace(R.id.container, new HistoryOfPricesFragment())
                 .commit();
     }
 
-    // back to main menu from all UIs
+    // return to main menu from any fragment
     @Override
     public void onBackPressed() {
         if (getSupportFragmentManager().getBackStackEntryCount() > 0 ){
@@ -192,10 +172,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void checkingDayOrNightMode() {
         if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) {
             // when night mode is equal to yes set dark theme
-            setTheme(R.style.Theme_Dark); //when dark mode is enabled, we use the dark theme
+            setTheme(R.style.Theme_Dark); // when dark mode is enabled, we use the dark theme
             Log.d(TAG, "theme is dark");
         } else {
-            setTheme(R.style.Theme_Light);  //default app theme
+            setTheme(R.style.Theme_Light);  // default app theme
             Log.d(TAG, "theme is light");
         }
     }

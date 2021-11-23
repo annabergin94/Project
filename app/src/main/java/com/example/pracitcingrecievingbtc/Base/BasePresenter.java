@@ -7,6 +7,6 @@ public interface BasePresenter {
     Wallet creatingWallet();
     Wallet loadingWallet();
     Wallet initialisingWallet();
-    void initWalletFromNetwork();
+    void myWalletInitialisedFromNetwork();
 
 }

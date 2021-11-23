@@ -1,11 +1,7 @@
 package com.example.pracitcingrecievingbtc.View;
 
-import android.content.ClipData;
 import android.content.ClipboardManager;
-import android.content.Context;
-import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,13 +10,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import com.example.pracitcingrecievingbtc.R;
-import org.bitcoinj.core.Address;
-import org.bitcoinj.core.Coin;
-import org.bitcoinj.core.LegacyAddress;
 import org.bitcoinj.core.NetworkParameters;
 import org.bitcoinj.params.TestNet3Params;
 import org.bitcoinj.utils.BtcFormat;
-import org.bitcoinj.wallet.SendRequest;
 
 
 public class SendBitcoinFragment extends Fragment implements View.OnClickListener {
@@ -58,7 +50,7 @@ public class SendBitcoinFragment extends Fragment implements View.OnClickListene
 
         // wallet balance
         tvAvailableBalance = (TextView) view.findViewById(R.id.tvAvailableBalance);
-        tvAvailableBalance.setText(((MainActivity) this.getActivity()).getBtcService().getBalance());
+        tvAvailableBalance.setText(((MainActivity) this.getActivity()).getBitcoinWalletPresenter().getBalance());
 
         // instantiate button
         btnSendBitcoin = (Button) view.findViewById(R.id.btnSendBitcoin);

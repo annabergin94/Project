@@ -37,10 +37,8 @@ import java.util.List;
 public class HistoryOfPricesFragment extends Fragment {
 
     private static final String TAG = "Graph";
-    private Button btnCallHistoricalPriceFrag;
     List<Double> bitcoinPrices = new ArrayList<>();
     List<String> date = new ArrayList<>();
-    //private static final String PATH_TO_CSV = "/Users/annab/OneDrive/Desktop/raw/data.csv";
     GraphView graph;
     LineGraphSeries<DataPoint> seriesPoints; // for the co-ordinates
     private List<Pair<Date, Double>> dataPoints;
@@ -52,14 +50,11 @@ public class HistoryOfPricesFragment extends Fragment {
         final View view = inflater.inflate(R.layout.fragment_historyof_prices, null, false);
 
 
-        final SimpleDateFormat sdf = new SimpleDateFormat("yy");
+        final SimpleDateFormat sdf = new SimpleDateFormat("hh:mm:ss a");
                 double x,y;
                 x = 0; // graph to start at 0
-
-
                 readCSV();
                 Log.d(TAG, "Reading the CSV file");
-
                 Log.d(TAG, "initialising the graph view and points array");
                 graph = (GraphView) view.findViewById(R.id.graph);
                 seriesPoints = new LineGraphSeries<DataPoint>();
@@ -73,21 +68,21 @@ public class HistoryOfPricesFragment extends Fragment {
                     seriesPoints.appendData(new DataPoint(x, y), true, bitcoinPrices.size());
                 }
                 graph.addSeries(seriesPoints); // adding the points to the graph
-                graph.getGridLabelRenderer().setNumHorizontalLabels(8); // for each year
-                graph.getGridLabelRenderer().setLabelFormatter(new DefaultLabelFormatter() {
-                        @Override
-                        public String formatLabel(double value, boolean isValueX) {
-                            if(isValueX) {
-                                return sdf.format(new Date((short)value));
-                            }
-                            else {
-                                return super.formatLabel(value, isValueX);
-                            }}});
+//                graph.getGridLabelRenderer().setNumHorizontalLabels(4); // for each year
+//                graph.getGridLabelRenderer().setLabelFormatter(new DefaultLabelFormatter() {
+//                        @Override
+//                        public String formatLabel(double value, boolean isValueX) {
+//                            if(isValueX) {
+//                                return sdf.format(new Date((short)value));
+//                            }
+//                            else {
+//                                return super.formatLabel(value, isValueX);
+//                            }}});
 
 
                 // adding labels
                 graph.getGridLabelRenderer().setVerticalAxisTitle("Bitcoin prices (USD)");
-                graph.getGridLabelRenderer().setHorizontalAxisTitle("Dates");
+                graph.getGridLabelRenderer().setHorizontalAxisTitle("Years 2014-2021");
 
                 // because x values are dates
                 graph.getGridLabelRenderer().setHumanRounding(false);
@@ -112,13 +107,13 @@ public class HistoryOfPricesFragment extends Fragment {
 ////                graph.getGridLabelRenderer().setNumHorizontalLabels(12);
 //
 //                Log.d(TAG, "setting scroll bar");
-//                graph.setHorizontalScrollBarEnabled(true);
+                graph.setHorizontalScrollBarEnabled(true);
 //
 //                graph.getGridLabelRenderer().setGridColor(Color.GRAY);
 
-                Log.d(TAG, "labelling xaxis");
+//                Log.d(TAG, "labelling xaxis");
 //                StaticLabelsFormatter staticLabelsFormatter = new StaticLabelsFormatter(graph);
-//                staticLabelsFormatter.setHorizontalLabels(new String[] {"   Dec","   Jan","  Feb", "  Mar","  Apr","  May","  Jun","  Jul","  Aug","  Sep","  Oct","  Nov","  Dec","    "});
+//         //       staticLabelsFormatter.setHorizontalLabels(new String[] {"2014","2015","2016", "2017","2018","2019","2020","2021"});
 //                graph.getGridLabelRenderer().setHorizontalLabelsAngle(90);
 //                graph.getGridLabelRenderer().setLabelFormatter(staticLabelsFormatter);
 
