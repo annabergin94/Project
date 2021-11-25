@@ -13,11 +13,11 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_height="400dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
             app:layout_constraintBottom_toTopOf="@+id/callingPlaceholderFrag"
             android:layout_marginBottom="52dp"
-            app:layout_constraintHorizontal_bias="0.6"/>
+            app:layout_constraintHorizontal_bias="0.9"/>
 
     <Button
             android:text="@string/main_menu"
@@ -41,6 +41,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginTop="32dp"
+            android:layout_marginBottom="32dp"
             app:layout_constraintBottom_toTopOf="@+id/graph"
             app:layout_constraintVertical_bias="0.125"
             android:textSize="20sp"

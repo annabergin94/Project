@@ -49,49 +49,28 @@ android{
 }
 
 dependencies{
-
-// already here?
+    // Android SDK
     implementation'androidx.appcompat:appcompat:1.3.1'
     implementation'com.google.android.material:material:1.4.0'
     implementation'androidx.constraintlayout:constraintlayout:2.1.1'
-    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'androidx.fragment:fragment:1.4.0-rc01'
+    implementation 'androidx.activity:activity:1.4.0'
     implementation 'androidx.navigation:navigation-fragment:2.3.5'
     implementation 'androidx.navigation:navigation-ui:2.3.5'
-
-// bitcoinj uses any version after 4
-    testImplementation'junit:junit:4.12'
+    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
+    implementation 'com.google.guava:guava:29.0-android'
+    implementation 'androidx.navigation:navigation-fragment:2.3.5'
+    implementation 'androidx.navigation:navigation-ui:2.3.5'
     androidTestImplementation'androidx.test.ext:junit:1.1.3'
     androidTestImplementation'androidx.test.espresso:espresso-core:3.4.0'
 
-    implementation'com.android.support:multidex:1.0.3'
-
-// BitcoinJ SDK
+    // BitcoinJ library
     implementation'org.bitcoinj:bitcoinj-core:0.15.10'
+    implementation 'org.slf4j:slf4j-simple:1.7.12' // Logging needed for BitcoinJ
+    testImplementation'junit:junit:4.12'  // Unit testing needed for BitcoinJ
 
-// local binary dependency https://developer.android.com/studio/build/dependencies
-    // depends on whatever is inside libs directory and of type jar
-    // implementation so har classes are not accessible in the dependent module
-    implementation fileTree(dir:'libs',include: ['*.jar'])
-
-    // to fix error Android Studio class file for com.google.common.util.concurrent.ListenableFuture not found
-    implementation 'com.google.guava:guava:29.0-android'
-
-// Runtime dependency (logging) https://mvnrepository.com/artifact/org.slf4j/slf4j-api/1.7.30
-    implementation 'org.slf4j:slf4j-simple:1.7.12'
-
-    implementation 'com.squareup:otto:1.3.6'
-
-    // QR code scanner
-    implementation 'androidmads.library.qrgenearator:QRGenearator:1.0.4'
-    implementation 'com.google.zxing:core:3.3.2'
-
-    // fragements
-    implementation 'androidx.fragment:fragment:1.4.0-rc01'
-    implementation 'androidx.activity:activity:1.4.0'
-
-    // graphs
+    // Graph View
     implementation 'com.jjoe64:graphview:4.2.1'
-    implementation 'com.opencsv:opencsv:3.9'
-
+    implementation 'com.opencsv:opencsv:3.9' // reading CSV file
 }
