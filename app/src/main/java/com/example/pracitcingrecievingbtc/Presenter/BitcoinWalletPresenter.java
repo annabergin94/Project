@@ -18,6 +18,8 @@ import org.bitcoinj.wallet.Wallet;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 public class BitcoinWalletPresenter implements Contract.Presenter {
@@ -46,6 +48,7 @@ public class BitcoinWalletPresenter implements Contract.Presenter {
         settingUpNetworkAndFiles(); // connecting to testnet, creating a local file for the wallet and blockchain
         myWallet = initialisingWallet(); // create or load wallet
         myWalletInitialisedFromNetwork(); // syncing the blockchain
+    //    myWallet.cleanup(); // removes pending transactions
     }
 
     // a helper method for connecting to the test net, creating a file for the wallet and blockchain locally
@@ -218,6 +221,15 @@ public class BitcoinWalletPresenter implements Contract.Presenter {
 
     public Coin getBalanceEstimated() {
         return myWallet.getBalance(Wallet.BalanceType.ESTIMATED);
+    }
+
+
+    public Set<Transaction> getTransactions(Boolean includeDead) {
+        return myWallet.getTransactions(includeDead);
+    }
+
+    public List<Transaction> getRecentTransactions() {
+        return myWallet.getTransactionsByTime();
     }
 }
 

@@ -1,6 +1,7 @@
 package com.example.pracitcingrecievingbtc.View;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.EditText;
 import android.widget.TextView;
 import androidx.fragment.app.Fragment;
@@ -8,11 +9,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.example.pracitcingrecievingbtc.R;
+import org.bitcoinj.core.Transaction;
+import org.bitcoinj.utils.BtcFormat;
+
+import java.util.List;
 
 public class ReceiveBitcoinFragment extends Fragment {
 
-    TextView tvAmountReceived;
-    TextView tvSenderAddress;
+    TextView tvAvailableBalance;
+    TextView tvRecentTransactions;
+    BtcFormat f = BtcFormat.getInstance(); // format balance
 
     private static final String TAG = ReceiveBitcoinFragment.class.getSimpleName();
 
@@ -20,12 +26,18 @@ public class ReceiveBitcoinFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_receive_bitcoin, container, false);
 
         // instantiate the entered amount to send
-        tvAmountReceived = view.findViewById(R.id.etAmountToSend);
-        tvAmountReceived.setText(amountBeingSent);
+        tvAvailableBalance = view.findViewById(R.id.tvAvailableBalance);
+        String out = f.format(((MainActivity)this.getActivity()).getBitcoinWalletPresenter().getBalanceEstimated());
+        tvAvailableBalance.setText(out);
 
-        // instantiate the entered recipient address
-        tvSenderAddress = view.findViewById(R.id.etRecipientAddress);
-        tvSenderAddress.setText(recipientAddress.trim());
+        List<Transaction> recentTransactions = ((MainActivity)this.getActivity()).getBitcoinWalletPresenter().getRecentTransactions();
+        String transactionList = "";
+        for (Transaction transaction : recentTransactions ) {
+            transactionList += transaction.getTxId().toString().trim() + "\n" + "\n";
+        }
+        Log.d(TAG, "displaying wallet transactions");
+        tvRecentTransactions = view.findViewById(R.id.tvRecentTransactions);
+        tvRecentTransactions.setText(transactionList);
 
         return view;
     }
