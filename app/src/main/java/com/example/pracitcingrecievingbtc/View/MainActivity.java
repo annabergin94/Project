@@ -24,7 +24,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ViewAddressFragment viewAddressFrag;
     private SendBitcoinFragment sendBitcoinFrag;
     private ReceiveBitcoinFragment receiveBitcoinFrag;
-    EditText etMyAddress;
 
     // called when the activity is first created to do all of the normal static setup
     @Override
@@ -55,17 +54,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Log.d(TAG, "6. Finished updating the wallet from the blockchain");
         }
 
-
-
     public BitcoinWalletPresenter getBitcoinWalletPresenter() {
         return bitcoinWalletPresenter;
     }
 
-
     public void onClick(View view) {
         if (view.getId() == R.id.btnCallingViewAddressFrag) {
             viewAddress(view);
-            etMyAddress = findViewById(R.id.etMyAddress);
         }
         if(view.getId()==R.id.backToMainMenu){
             backToMainMenu(view);

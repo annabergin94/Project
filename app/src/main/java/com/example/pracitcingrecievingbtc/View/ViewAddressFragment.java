@@ -1,6 +1,7 @@
 package com.example.pracitcingrecievingbtc.View;
 
 import android.content.ClipData;
+import android.content.Context;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,34 +18,62 @@ import android.content.ClipboardManager;
 // a subclass of Fragment to view address in a Fragment for the MainActivity to display
 public class ViewAddressFragment extends Fragment {
 
-
-    Button copy;
-    EditText etMyAddress;
-    TextView addressHeader;
-    ClipboardManager clipboardManager;
-
+    Button btnCopy;
+    TextView tvMyAddress;
+    ClipboardManager clipboard;
+    ClipData cd;
     private static final String TAG = ViewAddressFragment.class.getSimpleName();
+
+    Button btnPaste;
+    EditText etPasteAddress;
 
     // major diff with activities need to create a view object and return the view
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle saveInstanceState){
+
         View view = inflater.inflate(R.layout.fragment_view_address, container, false);
-        // need to use view because frag
-        copy = (Button) view.findViewById(R.id.copy);
-        etMyAddress = (EditText) view.findViewById(R.id.etMyAddress);
-        addressHeader = (TextView) view.findViewById(R.id.tvTitle);
 
-        etMyAddress.setText(((MainActivity)getActivity()).getBitcoinWalletPresenter().printMyWalletAddress());
+        btnCopy = (Button) view.findViewById(R.id.btnCopy);
+        tvMyAddress = (TextView) view.findViewById(R.id.tvMyAddress);
+        tvMyAddress.setText(((MainActivity)getActivity()).getBitcoinWalletPresenter().printMyWalletAddress());
 
-        copy.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view){
-                ClipData clip = ClipData.newPlainText("My wallet address", etMyAddress.getText().toString());
-          //      clipboardManager.setPrimaryClip(clip);
-                Toast.makeText(getActivity(), "Copying your address", Toast.LENGTH_SHORT).show();
-                ((MainActivity)getActivity()).getBitcoinWalletPresenter().printMyWalletAddress();
+        btnPaste = (Button) view.findViewById(R.id.btnPaste);
+        etPasteAddress = (EditText) view.findViewById(R.id.etPasteAddress);
+
+        btnCopy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                copy();
+            }
+        });
+
+        btnPaste.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                paste();
             }
         });
         return view;
+    }
+
+    public void copy(){
+        clipboard = (android.content.ClipboardManager) getContext().getSystemService(Context.CLIPBOARD_SERVICE);
+        // storing address as a string
+        String text = tvMyAddress.getText().toString();
+        // story copy of the address on the clipboard
+        cd = ClipData.newPlainText("Address", text);
+        // setting the address on the clipboard
+        clipboard.setPrimaryClip(cd);
+        Toast.makeText(getActivity(), "Address copied!", Toast.LENGTH_SHORT).show();
+    }
+
+    public void paste(){
+        // get clipboard data from clipboard manager
+        ClipData cd2 = clipboard.getPrimaryClip();
+        ClipData.Item item=cd2.getItemAt(0);
+        String copied =item.getText().toString();
+        etPasteAddress.setText(copied);
+        Toast.makeText(getActivity(), "Pasting address!", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -56,14 +85,10 @@ public class ViewAddressFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-//            Log.d(TAG, "registering view addresses fragment on the event bus");
-//            OttoEventBus.getInstance().register(this);
     }
 
     @Override
     public void onPause() {
         super.onPause();
-//            Log.d(TAG, "unregistering view addresses fragment on the event bus");
-//            OttoEventBus.getInstance().unregister(this);
     }
 }

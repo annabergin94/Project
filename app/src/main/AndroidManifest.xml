@@ -20,7 +20,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:usesCleartextTraffic="true"
-        android:theme="@style/Theme.Light" >
+        android:theme="@style/Theme.Dark" >
         <activity android:name=".View.MainActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

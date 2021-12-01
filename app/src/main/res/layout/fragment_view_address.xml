@@ -9,67 +9,105 @@
         android:background="?attr/background_color"
         tools:context=".View.ViewAddressFragment">
 
-    <EditText
-            android:hint=" "
+    <TextView
             android:layout_width="wrap_content"
-            android:layout_weight="3.5"
             android:layout_height="wrap_content"
-            android:id="@+id/etMyAddress"
             android:textColor="?attr/text_color"
-            android:shadowColor="@color/cardview_shadow_end_color"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            android:textSize="14sp"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_centerHorizontal="true"
+            android:text="Address"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:id="@+id/tvTitle"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="56dp"
+            app:layout_constraintHorizontal_bias="0.501"/>
+
+    <TextView
+            android:layout_width="match_parent"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/tvMyAddress"
+            app:layout_constraintBottom_toTopOf="@+id/btnCopy"
+            android:textColor="?attr/text_color"
+            android:textSize="16sp"
             android:layout_alignParentTop="true"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="132dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"/>
+            tools:layout_editor_absoluteY="179dp"/>
 
-    <Button android:id="@+id/copy"
+    <Button android:id="@+id/btnCopy"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:layout_centerHorizontal="true"
             android:text="Copy"
             android:textAllCaps="false"
-            android:textColor="@color/white"
             android:padding="10dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/etMyAddress"
-            android:layout_marginTop="44dp"/>
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintBottom_toTopOf="@+id/etPasteAddress"
+            android:layout_marginBottom="48dp"/>
 
+    <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName|number"
+            android:hint="enter address"
+            android:ems="7"
+            android:id="@+id/etPasteAddress"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/btnPaste"
+            android:layout_marginBottom="12dp"
+    />
+    <Button
+            android:text="Paste"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:id="@+id/btnPaste"
+            android:textAllCaps="false"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintBottom_toTopOf="@+id/callingPlaceholderFrag"
+            android:layout_marginBottom="40dp"/>
     <Button android:id="@+id/callingPlaceholderFrag"
             android:onClick="backToMainMenu"
             android:layout_height="45dp"
             android:layout_width="162dp"
             android:layout_alignParentBottom="true"
             android:textAllCaps="false"
-            android:text="@string/main_menu"
+            android:text="@string/Back"
             android:layout_below="@+id/copy"
             android:layout_alignParentStart="true"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginBottom="144dp"
+            android:layout_marginBottom="108dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintHorizontal_bias="0.497"
-            app:layout_constraintTop_toBottomOf="@+id/copy"
-            app:layout_constraintVertical_bias="1.0"
             tools:ignore="OnClick"/>
-
-    <EditText
+    <TextView
+            android:text="This is Your Bitcoin Address"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:inputType="textPersonName"
-            android:text="Wallet address"
-            android:ems="10"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            android:id="@+id/tvTitle"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.151"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintVertical_bias="0.099"/>
+            android:layout_height="wrap_content" android:id="@+id/tvExplainAddress"
+            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvTitle" android:layout_marginTop="40dp"
+            app:layout_constraintHorizontal_bias="0.497" app:layout_constraintBottom_toTopOf="@+id/tvMyAddress"
+            app:layout_constraintVertical_bias="0.277"/>
+    <TextView
+            android:text="Share this with anyone and they can send you payments."
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/tvExplainAddress2"
+            app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvMyAddress" app:layout_constraintBottom_toTopOf="@+id/copy"
+            app:layout_constraintVertical_bias="0.441"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 
