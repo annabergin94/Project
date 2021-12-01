@@ -33,6 +33,7 @@ public class BitcoinWalletPresenter implements Contract.Presenter {
     private Script.ScriptType outputScriptType;
     private Contract.View view;
     private ECKey key;
+    Transaction tx;
     BlockStore blockStore; // to load blocks
     BlockChain chain = null; // will be used to implement the SPV mode of the Bitcoin protocol
     // can verify transactions without downloading the whole blockchain, just the headers
@@ -172,11 +173,6 @@ public class BitcoinWalletPresenter implements Contract.Presenter {
         return groupOfDistinctPeers;
     }
 
-    // available balance
-    public Coin getBalance(){
-        return myWallet.getBalance();
-    }
-
     // recommend disclosing these to user
     public String getMnemonic() {
         DeterministicSeed seed = myWallet.getKeyChainSeed();
@@ -222,10 +218,6 @@ public class BitcoinWalletPresenter implements Contract.Presenter {
 
     public Coin getBalanceEstimated() {
         return myWallet.getBalance(Wallet.BalanceType.ESTIMATED);
-    }
-
-    public Coin getBalanceEstimatedSpendable() {
-        return myWallet.getBalance(Wallet.BalanceType.ESTIMATED_SPENDABLE);
     }
 }
 

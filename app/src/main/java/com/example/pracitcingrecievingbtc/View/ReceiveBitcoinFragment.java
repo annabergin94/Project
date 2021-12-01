@@ -2,6 +2,7 @@ package com.example.pracitcingrecievingbtc.View;
 
 import android.os.Bundle;
 import android.widget.EditText;
+import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,16 +11,22 @@ import com.example.pracitcingrecievingbtc.R;
 
 public class ReceiveBitcoinFragment extends Fragment {
 
+    TextView tvAmountReceived;
+    TextView tvSenderAddress;
+
     private static final String TAG = ReceiveBitcoinFragment.class.getSimpleName();
-    EditText etReceiveAmount;
-    String freshAddressString = "";
-
-
-    public ReceiveBitcoinFragment() {
-    }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_receive_bitcoin, container, false);
+
+        // instantiate the entered amount to send
+        tvAmountReceived = view.findViewById(R.id.etAmountToSend);
+        tvAmountReceived.setText(amountBeingSent);
+
+        // instantiate the entered recipient address
+        tvSenderAddress = view.findViewById(R.id.etRecipientAddress);
+        tvSenderAddress.setText(recipientAddress.trim());
+
         return view;
     }
 
@@ -32,27 +39,5 @@ public class ReceiveBitcoinFragment extends Fragment {
     public void onResume() {
         super.onResume();
     }
-
-
-
-//
-//    public static ReceiveBitcoinFragment newInstance(String param1, String param2) {
-//        ReceiveBitcoinFragment fragment = new ReceiveBitcoinFragment();
-//        Bundle args = new Bundle();
-//        args.putString(ARG_PARAM1, param1);
-//        args.putString(ARG_PARAM2, param2);
-//        fragment.setArguments(args);
-//        return fragment;
-//    }
-//
-//    @Override
-//    public void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        if (getArguments() != null) {
-//            mParam1 = getArguments().getString(ARG_PARAM1);
-//            mParam2 = getArguments().getString(ARG_PARAM2);
-//        }
-//    }
-
 
 }
