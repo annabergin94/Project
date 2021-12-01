@@ -2,6 +2,7 @@ package com.example.pracitcingrecievingbtc.View;
 
 import android.content.ClipboardManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import com.example.pracitcingrecievingbtc.R;
+import org.bitcoinj.core.Coin;
 import org.bitcoinj.core.NetworkParameters;
 import org.bitcoinj.params.TestNet3Params;
 import org.bitcoinj.utils.BtcFormat;
@@ -18,20 +20,15 @@ import org.bitcoinj.utils.BtcFormat;
 public class SendBitcoinFragment extends Fragment implements View.OnClickListener {
 
     private static final String TAG = SendBitcoinFragment.class.getSimpleName();
-    private ImageView ivCopy; // copy address emoji
-    protected ClipboardManager clipboardManager;
-
     EditText etAmountToSend; // user to enter amount to send
     EditText etRecipientAddress; // user to enter recipient address
     Button btnSendBitcoin; // send bitcoin button
-    Button btnScanQR;  // scan recipients QR code
     TextView tvAvailableBalance;
-    BtcFormat btcFormat = BtcFormat.getInstance();
+    BtcFormat f = BtcFormat.getInstance(); // format balance
 
     String amountBeingSent = "0.0";
     String recipientAddress = "";
 
-    NetworkParameters networkParams = TestNet3Params.get();
 
     @Nullable
     @Override
@@ -40,33 +37,24 @@ public class SendBitcoinFragment extends Fragment implements View.OnClickListene
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragement_send_bitcoin, container, false);
 
-        // instantiate the enter amount to send
-        etAmountToSend = (EditText) view.findViewById(R.id.etAmountToSend);
+        // instantiate the entered amount to send
+        etAmountToSend = view.findViewById(R.id.etAmountToSend);
         etAmountToSend.setText(amountBeingSent);
 
-        // instantiate the enter recipient address
-        etRecipientAddress = (EditText) view.findViewById(R.id.etRecipientAddress);
-        etRecipientAddress.setText(recipientAddress);
+        // instantiate the entered recipient address
+        etRecipientAddress = view.findViewById(R.id.etRecipientAddress);
+        etRecipientAddress.setText(recipientAddress.trim());
 
         // wallet balance
-        tvAvailableBalance = (TextView) view.findViewById(R.id.tvAvailableBalance);
-        tvAvailableBalance.setText(((MainActivity) this.getActivity()).getBitcoinWalletPresenter().getBalance());
+        tvAvailableBalance = view.findViewById(R.id.tvAvailableBalance);
+        String out = f.format(((MainActivity)this.getActivity()).getBitcoinWalletPresenter().getBalanceEstimated());
+        tvAvailableBalance.setText(out);
 
         // instantiate button
-        btnSendBitcoin = (Button) view.findViewById(R.id.btnSendBitcoin);
+        btnSendBitcoin = view.findViewById(R.id.btnSendBitcoin);
         btnSendBitcoin.setOnClickListener(this);
 
-        // scan qr
-        btnScanQR = (Button) view.findViewById(R.id.btnScanQR);
-        btnScanQR.setOnClickListener(this);
-
-        send();
-
         return view;
-    }
-
-    private void init(View view) {
-        ivCopy = view.findViewById(R.id.copy);
     }
 
     @Override
@@ -79,70 +67,49 @@ public class SendBitcoinFragment extends Fragment implements View.OnClickListene
         super.onResume();
     }
 
-    public void send() {
-
-        // hard coded address and amount
-//        LegacyAddress recipientAddress = LegacyAddress.fromBase58(networkParams, "mupBAFeT63hXfeeT4rnAUcpKHDkz1n4fdw");
-//        System.out.println("Send money to: " + recipientAddress.toString());
-//        Coin value = Coin.parseCoin("0.09");
-//        Log.d(TAG, "sending 0.09");
-
-        //   Context context = ((MainActivity) this.getActivity()).getApplicationContext();
-
-        // setting address and amount to user inputs
-        String address = etRecipientAddress.getText().toString();
-        String amount = etAmountToSend.getText().toString();
-
-        // pop up message if user doesn't enter amount or address
-        if (address.isEmpty()) { // If no input for origin then set origin to current location
-            Toast.makeText(getActivity(), "Please enter recipient address!", Toast.LENGTH_SHORT).show();
-        }
-        if (amount.isEmpty()) {
-            Toast.makeText(getActivity(), "Please enter an amount to send!", Toast.LENGTH_SHORT).show();
-            return;
-        }
-    }
-
-//        Coin coinAmount = Coin.parseCoin(amount);
-//        if (coinAmount.isPositive()) {
-//            Log.d(TAG, "updating amountEdit textview");
-//            etAmountToSend.setText("0.0");
-//            Log.d(TAG, "sending transaction start Toast to UI");
-//            CharSequence text = "Sending your transaction";
-//            int duration = Toast.LENGTH_LONG;
-//            Toast toast = Toast.makeText(((MainActivity) this.getActivity()).getApplicationContext(), text, duration);
-//            toast.show();
-//
-//            // performing the transaction
-//            // performing transaction
-//            Log.d(TAG, "invoking sendTransactions on btcService");
-//            String sendResult = ((MainActivity) this.getActivity()).getBtcService().sendTransaction(address, amount);
-//            // updating UI
-//            Log.d(TAG, "displaying wallet content");
-//            tvAvailableBalance = (TextView) view.findViewById(R.id.tvAvailableBalance);
-//            tvAvailableBalance.setText("Wallet Balance: " + btcFormat.format(((MainActivity) this.getActivity()).getBTCService().getBalanceEstimated()));
-//            Log.d(TAG, "sending update complete Toast to UI");
-//            text = "Sending transaction complete";
-//            toast = Toast.makeText(((MainActivity) this.getActivity()).getApplicationContext(), text, duration);
-//            toast.show();
-//            Log.d(TAG, sendResult);
-//
-//            // check the user enters an amount greater than 0
-//            // check the user has enough coins
-//            // try to send the coins
-//        }
-//    }
-
-    // switch statement to intercept clicks
     @Override
     public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.btnSendBitcoin:
-                send();
-                break;
-            case R.id.btnScanQR:
-             //   scanQr();
-                break;
+        if(view.getId() == R.id.btnSendBitcoin) {
+           sendTransaction();
+            }
+        }
+
+
+    public void sendTransaction()  {
+
+        String address = etRecipientAddress.getText().toString();
+        String amount = etAmountToSend.getText().toString();
+        Coin coinAmount = Coin.parseCoin(amount);
+
+        if (coinAmount.isPositive()) {
+            Log.d(TAG, "updating amountEdit textview");
+            etAmountToSend.setText("0.0");
+            Log.d(TAG, "sending transaction start Toast to UI");
+            CharSequence text = "Sending your transaction";
+            int duration = Toast.LENGTH_LONG;
+            Toast toast = Toast.makeText((this.getActivity()).getApplicationContext(), text, duration);
+            toast.show();
+            // performing transaction
+            Log.d(TAG, "invoking sendTransactions on btcService");
+            try {
+               ((MainActivity) this.getActivity()).getBitcoinWalletPresenter().send(address, amount);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            // updating UI
+            Log.d(TAG, "displaying wallet content");
+            tvAvailableBalance.setText("Wallet Balance: " + f.format(((MainActivity) this.getActivity()).getBitcoinWalletPresenter().getBalanceEstimated()));
+            Log.d(TAG, "sending update complete Toast to UI");
+            text = "Sending transaction complete";
+            toast = Toast.makeText(((MainActivity) this.getActivity()).getApplicationContext(), text, duration);
+            toast.show();
+        }
+        else {
+            Log.d(TAG, "non positive amount specified to send ");
+            CharSequence text = "amount must be positive";
+            int duration = Toast.LENGTH_LONG;
+            Toast toast = Toast.makeText(((MainActivity) this.getActivity()).getApplicationContext(), text, duration);
+            toast.show();
         }
     }
 }

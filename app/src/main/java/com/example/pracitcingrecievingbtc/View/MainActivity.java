@@ -14,17 +14,16 @@ import androidx.appcompat.widget.SwitchCompat;
 import androidx.fragment.app.Fragment;
 import com.example.pracitcingrecievingbtc.Presenter.BitcoinWalletPresenter;
 import com.example.pracitcingrecievingbtc.R;
+import org.bitcoinj.utils.BtcFormat;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static final String TAG = MainActivity.class.getSimpleName();
     public static Context context;
     public BitcoinWalletPresenter bitcoinWalletPresenter;
-
     private ViewAddressFragment viewAddressFrag;
     private SendBitcoinFragment sendBitcoinFrag;
     private ReceiveBitcoinFragment receiveBitcoinFrag;
-
     EditText etMyAddress;
 
     // called when the activity is first created to do all of the normal static setup
@@ -87,6 +86,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     // must be static to be properly recreated from instance state
     public static class PlaceholderFragment extends Fragment {
 
+        BtcFormat f = BtcFormat.getInstance(); // format balance
         SwitchCompat btnSwitchTheme;
         TextView tvAvailableBalance;
 
@@ -98,10 +98,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             View view = inflater.inflate(R.layout.fragment_main_activity, container, false);
 
             // view. used to call the id because we are in a fragment
-            tvAvailableBalance = (TextView) view.findViewById(R.id.tvAvailableBalance);
-            tvAvailableBalance.setText("Balance: " + ((MainActivity) this.getActivity()).getBitcoinWalletPresenter().getBalance() + " BTC");
-
-            btnSwitchTheme = (SwitchCompat) view.findViewById(R.id.btnSwitchTheme);
+            tvAvailableBalance = view.findViewById(R.id.tvAvailableBalance);
+            String out = f.format(((MainActivity)this.getActivity()).getBitcoinWalletPresenter().getBalanceEstimated());
+            tvAvailableBalance.setText(out);
+            btnSwitchTheme = view.findViewById(R.id.btnSwitchTheme);
             btnSwitchTheme.setOnCheckedChangeListener((buttonView, isChecked) -> {
                 // checking conditions
                 if (isChecked) {

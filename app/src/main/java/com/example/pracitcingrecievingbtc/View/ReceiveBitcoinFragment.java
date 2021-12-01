@@ -1,6 +1,7 @@
 package com.example.pracitcingrecievingbtc.View;
 
 import android.os.Bundle;
+import android.widget.EditText;
 import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,8 @@ import com.example.pracitcingrecievingbtc.R;
 public class ReceiveBitcoinFragment extends Fragment {
 
     private static final String TAG = ReceiveBitcoinFragment.class.getSimpleName();
+    EditText etReceiveAmount;
+    String freshAddressString = "";
 
 
     public ReceiveBitcoinFragment() {

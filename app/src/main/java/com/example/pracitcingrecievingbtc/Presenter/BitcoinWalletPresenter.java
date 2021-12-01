@@ -4,15 +4,12 @@ import android.content.Context; // connection between Android System and App Pro
 import android.util.Log; // helps debugging by printing statements in the logcat
 import com.example.pracitcingrecievingbtc.Contracts.Contract;
 import com.google.common.base.Joiner; // part of Guava, central to BitcoinJ, appends results ie., skips spaces and returns a string
-
 import org.bitcoinj.core.*; // contains classes for network messages like Block and Transaction, peer connectivity via PeerGroup, and block chain management
 import org.bitcoinj.net.discovery.DnsDiscovery; // supports peer discovery through DNS
-
 import org.bitcoinj.params.TestNet3Params; // testing network for blockchain developers
 import org.bitcoinj.script.Script;
 import org.bitcoinj.store.BlockStore;
 import org.bitcoinj.store.BlockStoreException;
-
 import org.bitcoinj.store.SPVBlockStore;
 import org.bitcoinj.utils.BriefLogFormatter;
 import org.bitcoinj.wallet.DeterministicSeed;
@@ -30,7 +27,7 @@ public class BitcoinWalletPresenter implements Contract.Presenter {
     private File myWalletFile;
     private File blockchainFileSPVMode;
     private Wallet myWallet;
-    private PeerGroup groupOfDistinctPeers; // tries to maintain a constant num of connections to a set of distinct peers
+    private static PeerGroup groupOfDistinctPeers; // tries to maintain a constant num of connections to a set of distinct peers
     private Context context;
     private int peerCount;
     private Script.ScriptType outputScriptType;
@@ -171,9 +168,13 @@ public class BitcoinWalletPresenter implements Contract.Presenter {
 
     }
 
-    // printing the wallet balance
-    public String getBalance() {
-        return myWallet.getBalance().toString();
+    public PeerGroup getGroupOfDistinctPeers() {
+        return groupOfDistinctPeers;
+    }
+
+    // available balance
+    public Coin getBalance(){
+        return myWallet.getBalance();
     }
 
     // recommend disclosing these to user
@@ -184,16 +185,47 @@ public class BitcoinWalletPresenter implements Contract.Presenter {
         return recoverySeedWords;
     }
 
+    // listens for coins sent to the user's wallet
     private void setupWalletListeners(Wallet wallet) {
         wallet.addCoinsReceivedEventListener((wallet1, tx, prevBalance, newBalance) -> {
             view.displayMyBalance(wallet.getBalance().toFriendlyString());
+            Log.d(TAG, "The wallet receives coins");
+            Log.d(TAG, "The transaction id is " + tx.getTxId().toString());
+            Log.d(TAG, "Previous wallet balance: " + prevBalance);
+            Log.d(TAG, "New wallet balance" + newBalance);
+            Log.d(TAG, tx.toString());
         });
-        wallet.addCoinsSentEventListener((wallet12, tx, prevBalance, newBalance) -> {
-        //    view.displayMyBalance(wallet.getBalance().toFriendlyString());
-        //    view.clearAmount();
-        //    view.displayRecipientAddress(null);
-        //    view.showToastMessage("Sent " + prevBalance.minus(newBalance).minus(tx.getFee()).toFriendlyString());
-        });
+    }
+
+    public void send(String address, String amount) throws Exception {
+
+     //   address = "tb1qf30nznypp6qwk4qdfr05fran6wnyqrj7d37vk6";
+      //  amount = "0.0005";
+
+        Address to = Address.fromString(networkParams, address);
+   ///     LegacyAddress to = LegacyAddress.fromBase58(networkParams, Hex.decode(address).toString());
+        Log.d(TAG, "Send money to: " + to);
+        Coin value = Coin.parseCoin(amount);
+        Log.d(TAG, "Send " + amount + "coins" + to);
+        try {
+            Wallet.SendResult result = myWallet.sendCoins(groupOfDistinctPeers, to, value);
+            Log.d(TAG, "coins sent");
+            myWallet.saveToFile(myWalletFile);
+            Log.d(TAG, "save to wallet");
+            result.broadcastComplete.get();
+            Log.d(TAG, "broadcast transaction");
+        } catch (InsufficientMoneyException e) {
+            Log.e(TAG, "wallet does not contain enough to send this amount");
+            e.printStackTrace();
+        }
+    }
+
+    public Coin getBalanceEstimated() {
+        return myWallet.getBalance(Wallet.BalanceType.ESTIMATED);
+    }
+
+    public Coin getBalanceEstimatedSpendable() {
+        return myWallet.getBalance(Wallet.BalanceType.ESTIMATED_SPENDABLE);
     }
 }
 

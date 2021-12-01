@@ -10,7 +10,6 @@
         android:orientation="vertical"
         android:background="?attr/background_color">
 
-
     <Button
             android:text="View address"
             android:onClick="viewAddress"
@@ -37,6 +36,7 @@
             app:layout_constraintTop_toBottomOf="@+id/btnCallingViewAddressFrag"
             android:layout_marginTop="24dp"
             app:layout_constraintHorizontal_bias="0.498"/>
+
     <Button
             android:text="Receive Bitcoin"
             android:onClick="receiveBitcoin"
@@ -49,6 +49,7 @@
             app:layout_constraintTop_toBottomOf="@+id/btnCallingSendBitcoinFrag"
             android:layout_marginTop="24dp"
             app:layout_constraintHorizontal_bias="0.501"/>
+
     <Button
             android:text="View Bitcoin Price History"
             android:onClick="viewPrices"
@@ -62,16 +63,20 @@
             app:layout_constraintTop_toBottomOf="@+id/btnCallingReceiveBitcoinFrag"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintVertical_bias="0.05"/>
+
     <TextView
             android:text="TextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/tvAvailableBalance"
+            android:inputType="numberDecimal"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintVertical_bias="0.329" android:textSize="20sp"/>
+            app:layout_constraintVertical_bias="0.329"
+            android:textSize="20sp"/>
+
     <ImageView
             android:src="@drawable/applogo"
             android:layout_width="141dp"

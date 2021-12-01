@@ -3,6 +3,7 @@ package com.example.pracitcingrecievingbtc.View;
 import java.util.Calendar;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,6 +43,7 @@ public class HistoryOfPricesFragment extends Fragment {
         for (int i = 0; i < bitcoinPrices.size(); i++) {
             y = bitcoinPrices.get(i); // price
             x = date.get(i).getTime();
+            Log.d(TAG, "x = " + x + "b y = " + y);
             seriesPoints.appendData(new DataPoint(x, y), true, bitcoinPrices.size());
         }
         graph.addSeries(seriesPoints);
@@ -66,7 +68,7 @@ public class HistoryOfPricesFragment extends Fragment {
     public void readCSV() {
         try {
             // put the data in a raw folder in the project from https://www.coindesk.com/price/bitcoin/
-            CSVReader reader = new CSVReader(new InputStreamReader(getResources().openRawResource(R.raw.bitcoinpricehistorydatacopy)));
+            CSVReader reader = new CSVReader(new InputStreamReader(getResources().openRawResource(R.raw.data)));
             String[] nextLine;
             reader.readNext();
             while ((nextLine = reader.readNext()) != null) {
