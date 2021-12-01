@@ -33,7 +33,7 @@ public class ReceiveBitcoinFragment extends Fragment {
         List<Transaction> recentTransactions = ((MainActivity)this.getActivity()).getBitcoinWalletPresenter().getRecentTransactions();
         String transactionList = "";
         for (Transaction transaction : recentTransactions ) {
-            transactionList += transaction.getTxId().toString().trim() + "\n" + "\n";
+            transactionList += transaction.getTxId().toString().substring(0,4) + "/t"; // print first five
         }
         Log.d(TAG, "displaying wallet transactions");
         tvRecentTransactions = view.findViewById(R.id.tvRecentTransactions);
