@@ -32,13 +32,9 @@ public class HistoryOfPricesFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_historyof_prices, null, false);
-
         readCSV(); // reading in the data
         graph = (GraphView) view.findViewById(R.id.graph);
-        DataPoint[] dp = new DataPoint[bitcoinPrices.size()]; // empty
-
         seriesPoints = new LineGraphSeries<DataPoint>();
-
         // storing x and y values in the data point array
         for (int i = 0; i < bitcoinPrices.size(); i++) {
             y = bitcoinPrices.get(i); // price
@@ -51,9 +47,6 @@ public class HistoryOfPricesFragment extends Fragment {
         graph.getGridLabelRenderer().setNumHorizontalLabels(3); // only 4 because of the space
         // as we use dates as labels, the human rounding to nice readable numbers is not necessary
         graph.getGridLabelRenderer().setHumanRounding(false);
-
-        //      settingXAxisLabels();
-   //     graph.getGridLabelRenderer().setGridColor(Color.BLUE);
         settingLabels();
         seriesPoints.setColor(Color.MAGENTA);
         seriesPoints.setThickness(2);
@@ -83,10 +76,8 @@ public class HistoryOfPricesFragment extends Fragment {
                 Calendar calendar = Calendar.getInstance();
                 calendar.set(year, month - 1, day);
                 date.add(calendar);
-
                 bitcoinPrices.add(Double.parseDouble(nextLine[1]));
             }
-            //  System.out.println(date);
             reader.close();
         } catch (IOException e) {
             e.printStackTrace();
