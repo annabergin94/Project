@@ -6,7 +6,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
@@ -23,7 +22,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public BitcoinWalletPresenter bitcoinWalletPresenter;
     private ViewAddressFragment viewAddressFrag;
     private SendBitcoinFragment sendBitcoinFrag;
-    private ReceiveBitcoinFragment receiveBitcoinFrag;
+    private TransactionHistoryFragment receiveBitcoinFrag;
 
     // called when the activity is first created to do all of the normal static setup
     @Override
@@ -130,7 +129,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     // replace container fragment with the receiving Bitcoin fragment
     public void receiveBitcoin(View view) {
-        receiveBitcoinFrag = new ReceiveBitcoinFragment();
+        receiveBitcoinFrag = new TransactionHistoryFragment();
         getSupportFragmentManager().beginTransaction()
                 .setReorderingAllowed(true)
                 .replace(R.id.container, receiveBitcoinFrag)

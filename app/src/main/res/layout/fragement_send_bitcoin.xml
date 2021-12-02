@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:app="http://schemas.android.com/apk/res-auto"
                 xmlns:tools="http://schemas.android.com/tools"
                 tools:context=".View.MainActivity$PlaceholderFragment"
@@ -12,97 +13,81 @@
     <TextView android:layout_height="wrap_content"
               android:layout_width="wrap_content"
               android:layout_centerHorizontal="true"
-              android:layout_marginTop="20dp"
               android:id="@+id/tvEnterAmount"
-              android:text="Enter amount"
+              android:text="@string/enter_amount"
               android:textColor="?attr/text_color"
               android:textAppearance="?android:attr/textAppearanceMedium"
               android:textSize="20sp"
-              android:textStyle="bold"/>
-
+              android:textStyle="bold" app:layout_constraintTop_toTopOf="parent"
+              app:layout_constraintBottom_toTopOf="@+id/etAmountToSend"
+              app:layout_constraintVertical_bias="0.761" app:layout_constraintEnd_toEndOf="parent"
+              app:layout_constraintStart_toStartOf="parent"/>
     <EditText android:layout_height="wrap_content"
               android:layout_width="347dp"
               android:layout_centerHorizontal="true"
-              android:layout_marginTop="30dp"
               android:id="@+id/etAmountToSend"
               android:layout_below="@+id/tvEnterAmount"
               android:ems="10"
-              android:inputType="number"
-              app:layout_constraintBottom_toTopOf="@+id/tvEnterAmount"
-              android:hint="Enter amount of BTC"
+              android:inputType="numberDecimal"
+              android:hint="@string/enter_amount_of_btc"
               android:textColor="?attr/text_color"
-              android:textColorHint="?attr/text_color"/>
-
+              android:textColorHint="?attr/text_color"
+              app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
+              android:layout_marginBottom="16dp" app:layout_constraintBottom_toTopOf="@+id/tvAvailableBalance"/>
     <TextView android:layout_height="wrap_content"
               android:layout_width="wrap_content"
               android:layout_alignParentTop="true"
               android:id="@+id/tvAvailableBalance"
-              app:layout_constraintBottom_toTopOf="@+id/etAmountToSend"
               android:textColor="?attr/text_color"
-              android:text="0.005 BTC available"
-              android:layout_marginTop="150dp"
+              android:text="@string/_0_005_btc_available"
               android:layout_centerHorizontal="true"
-              android:textSize="16sp"/>
-
+              android:textSize="16sp"
+              app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
+              app:layout_constraintBottom_toTopOf="@+id/tvRecipientAddress" android:layout_marginBottom="60dp"/>
     <TextView android:layout_height="wrap_content"
               android:layout_width="wrap_content"
               android:layout_alignParentTop="true"
-              android:layout_marginTop="250dp"
               android:id="@+id/tvRecipientAddress"
               android:layout_centerHorizontal="true"
-              android:text="Enter recipient address"
-              app:layout_constraintBottom_toTopOf="@+id/tvAvailableBalance"
+              android:text="@string/enter_recipient_address"
               android:textColor="?attr/text_color"
               android:textAppearance="?android:attr/textAppearanceMedium"
-              android:layout_marginLeft="30dp"
               android:textSize="20sp"
-              android:textStyle="bold"/>
-
+              android:textStyle="bold"
+              app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
+              app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toBottomOf="parent"/>
     <EditText android:layout_height="wrap_content"
               android:layout_width="347dp"
-              android:layout_marginTop="300dp"
               android:id="@+id/etRecipientAddress"
-              app:layout_constraintBottom_toTopOf="@+id/tvRecipientAddress"
               android:ems="10"
-              android:layout_marginLeft="30dp"
               android:textColor="?attr/text_color"
-              android:hint="Enter recipient address"
+              android:hint="@string/enter_recipient_address"
+              android:maxLength="32"
               android:textColorHint="@color/white"
-              android:inputType="textShortMessage"/>
-
-    <Button android:layout_height="44dp"
-            android:layout_width="61dp"
-            android:layout_marginTop="-99dp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginStart="20dp"
-            android:id="@+id/btnScanQR"
-            android:text="QR"
-            android:textAllCaps="false"
-            app:layout_constraintBottom_toTopOf="@+id/tvRecipientAddress"
-            android:layout_marginLeft="320dp"
-            android:layout_alignParentBottom="false"
-            android:layout_centerHorizontal="false"/>
-
+              android:inputType="textShortMessage" app:layout_constraintStart_toStartOf="parent"
+              app:layout_constraintEnd_toEndOf="parent"
+              android:layout_marginTop="32dp" app:layout_constraintTop_toBottomOf="@+id/tvRecipientAddress"
+              app:layout_constraintBottom_toTopOf="@+id/btnSendBitcoin" app:layout_constraintVertical_bias="0.0"/>
     <Button android:layout_height="wrap_content"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="100dp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginStart="20dp"
             android:id="@+id/btnSendBitcoin"
-            app:layout_constraintBottom_toTopOf="@+id/etRecipientAddress"
-            android:text="Send"
+            android:text="@string/send"
             android:textAllCaps="false"
-            android:layout_below="@+id/tvRecipientAddress"/>
-
+            android:layout_below="@+id/tvRecipientAddress" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498" app:layout_constraintBottom_toTopOf="@+id/backToMainMenu"
+            android:layout_marginBottom="40dp"/>
     <Button android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:layout_centerHorizontal="true"
             android:id="@+id/backToMainMenu"
-            android:text="Main menu"
-            android:layout_marginBottom="18dp"
-            android:onClick="backToMainMenu"
+            android:text="@string/main_menu"
             android:textAllCaps="false"
-            android:layout_alignParentBottom="true"/>
+            android:onClick="backToMainMenu"
+            android:layout_alignParentBottom="true"
+            app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="48dp"/>
 
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -40,19 +40,9 @@ public class ViewAddressFragment extends Fragment {
         btnPaste = (Button) view.findViewById(R.id.btnPaste);
         etPasteAddress = (EditText) view.findViewById(R.id.etPasteAddress);
 
-        btnCopy.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                copy();
-            }
-        });
+        btnCopy.setOnClickListener(v -> copy()); // copy address
+        btnPaste.setOnClickListener(v -> paste()); // paste for testing since prototype
 
-        btnPaste.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                paste();
-            }
-        });
         return view;
     }
 

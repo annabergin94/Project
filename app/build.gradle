@@ -72,5 +72,6 @@ dependencies{
 
     // Graph View
     implementation 'com.jjoe64:graphview:4.2.1'
-    implementation 'com.opencsv:opencsv:3.9' // reading CSV file
+    implementation 'com.opencsv:opencsv:3.9'
+    androidTestImplementation 'org.junit.jupiter:junit-jupiter:5.7.0'// reading CSV file
 }

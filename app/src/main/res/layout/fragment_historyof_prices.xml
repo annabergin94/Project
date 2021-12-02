@@ -20,7 +20,8 @@
             app:layout_constraintHorizontal_bias="0.9"/>
 
     <Button
-            android:text="@string/Back"
+            android:text="@string/main_menu"
+            android:textAllCaps="false"
             android:onClick="backToMainMenu"
             android:layout_height="47dp"
             android:id="@+id/callingPlaceholderFrag"

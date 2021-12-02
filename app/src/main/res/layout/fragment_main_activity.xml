@@ -38,7 +38,7 @@
             app:layout_constraintHorizontal_bias="0.498"/>
 
     <Button
-            android:text="Receive Bitcoin"
+            android:text="Transaction History"
             android:onClick="receiveBitcoin"
             tools:ignore="onClick"
             android:layout_width="wrap_content"
@@ -78,9 +78,9 @@
             android:textSize="20sp"/>
 
     <ImageView
-            android:src="@drawable/applogo"
-            android:layout_width="141dp"
-            android:layout_height="110dp"
+            android:src="@drawable/softcoinlogo"
+            android:layout_width="299dp"
+            android:layout_height="100dp"
             android:id="@+id/appLogo"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

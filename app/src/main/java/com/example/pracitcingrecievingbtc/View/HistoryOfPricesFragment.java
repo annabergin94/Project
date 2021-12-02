@@ -93,21 +93,3 @@ public class HistoryOfPricesFragment extends Fragment {
         }
     }
 }
-
-
-
-
-
-//        graph.addSeries(seriesPoints); // adding the points to the graph
-//        graph.getGridLabelRenderer().setLabelFormatter(new DefaultLabelFormatter() {
-//            @Override
-//            public String formatLabel(double value, boolean isValueX) {
-//                if (isValueX) {
-//                    // not working so adding these manually
-//                    return "";
-//                } else {
-//                    // display bitcoin prices in $
-//                    return super.formatLabel(value, isValueX) + " $";
-//                }
-//            }
-//        });

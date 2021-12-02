@@ -2,7 +2,6 @@ package com.example.pracitcingrecievingbtc.View;
 
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.EditText;
 import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
@@ -14,20 +13,20 @@ import org.bitcoinj.utils.BtcFormat;
 
 import java.util.List;
 
-public class ReceiveBitcoinFragment extends Fragment {
+public class TransactionHistoryFragment extends Fragment {
 
     TextView tvAvailableBalance;
     TextView tvRecentTransactions;
     BtcFormat f = BtcFormat.getInstance(); // format balance
 
-    private static final String TAG = ReceiveBitcoinFragment.class.getSimpleName();
+    private static final String TAG = TransactionHistoryFragment.class.getSimpleName();
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_receive_bitcoin, container, false);
 
         // instantiate the entered amount to send
         tvAvailableBalance = view.findViewById(R.id.tvAvailableBalance);
-        String out = f.format(((MainActivity)this.getActivity()).getBitcoinWalletPresenter().getBalanceEstimated());
+        String out = f.format(((MainActivity)this.getActivity()).getBitcoinWalletPresenter().getBalanceEstimated(),2,3,3) + " BTC";
         tvAvailableBalance.setText(out);
 
         List<Transaction> recentTransactions = ((MainActivity)this.getActivity()).getBitcoinWalletPresenter().getRecentTransactions();

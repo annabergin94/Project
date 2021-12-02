@@ -13,4 +13,27 @@
     <string name="title_activity_settings">SettingsActivity</string>
     <string name="Back">Main menu</string>
     <string name="the_history_of_bitcoin_prices_2014_2021">The History of Bitcoin Prices (2014-2021)</string>
+    <string name="send">Send</string>
+    <string name="enter_recipient_address">Enter recipient address</string>
+    <string name="_0_005_btc_available">0.005 BTC available</string>
+    <string name="enter_amount_of_btc">Enter amount of BTC</string>
+    <string name="enter_amount">Enter amount</string>
+    <string name="main_menu">Main Menu</string>
+    <string name="title_recovery">title_recovery</string>
+    <string name="description_recovery">description_recovery</string>
+    <string name="current_bitcoin_address">Current Bitcoin Address</string>
+    <string name="paste">Paste</string>
+    <string name="enter_address">enter address</string>
+    <string name="copy">Copy</string>
+    <string name="address">Address</string>
+    <string name="transactions">Transactions</string>
+    <string name="transaction_history">Transaction history</string>
+    <string name="_0_005_btc_received">0.005 BTC received</string>
+    <string name="wallet_balance">Wallet balance</string>
+    <string name="share_this_with_anyone_and_they_can_send_you_payments">Share this with anyone and they can send you
+        payments.
+    </string>
+    <string name="a_new_address_will_appear_here_everytime_you_send_or_receive_bitcoin">A new address will appear here
+        everytime you send or receive Bitcoin.
+    </string>
 </resources>

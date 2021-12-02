@@ -34,8 +34,6 @@ public class BitcoinWalletPresenter implements Contract.Presenter {
     private int peerCount;
     private Script.ScriptType outputScriptType;
     private Contract.View view;
-    private ECKey key;
-    Transaction tx;
     BlockStore blockStore; // to load blocks
     BlockChain chain = null; // will be used to implement the SPV mode of the Bitcoin protocol
     // can verify transactions without downloading the whole blockchain, just the headers
@@ -48,7 +46,6 @@ public class BitcoinWalletPresenter implements Contract.Presenter {
         settingUpNetworkAndFiles(); // connecting to testnet, creating a local file for the wallet and blockchain
         myWallet = initialisingWallet(); // create or load wallet
         myWalletInitialisedFromNetwork(); // syncing the blockchain
-    //    myWallet.cleanup(); // removes pending transactions
     }
 
     // a helper method for connecting to the test net, creating a file for the wallet and blockchain locally
@@ -145,8 +142,7 @@ public class BitcoinWalletPresenter implements Contract.Presenter {
 
     // a helper method to print wallet address
     public String printMyWalletAddress(){
-        String currentReceiveaddress =  myWallet.currentReceiveAddress().toString();
-        return currentReceiveaddress;
+        return myWallet.currentReceiveAddress().toString();
     }
 
     // a helper method to
@@ -221,11 +217,6 @@ public class BitcoinWalletPresenter implements Contract.Presenter {
 
     public Coin getBalanceEstimated() {
         return myWallet.getBalance(Wallet.BalanceType.ESTIMATED);
-    }
-
-
-    public Set<Transaction> getTransactions(Boolean includeDead) {
-        return myWallet.getTransactions(includeDead);
     }
 
     public List<Transaction> getRecentTransactions() {

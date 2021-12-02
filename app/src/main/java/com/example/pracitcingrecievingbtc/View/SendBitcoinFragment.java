@@ -45,9 +45,9 @@ public class SendBitcoinFragment extends Fragment implements View.OnClickListene
         etRecipientAddress = view.findViewById(R.id.etRecipientAddress);
         etRecipientAddress.setText(recipientAddress.trim());
 
-        // wallet balance
+        // view. used to call the id because we are in a fragment
         tvAvailableBalance = view.findViewById(R.id.tvAvailableBalance);
-        String out = f.format(((MainActivity)this.getActivity()).getBitcoinWalletPresenter().getBalanceEstimated());
+        String out = f.format(((MainActivity)this.getActivity()).getBitcoinWalletPresenter().getBalanceEstimated(),2,3,3) + " BTC";
         tvAvailableBalance.setText(out);
 
         // instantiate button
