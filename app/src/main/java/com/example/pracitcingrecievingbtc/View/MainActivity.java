@@ -82,6 +82,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         BtcFormat f = BtcFormat.getCoinInstance(); // format balance
         SwitchCompat btnSwitchTheme;
         TextView tvAvailableBalance;
+        TextView tvRealBalance;
 
         public PlaceholderFragment() {
         }
@@ -92,8 +93,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             // view. used to call the id because we are in a fragment
             tvAvailableBalance = view.findViewById(R.id.tvAvailableBalance);
-            String out = f.format(((MainActivity)this.getActivity()).getBitcoinWalletPresenter().getBalanceEstimated(),2,3,3) + " BTC";
-            tvAvailableBalance.setText(out);
+            String out = f.format(((MainActivity)this.getActivity()).getBitcoinWalletPresenter().getBalanceEstimated(),2,3, 3) + " BTC";
+            tvAvailableBalance.setText("Balance " + out);
+
+
+            tvRealBalance = view.findViewById(R.id.tvRealBalance);
+            double result = Double.parseDouble(f.format(((MainActivity)this.getActivity()).getBitcoinWalletPresenter().getBalanceEstimated(),2,3, 3)) * 42863.24323705;
+            tvRealBalance.setText(String.valueOf(result));
+
             btnSwitchTheme = view.findViewById(R.id.btnSwitchTheme);
             btnSwitchTheme.setOnCheckedChangeListener((buttonView, isChecked) -> {
                 // checking conditions

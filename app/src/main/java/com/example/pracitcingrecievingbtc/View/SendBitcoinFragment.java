@@ -1,6 +1,5 @@
 package com.example.pracitcingrecievingbtc.View;
 
-import android.content.ClipboardManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,8 +11,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import com.example.pracitcingrecievingbtc.R;
 import org.bitcoinj.core.Coin;
-import org.bitcoinj.core.NetworkParameters;
-import org.bitcoinj.params.TestNet3Params;
 import org.bitcoinj.utils.BtcFormat;
 
 
@@ -96,19 +93,16 @@ public class SendBitcoinFragment extends Fragment implements View.OnClickListene
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            // updating UI
-            Log.d(TAG, "displaying wallet content");
-            tvAvailableBalance.setText("Wallet Balance: " + f.format(((MainActivity) this.getActivity()).getBitcoinWalletPresenter().getBalanceEstimated()));
             Log.d(TAG, "sending update complete Toast to UI");
             text = "Sending transaction complete";
-            toast = Toast.makeText(((MainActivity) this.getActivity()).getApplicationContext(), text, duration);
+            toast = Toast.makeText(this.getActivity().getApplicationContext(), text, duration);
             toast.show();
         }
         else {
             Log.d(TAG, "non positive amount specified to send ");
             CharSequence text = "amount must be positive";
             int duration = Toast.LENGTH_LONG;
-            Toast toast = Toast.makeText(((MainActivity) this.getActivity()).getApplicationContext(), text, duration);
+            Toast toast = Toast.makeText(this.getActivity().getApplicationContext(), text, duration);
             toast.show();
         }
     }

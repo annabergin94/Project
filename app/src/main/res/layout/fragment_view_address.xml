@@ -20,6 +20,7 @@
             app:layout_constraintBottom_toTopOf="@+id/tvMyAddress"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.565"/>
+
     <TextView
             android:layout_width="match_parent"
             android:layout_marginLeft="20dp"
@@ -34,6 +35,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             tools:layout_editor_absoluteY="81dp"/>
+
 
     <Button android:id="@+id/btnCopy"
             android:layout_height="wrap_content"
@@ -103,8 +105,10 @@
             app:layout_constraintTop_toBottomOf="@+id/tvMyAddress"
             android:layout_marginTop="16dp"
             android:layout_marginBottom="44dp"
-            app:layout_constraintBottom_toTopOf="@+id/btnCopy" app:layout_constraintHorizontal_bias="0.489"
+            app:layout_constraintBottom_toTopOf="@+id/btnCopy"
+            app:layout_constraintHorizontal_bias="0.489"
             app:layout_constraintVertical_bias="1.0"/>
+
     <TextView
             android:text="Your new address is automatically generated after every transaction."
             android:layout_width="wrap_content"

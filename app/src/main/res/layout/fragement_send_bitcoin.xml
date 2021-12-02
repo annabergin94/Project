@@ -22,6 +22,7 @@
               app:layout_constraintBottom_toTopOf="@+id/etAmountToSend"
               app:layout_constraintVertical_bias="0.761" app:layout_constraintEnd_toEndOf="parent"
               app:layout_constraintStart_toStartOf="parent"/>
+
     <EditText android:layout_height="wrap_content"
               android:layout_width="347dp"
               android:layout_centerHorizontal="true"
@@ -34,6 +35,7 @@
               android:textColorHint="?attr/text_color"
               app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
               android:layout_marginBottom="16dp" app:layout_constraintBottom_toTopOf="@+id/tvAvailableBalance"/>
+
     <TextView android:layout_height="wrap_content"
               android:layout_width="wrap_content"
               android:layout_alignParentTop="true"
@@ -42,8 +44,11 @@
               android:text="@string/_0_005_btc_available"
               android:layout_centerHorizontal="true"
               android:textSize="16sp"
-              app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
-              app:layout_constraintBottom_toTopOf="@+id/tvRecipientAddress" android:layout_marginBottom="60dp"/>
+              app:layout_constraintStart_toStartOf="parent"
+              app:layout_constraintEnd_toEndOf="parent"
+              app:layout_constraintBottom_toTopOf="@+id/tvRecipientAddress"
+              android:layout_marginBottom="60dp"/>
+
     <TextView android:layout_height="wrap_content"
               android:layout_width="wrap_content"
               android:layout_alignParentTop="true"
@@ -54,30 +59,40 @@
               android:textAppearance="?android:attr/textAppearanceMedium"
               android:textSize="20sp"
               android:textStyle="bold"
-              app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
-              app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toBottomOf="parent"/>
+              app:layout_constraintStart_toStartOf="parent"
+              app:layout_constraintEnd_toEndOf="parent"
+              app:layout_constraintTop_toTopOf="parent"
+              app:layout_constraintBottom_toBottomOf="parent"/>
+
     <EditText android:layout_height="wrap_content"
               android:layout_width="347dp"
               android:id="@+id/etRecipientAddress"
               android:ems="10"
               android:textColor="?attr/text_color"
               android:hint="@string/enter_recipient_address"
-              android:maxLength="32"
+              android:maxLength="42"
               android:textColorHint="@color/white"
-              android:inputType="textShortMessage" app:layout_constraintStart_toStartOf="parent"
+              android:inputType="textShortMessage"
+              app:layout_constraintStart_toStartOf="parent"
               app:layout_constraintEnd_toEndOf="parent"
-              android:layout_marginTop="32dp" app:layout_constraintTop_toBottomOf="@+id/tvRecipientAddress"
-              app:layout_constraintBottom_toTopOf="@+id/btnSendBitcoin" app:layout_constraintVertical_bias="0.0"/>
+              android:layout_marginTop="32dp"
+              app:layout_constraintTop_toBottomOf="@+id/tvRecipientAddress"
+              app:layout_constraintBottom_toTopOf="@+id/btnSendBitcoin"
+              app:layout_constraintVertical_bias="0.0"/>
+
     <Button android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:layout_centerHorizontal="true"
             android:id="@+id/btnSendBitcoin"
             android:text="@string/send"
             android:textAllCaps="false"
-            android:layout_below="@+id/tvRecipientAddress" app:layout_constraintStart_toStartOf="parent"
+            android:layout_below="@+id/tvRecipientAddress"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498" app:layout_constraintBottom_toTopOf="@+id/backToMainMenu"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintBottom_toTopOf="@+id/backToMainMenu"
             android:layout_marginBottom="40dp"/>
+
     <Button android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:layout_centerHorizontal="true"
@@ -86,7 +101,8 @@
             android:textAllCaps="false"
             android:onClick="backToMainMenu"
             android:layout_alignParentBottom="true"
-            app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             android:layout_marginBottom="48dp"/>
 

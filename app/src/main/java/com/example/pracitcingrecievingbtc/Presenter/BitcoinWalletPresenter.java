@@ -160,7 +160,7 @@ public class BitcoinWalletPresenter implements Contract.Presenter {
         groupOfDistinctPeers.addDisconnectedEventListener((peer, peerCount) ->
                 Log.d(TAG, "There are currently " + peerCount + " peers connected. The peer lost is " + peer.getAddress()));
         groupOfDistinctPeers.addPeerDiscovery(new DnsDiscovery(networkParams)); // look for peers
-        groupOfDistinctPeers.setMaxConnections(10); // setting max num of peers to connect too
+        groupOfDistinctPeers.setMaxConnections(10); // setting max num of peers to connect too, but need 8 to broadcast a transaction to network
         groupOfDistinctPeers.addWallet(myWallet); // adding wallet with keys before downloading the blockchain to make sure relevant parts are downloaded (if add wallet keys earlier than the current chain head, the relevant parts of the chain won't be downloaded
         groupOfDistinctPeers.startAsync(); // start syncing blockchain
         groupOfDistinctPeers.downloadBlockChain();
@@ -193,9 +193,6 @@ public class BitcoinWalletPresenter implements Contract.Presenter {
     }
 
     public void send(String address, String amount) throws Exception {
-
-     //   address = "tb1qf30nznypp6qwk4qdfr05fran6wnyqrj7d37vk6";
-      //  amount = "0.0005";
 
         Address to = Address.fromString(networkParams, address);
    ///     LegacyAddress to = LegacyAddress.fromBase58(networkParams, Hex.decode(address).toString());
