@@ -94,16 +94,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             // view. used to call the id because we are in a fragment
             tvAvailableBalance = view.findViewById(R.id.tvAvailableBalance);
             String out = f.format(((MainActivity)this.getActivity()).getBitcoinWalletPresenter().getBalanceEstimated(),2,3, 3) + " BTC";
-            tvAvailableBalance.setText("Balance " + out);
+            tvAvailableBalance.setText("Balance: " + out);
 
 
             tvRealBalance = view.findViewById(R.id.tvRealBalance);
             double result = Double.parseDouble(f.format(((MainActivity)this.getActivity()).getBitcoinWalletPresenter().getBalanceEstimated(),2,3, 3)) * 42863.24323705;
-            tvRealBalance.setText(String.valueOf(result));
+            double roundedResult = Math.round(result*100.0)/100.0;
+            tvRealBalance.setText("£" + String.format(String.valueOf(roundedResult)));
 
             btnSwitchTheme = view.findViewById(R.id.btnSwitchTheme);
             btnSwitchTheme.setOnCheckedChangeListener((buttonView, isChecked) -> {
-                // checking conditions
                 if (isChecked) {
                     // when switch button is click set night mode
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);

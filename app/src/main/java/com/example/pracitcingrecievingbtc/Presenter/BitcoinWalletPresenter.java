@@ -165,19 +165,10 @@ public class BitcoinWalletPresenter implements Contract.Presenter {
         groupOfDistinctPeers.startAsync(); // start syncing blockchain
         groupOfDistinctPeers.downloadBlockChain();
         groupOfDistinctPeers.stopAsync(); // stop syncing the blockchain
-
     }
 
     public PeerGroup getGroupOfDistinctPeers() {
         return groupOfDistinctPeers;
-    }
-
-    // recommend disclosing these to user
-    public String getMnemonic() {
-        DeterministicSeed seed = myWallet.getKeyChainSeed();
-        String recoverySeedWords = Joiner.on(" ").join(seed.getMnemonicCode());
-        Log.d(TAG, "Recovery Seed words are: " + recoverySeedWords);
-        return recoverySeedWords;
     }
 
     // listens for coins sent to the user's wallet

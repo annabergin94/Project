@@ -18,6 +18,7 @@ public class TransactionHistoryFragment extends Fragment {
     TextView tvAvailableBalance;
     TextView tvRecentTransactions;
     BtcFormat f = BtcFormat.getInstance(); // format balance
+    String transactionList = "";
 
     private static final String TAG = TransactionHistoryFragment.class.getSimpleName();
 
@@ -29,17 +30,29 @@ public class TransactionHistoryFragment extends Fragment {
         String out = f.format(((MainActivity)this.getActivity()).getBitcoinWalletPresenter().getBalanceEstimated(),2,3,3) + " BTC";
         tvAvailableBalance.setText(out);
 
-        List<Transaction> recentTransactions = ((MainActivity)this.getActivity()).getBitcoinWalletPresenter().getRecentTransactions();
-        String transactionList = "";
-        for (Transaction transaction : recentTransactions ) {
-            transactionList += transaction.getTxId().toString().substring(0,4) + "/t"; // print first five
-        }
-        Log.d(TAG, "displaying wallet transactions");
+
+       transactionHistory();
         tvRecentTransactions = view.findViewById(R.id.tvRecentTransactions);
         tvRecentTransactions.setText(transactionList);
 
         return view;
     }
+
+    public void transactionHistory(){
+        int id = 0;
+        // get the recent transactions from the wallet
+        List<Transaction> recentTransactions = ((MainActivity)this.getActivity()).getBitcoinWalletPresenter().getRecentTransactions();
+        // for each of the recent transactions add them to the string variable transactionList to print
+        for (Transaction transaction : recentTransactions ) {
+            transactionList = transactionList + "Transaction id: " + transaction.getTxId().toString().substring(0,4) + "/t" + "Sent: " + transaction.getOutputs() + "     Time: " + transaction.getUpdateTime() + "\n";// print first five
+        }
+    }
+
+//    public void printingTransactionHistory(){
+//        for(Transaction transaction : transactionList){
+//
+//        }
+//    }
 
     @Override
     public void onPause() {
