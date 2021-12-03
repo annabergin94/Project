@@ -2,6 +2,8 @@ package com.example.pracitcingrecievingbtc.View;
 
 import android.content.ClipData;
 import android.content.Context;
+import android.content.res.Resources;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
@@ -35,6 +37,7 @@ public class ViewAddressFragment extends Fragment {
 
         btnCopy = (Button) view.findViewById(R.id.btnCopy);
         tvMyAddress = (TextView) view.findViewById(R.id.tvMyAddress);
+        tvMyAddress.setTextColor(Color.MAGENTA);
         tvMyAddress.setText(((MainActivity)getActivity()).getBitcoinWalletPresenter().printMyWalletAddress());
 
         btnPaste = (Button) view.findViewById(R.id.btnPaste);

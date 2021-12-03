@@ -44,7 +44,7 @@ public class TransactionHistoryFragment extends Fragment {
         List<Transaction> recentTransactions = ((MainActivity)this.getActivity()).getBitcoinWalletPresenter().getRecentTransactions();
         // for each of the recent transactions add them to the string variable transactionList to print
         for (Transaction transaction : recentTransactions ) {
-            transactionList = transactionList + "Transaction id: " + transaction.getTxId().toString().substring(0,4) + "/t" + "Sent: " + transaction.getOutputs() + "     Time: " + transaction.getUpdateTime() + "\n";// print first five
+            transactionList = transactionList + "Transaction id: " + transaction.getTxId().toString().substring(0,4) + "/t" + "Time: " + transaction.getUpdateTime() + "\n";// print first five
         }
     }
 
