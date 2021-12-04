@@ -11,31 +11,36 @@
 
 
     <TextView
-            android:text="@string/current_bitcoin_address"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:text="Current address"
+            android:layout_width="105dp"
+            android:layout_height="26dp"
             android:id="@+id/tvExplainAddress"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintHorizontal_bias="0.519" android:layout_marginTop="56dp"
-            android:layout_marginBottom="50dp" app:layout_constraintBottom_toTopOf="@+id/tvMyAddress"
-            app:layout_constraintVertical_bias="1.0"/>
+            app:layout_constraintBottom_toTopOf="@+id/tvMyAddress"
+            app:layout_constraintVertical_bias="0.842"
+            android:layout_marginLeft="70dp"
+            android:layout_marginRight="70dp"
+            android:textStyle="bold"/>
+
     <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="337dp"
+            android:layout_height="25dp"
             android:layout_centerHorizontal="true"
             android:id="@+id/tvMyAddress"
             android:textColor="?attr/text_color"
             android:textSize="16sp"
             android:textColorHighlight="@color/purple_700"
-            app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.842"
-            android:layout_marginBottom="32dp" app:layout_constraintBottom_toTopOf="@+id/tvAddressUserInfo"
-            android:layout_marginLeft="10dp" android:layout_marginRight="10dp"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="28dp"
+            app:layout_constraintBottom_toTopOf="@+id/tvAddressUserInfo"
+            android:layout_marginLeft="10dp" app:layout_constraintHorizontal_bias="0.567" android:textStyle="bold"/>
     <Button android:id="@+id/btnCopy"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
+            android:layout_height="51dp"
+            android:layout_width="85dp"
             android:layout_centerHorizontal="true"
             android:text="@string/copy"
             android:textAllCaps="false"
@@ -43,8 +48,8 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
-            android:layout_marginBottom="17dp"
-            app:layout_constraintBottom_toTopOf="@+id/textView4"/>
+            app:layout_constraintTop_toBottomOf="@+id/tvAddressUserInfo"
+            android:layout_marginTop="8dp"/>
 
     <EditText
             android:layout_width="match_parent"
@@ -59,9 +64,8 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toTopOf="@+id/btnPaste"
-            android:layout_marginBottom="40dp"
-            app:layout_constraintHorizontal_bias="0.0"/>
-
+            android:layout_marginBottom="8dp"
+    />
     <Button
             android:text="@string/paste"
             android:layout_width="wrap_content"
@@ -92,22 +96,36 @@
 
     <TextView
             android:text="@string/share_this_with_anyone_and_they_can_send_you_payments"
-            android:layout_centerHorizontal="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="false"
+            android:layout_width="337dp"
+            android:layout_height="37dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:id="@+id/tvAddressUserInfo"
-            app:layout_constraintBottom_toTopOf="@+id/btnCopy" app:layout_constraintHorizontal_bias="0.615"
-            android:layout_marginBottom="24dp"/>
+            tools:layout_editor_absoluteY="178dp"
+            android:textSize="14sp"
+            android:layout_marginRight="20dp"
+            app:layout_constraintHorizontal_bias="0.944" android:layout_marginLeft="20dp"/>
+
     <TextView
-            android:text="Your new address is automatically generated after every transaction."
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/textView4"
+            android:text="You current address updates everytime you send or receive Bitcoins."
+            android:layout_width="371dp"
+            android:layout_height="34dp"
+            android:id="@+id/tv4"
             app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginStart="8dp"
-            app:layout_constraintBottom_toTopOf="@+id/etPasteAddress" android:layout_marginBottom="52dp"/>
+            android:textSize="12sp"
+            app:layout_constraintBottom_toTopOf="@+id/etPasteAddress"
+            android:layout_marginBottom="44dp" app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.492" android:layout_marginTop="19dp"
+            app:layout_constraintTop_toBottomOf="@+id/btnCopy" app:layout_constraintVertical_bias="0.0"/>
+    <ImageView
+            android:src="@drawable/softcoinicon"
+            android:layout_width="78dp"
+            android:layout_height="66dp" android:id="@+id/imageView2"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintHorizontal_bias="0.06" android:layout_marginTop="16dp"
+            android:layout_marginBottom="42dp" app:layout_constraintBottom_toTopOf="@+id/tvMyAddress"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

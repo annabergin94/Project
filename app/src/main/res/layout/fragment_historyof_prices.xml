@@ -2,7 +2,8 @@
 <androidx.constraintlayout.widget.ConstraintLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools" android:id="@+id/history_of_prices"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/history_of_prices"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -33,7 +34,7 @@
             android:layout_marginBottom="24dp"/>
 
     <TextView
-            android:text="BTC/USD prices since 2014"
+            android:text="BTC/USD prices since 2013"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/graphTitle"
@@ -44,6 +45,7 @@
             app:layout_constraintStart_toEndOf="@+id/imageView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.28"/>
+
     <ImageView
             android:layout_width="54dp"
             android:layout_height="44dp"
