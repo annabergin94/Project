@@ -11,7 +11,7 @@
         android:background="?attr/background_color">
 
     <Button
-            android:text="View current address"
+            android:text="Current Address"
             android:textAllCaps="false"
             android:onClick="viewAddress"
             tools:ignore="OnClick"
@@ -57,7 +57,7 @@
             android:textSize="18sp"/>
 
     <Button
-            android:text="View Bitcoin Price History"
+            android:text="Bitcoin Price History"
             android:textAllCaps="false"
             android:onClick="viewPrices"
             tools:onClick="ignore"
@@ -83,7 +83,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintVertical_bias="0.449"
-            android:textSize="20sp"/>
+            android:textSize="22sp"/>
 
     <ImageView
             android:src="@drawable/softcoinlogo"
@@ -119,6 +119,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvAvailableBalance"
             android:layout_marginTop="8dp"
-            android:textSize="16sp"/>
+            android:textSize="20sp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
