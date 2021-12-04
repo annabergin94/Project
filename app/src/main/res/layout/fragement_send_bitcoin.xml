@@ -80,7 +80,7 @@
               android:textColorHint="?attr/text_color"
               android:hint="@string/enter_recipient_address"
               android:maxLength="42"
-              android:inputType="text"
+              android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
               app:layout_constraintStart_toStartOf="parent"
               app:layout_constraintEnd_toEndOf="parent"
               android:layout_marginTop="32dp"
