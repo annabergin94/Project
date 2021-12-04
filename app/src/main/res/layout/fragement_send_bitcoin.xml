@@ -14,7 +14,7 @@
               android:layout_width="wrap_content"
               android:layout_centerHorizontal="true"
               android:id="@+id/tvEnterAmount"
-              android:text="@string/enter_amount"
+              android:text="Enter amount to send"
               android:textColor="?attr/text_color"
               android:textAppearance="?android:attr/textAppearanceMedium"
               android:textSize="20sp"
@@ -32,14 +32,15 @@
               android:layout_below="@+id/tvEnterAmount"
               android:ems="10"
               android:inputType="numberDecimal"
-              android:hint="@string/enter_amount_of_btc"
+              android:hint="0.0"
               android:textColor="?attr/text_color"
               android:textColorHint="?attr/text_color"
               app:layout_constraintStart_toStartOf="parent"
               app:layout_constraintEnd_toEndOf="parent"
               android:background="@drawable/etbackground"
               android:layout_marginBottom="12dp"
-              app:layout_constraintBottom_toTopOf="@+id/tvAvailableBalance"/>
+              app:layout_constraintBottom_toTopOf="@+id/tvAvailableBalance" android:paddingLeft="10dp"
+              android:paddingRight="10dp"/>
 
     <TextView android:layout_height="wrap_content"
               android:layout_width="wrap_content"
