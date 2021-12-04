@@ -23,6 +23,7 @@
             android:text="@string/main_menu"
             android:textAllCaps="false"
             android:onClick="backToMainMenu"
+            android:textSize="18sp"
             android:layout_height="47dp"
             android:id="@+id/callingPlaceholderFrag"
             app:layout_constraintStart_toStartOf="parent"

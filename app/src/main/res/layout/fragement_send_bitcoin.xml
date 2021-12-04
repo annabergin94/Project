@@ -39,7 +39,8 @@
               app:layout_constraintEnd_toEndOf="parent"
               android:background="@drawable/etbackground"
               android:layout_marginBottom="12dp"
-              app:layout_constraintBottom_toTopOf="@+id/tvAvailableBalance" android:paddingLeft="10dp"
+              app:layout_constraintBottom_toTopOf="@+id/tvAvailableBalance"
+              android:paddingLeft="10dp"
               android:paddingRight="10dp"/>
 
     <TextView android:layout_height="wrap_content"
@@ -79,7 +80,7 @@
               android:textColorHint="?attr/text_color"
               android:hint="@string/enter_recipient_address"
               android:maxLength="42"
-              android:inputType="textShortMessage"
+              android:inputType="text"
               app:layout_constraintStart_toStartOf="parent"
               app:layout_constraintEnd_toEndOf="parent"
               android:layout_marginTop="32dp"
@@ -96,6 +97,7 @@
             android:id="@+id/btnSendBitcoin"
             android:text="@string/send"
             android:textAllCaps="false"
+            android:textSize="18sp"
             android:layout_below="@+id/tvRecipientAddress"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -108,6 +110,7 @@
             android:layout_centerHorizontal="true"
             android:id="@+id/backToMainMenu"
             android:text="@string/main_menu"
+            android:textSize="18sp"
             android:textAllCaps="false"
             android:onClick="backToMainMenu"
             android:layout_alignParentBottom="true"
@@ -124,9 +127,9 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintHorizontal_bias="0.063"
+            app:layout_constraintHorizontal_bias="0.0"
             android:layout_marginBottom="80dp"
             app:layout_constraintBottom_toTopOf="@+id/etAmountToSend"
-            app:layout_constraintVertical_bias="0.761"/>
+            app:layout_constraintVertical_bias="0.0"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

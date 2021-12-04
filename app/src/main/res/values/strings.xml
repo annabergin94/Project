@@ -36,4 +36,7 @@
     <string name="a_new_address_will_appear_here_everytime_you_send_or_receive_bitcoin">A new address will appear here
         everytime you send or receive Bitcoin.
     </string>
+    <string name="share_this_address_with_anyone_and_they_can_send_you_payments">Share this address with anyone and they
+        can send you payments.
+    </string>
 </resources>

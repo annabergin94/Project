@@ -12,17 +12,19 @@
 
     <TextView
             android:text="Current address"
-            android:layout_width="105dp"
-            android:layout_height="26dp"
+            android:textColor="?attr/text_color"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_width="151dp"
+            android:layout_height="39dp"
             android:id="@+id/tvExplainAddress"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/tvMyAddress"
-            app:layout_constraintVertical_bias="0.842"
             android:layout_marginLeft="70dp"
             android:layout_marginRight="70dp"
-            android:textStyle="bold"/>
+            android:layout_marginTop="104dp"/>
 
     <TextView
             android:layout_width="337dp"
@@ -30,26 +32,35 @@
             android:layout_centerHorizontal="true"
             android:id="@+id/tvMyAddress"
             android:textColor="?attr/text_color"
-            android:textSize="16sp"
-            android:textColorHighlight="@color/purple_700"
+            android:text="address"
+            android:background="@drawable/etbackground"
+            android:textSize="20sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginRight="10dp"
-            android:layout_marginBottom="28dp"
-            app:layout_constraintBottom_toTopOf="@+id/tvAddressUserInfo"
-            android:layout_marginLeft="10dp" app:layout_constraintHorizontal_bias="0.567" android:textStyle="bold"/>
+            android:layout_marginRight="5dp"
+            android:layout_marginLeft="5dp"
+            android:paddingLeft="3dp"
+            android:paddingRight="3dp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@+id/tvExplainAddress"
+            android:layout_marginTop="20dp"/>
+
     <Button android:id="@+id/btnCopy"
-            android:layout_height="51dp"
-            android:layout_width="85dp"
+            android:layout_height="55dp"
+            android:layout_width="69dp"
             android:layout_centerHorizontal="true"
             android:text="@string/copy"
             android:textAllCaps="false"
             android:padding="10dp"
+            android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintBottom_toTopOf="@+id/etPasteAddress"
+            app:layout_constraintHorizontal_bias="0.478"
+            android:layout_marginBottom="48dp"
+            android:layout_marginTop="23dp"
             app:layout_constraintTop_toBottomOf="@+id/tvAddressUserInfo"
-            android:layout_marginTop="8dp"/>
+            app:layout_constraintVertical_bias="0.0"/>
 
     <EditText
             android:layout_width="match_parent"
@@ -64,69 +75,69 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toTopOf="@+id/btnPaste"
-            android:layout_marginBottom="8dp"
-    />
+            android:layout_marginBottom="24dp"/>
+
     <Button
             android:text="@string/paste"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="92dp"
+            android:layout_height="41dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/etPasteAddress"
             android:id="@+id/btnPaste"
             android:textAllCaps="false"
+            android:textSize="18sp"
             app:layout_constraintHorizontal_bias="0.498"
-            app:layout_constraintBottom_toTopOf="@+id/callingPlaceholderFrag"
-            android:layout_marginBottom="64dp"/>
+            android:layout_marginTop="52dp"/>
 
     <Button android:id="@+id/callingPlaceholderFrag"
             android:onClick="backToMainMenu"
-            android:layout_height="45dp"
-            android:layout_width="162dp"
+            android:layout_height="51dp"
+            android:layout_width="142dp"
             android:layout_alignParentBottom="true"
             android:textAllCaps="false"
             android:text="@string/main_menu"
+            android:textSize="18sp"
             android:layout_below="@+id/btnCopy"
             android:layout_alignParentStart="true"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginBottom="44dp"
+            android:layout_marginBottom="40dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintHorizontal_bias="0.497"
-            tools:ignore="OnClick"/>
+            tools:ignore="OnClick"
+            app:layout_constraintTop_toBottomOf="@+id/btnPaste"
+            app:layout_constraintVertical_bias="0.755"
+            app:layout_constraintStart_toStartOf="parent"/>
 
     <TextView
-            android:text="@string/share_this_with_anyone_and_they_can_send_you_payments"
+            android:text="@string/share_this_address_with_anyone_and_they_can_send_you_payments"
+            android:textColor="?attr/text_color"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textSize="18sp"
             android:layout_centerHorizontal="false"
-            android:layout_width="337dp"
-            android:layout_height="37dp"
+            android:layout_width="376dp"
+            android:layout_height="57dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:id="@+id/tvAddressUserInfo"
-            tools:layout_editor_absoluteY="178dp"
-            android:textSize="14sp"
             android:layout_marginRight="20dp"
-            app:layout_constraintHorizontal_bias="0.944" android:layout_marginLeft="20dp"/>
+            android:layout_marginLeft="20dp"
+            app:layout_constraintHorizontal_bias="0.485"
+            android:layout_marginTop="12dp"
+            app:layout_constraintTop_toBottomOf="@+id/tvMyAddress"/>
 
-    <TextView
-            android:text="You current address updates everytime you send or receive Bitcoins."
-            android:layout_width="371dp"
-            android:layout_height="34dp"
-            android:id="@+id/tv4"
-            app:layout_constraintStart_toStartOf="parent"
-            android:textSize="12sp"
-            app:layout_constraintBottom_toTopOf="@+id/etPasteAddress"
-            android:layout_marginBottom="44dp" app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.492" android:layout_marginTop="19dp"
-            app:layout_constraintTop_toBottomOf="@+id/btnCopy" app:layout_constraintVertical_bias="0.0"/>
     <ImageView
             android:src="@drawable/softcoinicon"
-            android:layout_width="78dp"
-            android:layout_height="66dp" android:id="@+id/imageView2"
+            android:layout_width="73dp"
+            android:layout_height="62dp"
+            android:id="@+id/imageView2"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintHorizontal_bias="0.06" android:layout_marginTop="16dp"
-            android:layout_marginBottom="42dp" app:layout_constraintBottom_toTopOf="@+id/tvMyAddress"/>
-
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="93dp"
+            app:layout_constraintBottom_toTopOf="@+id/tvMyAddress"
+            app:layout_constraintVertical_bias="0.0"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 
