@@ -44,7 +44,18 @@ public class TransactionHistoryFragment extends Fragment {
         List<Transaction> recentTransactions = ((MainActivity)this.getActivity()).getBitcoinWalletPresenter().getRecentTransactions();
         // for each of the recent transactions add them to the string variable transactionList to print
         for (Transaction transaction : recentTransactions ) {
-            transactionList = transactionList + "Transaction id: " + transaction.getTxId().toString().substring(0,4) + "/t" + "Time: " + transaction.getUpdateTime() + "\n";// print first five
+            transactionList = transactionList + "Id:" + transaction.getTxId().toString().substring(0,4) + "\t" + "Time: " + transaction.getUpdateTime().toString().substring(4,19) + "\n";// print first five
+            Log.d(TAG, transaction.toString());
+            Log.d(TAG, String.valueOf(transaction.getConfidence()));
+// null doesn't work  Log.d(TAG, transaction.getExchangeRate().toString());
+//            Log.d(TAG, transaction.getFee().toString());
+            Log.d(TAG, transaction.getOutputs().toString());
+            Log.d(TAG, transaction.getInputs().toString());
+            Log.d(TAG, transaction.getUpdateTime().toString());
+            Log.d(TAG, transaction.getPurpose().toString());
+            Log.d(TAG, String.valueOf(transaction.getVersion()));
+            Log.d(TAG, transaction.getWTxId().toString());
+
         }
     }
 
