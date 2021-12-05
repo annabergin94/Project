@@ -19,7 +19,6 @@ import org.bitcoinj.wallet.Wallet;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
-import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 public class BitcoinWalletPresenter implements Contract.Presenter {
@@ -210,6 +209,11 @@ public class BitcoinWalletPresenter implements Contract.Presenter {
     public List<Transaction> getRecentTransactions() {
         return myWallet.getTransactionsByTime();
     }
+
+    public Wallet getMyWallet() {
+        return myWallet;
+    }
+
 }
 
 

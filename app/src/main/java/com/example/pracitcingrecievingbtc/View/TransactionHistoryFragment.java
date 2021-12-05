@@ -8,7 +8,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.example.pracitcingrecievingbtc.R;
+import org.bitcoinj.core.Coin;
 import org.bitcoinj.core.Transaction;
+import org.bitcoinj.core.TransactionBag;
 import org.bitcoinj.utils.BtcFormat;
 
 import java.util.List;
@@ -19,6 +21,7 @@ public class TransactionHistoryFragment extends Fragment {
     TextView tvRecentTransactions;
     BtcFormat f = BtcFormat.getInstance(); // format balance
     String transactionList = "";
+    Transaction transaction;
 
     private static final String TAG = TransactionHistoryFragment.class.getSimpleName();
 
@@ -39,22 +42,39 @@ public class TransactionHistoryFragment extends Fragment {
     }
 
     public void transactionHistory(){
-        int id = 0;
+        TransactionBag tx = ((MainActivity)this.getActivity()).getBitcoinWalletPresenter().getMyWallet();
+        Coin valueSentToMe;
+
         // get the recent transactions from the wallet
         List<Transaction> recentTransactions = ((MainActivity)this.getActivity()).getBitcoinWalletPresenter().getRecentTransactions();
         // for each of the recent transactions add them to the string variable transactionList to print
         for (Transaction transaction : recentTransactions ) {
-            transactionList = transactionList + "Id:" + transaction.getTxId().toString().substring(0,4) + "\t" + "Time: " + transaction.getUpdateTime().toString().substring(4,19) + "\n";// print first five
-            Log.d(TAG, transaction.toString());
-            Log.d(TAG, String.valueOf(transaction.getConfidence()));
+            transactionList = transactionList + transaction.getUpdateTime().toString().substring(4,10) + "\n" +
+                    "total value " + transaction.getValue(((MainActivity)this.getActivity()).getBitcoinWalletPresenter().getMyWallet()).toFriendlyString() +
+                    " sends (" + transaction.getValueSentFromMe(tx).toFriendlyString() +
+                    "\n" + " and receives " + transaction.getValueSentToMe(tx).toFriendlyString()
+                    + ")" + "\n";// print first five
+
+
+            Log.d(TAG, "id:   " + transaction.getTxId() + "\t" + transaction.getUpdateTime().toString().substring(4,17) +  "total value (sends   " + transaction.getValueSentFromMe(((MainActivity)this.getActivity()).getBitcoinWalletPresenter().getMyWallet()) + " and receives " +  transaction.getValueSentToMe(((MainActivity)this.getActivity()).getBitcoinWalletPresenter().getMyWallet()).toFriendlyString());
+
+
+            // TRANSACTION BAG
+            // ((MainActivity)this.getActivity()).getBitcoinWalletPresenter().getMyWallet())
+
+            // don't work
+//            Log.d(TAG, String.valueOf(transaction.getConfidence()));
 // null doesn't work  Log.d(TAG, transaction.getExchangeRate().toString());
 //            Log.d(TAG, transaction.getFee().toString());
-            Log.d(TAG, transaction.getOutputs().toString());
-            Log.d(TAG, transaction.getInputs().toString());
-            Log.d(TAG, transaction.getUpdateTime().toString());
-            Log.d(TAG, transaction.getPurpose().toString());
-            Log.d(TAG, String.valueOf(transaction.getVersion()));
-            Log.d(TAG, transaction.getWTxId().toString());
+
+            // not sure
+       //     Log.d(TAG, transaction.getOutputs().toString());
+      //      Log.d(TAG, transaction.getInputs().toString());
+      //      Log.d(TAG, transaction.getUpdateTime().toString());
+      //      Log.d(TAG, transaction.getPurpose().toString());
+      //      Log.d(TAG, String.valueOf(transaction.getVersion()));
+       //     Log.d(TAG, transaction.getWTxId().toString());
+       //     Log.d(TAG, transaction.toString());
 
         }
     }
