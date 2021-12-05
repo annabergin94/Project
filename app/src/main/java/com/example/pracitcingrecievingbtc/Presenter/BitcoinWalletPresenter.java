@@ -183,9 +183,7 @@ public class BitcoinWalletPresenter implements Contract.Presenter {
     }
 
     public void send(String address, String amount) throws Exception {
-
         Address to = Address.fromString(networkParams, address);
-   ///     LegacyAddress to = LegacyAddress.fromBase58(networkParams, Hex.decode(address).toString());
         Log.d(TAG, "Send money to: " + to);
         Coin value = Coin.parseCoin(amount);
         Log.d(TAG, "Send " + amount + "coins" + to);
