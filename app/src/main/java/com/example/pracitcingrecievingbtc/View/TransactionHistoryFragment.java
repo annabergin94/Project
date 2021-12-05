@@ -52,66 +52,19 @@ public class TransactionHistoryFragment extends Fragment {
                     " Fee: " + Coin.valueOf(fee).toFriendlyString() + "\n" +
                     "---------------------------------------------------------------------" +
                     "\n";
-
-
-            System.out.println("Date and Time: " + transaction.getUpdateTime().toString());
-            System.out.println("Amount Sent to me: " + transaction.getValueSentToMe(tx).toFriendlyString());
-            System.out.println("Amount Sent from me: " + transaction.getValueSentFromMe(tx).toFriendlyString());
-        //    long fee = (transaction.getInputSum().getValue() > 0 ? transaction.getInputSum().getValue() - transaction.getOutputSum().getValue() : 0);
-            System.out.println("Fee: " + Coin.valueOf(fee).toFriendlyString());
-            System.out.println("Transaction Depth: " + transaction.getConfidence().getDepthInBlocks());
-            System.out.println("Transaction Blocks: " + transaction.getConfidence().toString());
-            System.out.println("Tx Hex: " + transaction.getTxId().toString());
-            System.out.println("Tx: " + transaction.toString());
             i++;
+//            // testing
+//            System.out.println("Date and Time: " + transaction.getUpdateTime().toString());
+//            System.out.println("Amount Sent to me: " + transaction.getValueSentToMe(tx).toFriendlyString());
+//            System.out.println("Amount Sent from me: " + transaction.getValueSentFromMe(tx).toFriendlyString());
+//        //    long fee = (transaction.getInputSum().getValue() > 0 ? transaction.getInputSum().getValue() - transaction.getOutputSum().getValue() : 0);
+//            System.out.println("Fee: " + Coin.valueOf(fee).toFriendlyString());
+//            System.out.println("Transaction Depth: " + transaction.getConfidence().getDepthInBlocks());
+//            System.out.println("Transaction Blocks: " + transaction.getConfidence().toString());
+//            System.out.println("Tx Hex: " + transaction.getTxId().toString());
+//            System.out.println("Tx: " + transaction.toString());
         }
     }
-
-//    public void transactionHistory(){
-//        TransactionBag tx = ((MainActivity)this.getActivity()).getBitcoinWalletPresenter().getMyWallet();
-//        Coin valueSentToMe;
-//
-//        // get the recent transactions from the wallet
-//        List<Transaction> recentTransactions = ((MainActivity)this.getActivity()).getBitcoinWalletPresenter().getRecentTransactions();
-//        // for each of the recent transactions add them to the string variable transactionList to print
-//        for (Transaction transaction : recentTransactions) {
-//            // storing the transactions in a string so that it can be passed to setText() to display on UI
-//            transactionList = transactionList + transaction.getUpdateTime().toString().substring(4,10) + "\n" +
-//                    transaction.getOutputs() +
-//                    "\n" + " and remaining balance after fees is " + transaction.getInputs()
-//                    + ")" + "\n";// print first five
-//            Log.d(TAG, "id:   " + transaction.getTxId() + "\t" + transaction.getUpdateTime().toString().substring(4,17) +  "total value (sends   " + transaction.getValueSentFromMe(((MainActivity)this.getActivity()).getBitcoinWalletPresenter().getMyWallet()) + " and receives " +  transaction.getValueSentToMe(((MainActivity)this.getActivity()).getBitcoinWalletPresenter().getMyWallet()).toFriendlyString());
-//        }
-//    }
-
-
-//    public void transactionHistory(){
-//        TransactionBag tx = ((MainActivity)this.getActivity()).getBitcoinWalletPresenter().getMyWallet();
-//        Coin valueSentToMe;
-//
-//        // get the recent transactions from the wallet
-//        List<Transaction> recentTransactions = ((MainActivity)this.getActivity()).getBitcoinWalletPresenter().getRecentTransactions();
-//        // for each of the recent transactions add them to the string variable transactionList to print
-//        for (Transaction transaction : recentTransactions) {
-//            // storing the transactions in a string so that it can be passed to setText() to display on UI
-//            transactionList = transactionList + transaction.getUpdateTime().toString().substring(4,10) + "\n" +
-//                    "total value " + transaction.getValue(tx).toFriendlyString() + "\n" +
-//                    " balance before sends (" + transaction.getValueSentFromMe(tx).toFriendlyString() +
-//                    "\n" + " and remaining balance after fees is " + transaction.getValueSentToMe(tx).toFriendlyString()
-//                    + ")" + "\n";// print first five
-//            Log.d(TAG, "id:   " + transaction.getTxId() + "\t" + transaction.getUpdateTime().toString().substring(4,17) +  "total value (sends   " + transaction.getValueSentFromMe(((MainActivity)this.getActivity()).getBitcoinWalletPresenter().getMyWallet()) + " and receives " +  transaction.getValueSentToMe(((MainActivity)this.getActivity()).getBitcoinWalletPresenter().getMyWallet()).toFriendlyString());
-//        }
-//    }
-
-//    public void storingBalances(){
-//        Coin value = null;
-//        String testlist = "";
-//        TransactionBag tx = ((MainActivity)this.getActivity()).getBitcoinWalletPresenter().getMyWallet();
-//        List<Transaction> test = ((MainActivity)this.getActivity()).getBitcoinWalletPresenter().getRecentTransactions();
-//        for (Transaction transactions : test) {
-//            value = transactions.getValue(tx);
-//        }
-//    }
 
     @Override
     public void onPause() {
