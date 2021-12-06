@@ -46,22 +46,22 @@ public class TransactionHistoryFragment extends Fragment {
             // storing the transactions in a string so that it can be passed to setText() to display on UI
             transactionList = transactionList +
                     " " + i + ". Date: " + transaction.getUpdateTime().toString().substring(4,10) + "\n" +
-                    " Amount sent to me: " + transaction.getValueSentToMe(tx).toFriendlyString() + "\n" +
-                    " Amount Sent from me: " + transaction.getValueSentFromMe(tx).toFriendlyString() + "\n" +
-                    " Fee: " + Coin.valueOf(fee).toFriendlyString() + "\n" +
+                    "      Amount sent to me: " + transaction.getValueSentToMe(tx).toFriendlyString() + "\n" +
+                    "      Amount Sent from me: " + transaction.getValueSentFromMe(tx).toFriendlyString() + "\n" +
+                    "      Fee: " + Coin.valueOf(fee).toFriendlyString() + "\n" +
                     "---------------------------------------------------------------------"
             + "\n";
             i++;
 //            // testing
-//            System.out.println("Date and Time: " + transaction.getUpdateTime().toString());
-//            System.out.println("Amount Sent to me: " + transaction.getValueSentToMe(tx).toFriendlyString());
-//            System.out.println("Amount Sent from me: " + transaction.getValueSentFromMe(tx).toFriendlyString());
-//        //    long fee = (transaction.getInputSum().getValue() > 0 ? transaction.getInputSum().getValue() - transaction.getOutputSum().getValue() : 0);
-//            System.out.println("Fee: " + Coin.valueOf(fee).toFriendlyString());
-//            System.out.println("Transaction Depth: " + transaction.getConfidence().getDepthInBlocks());
-//            System.out.println("Transaction Blocks: " + transaction.getConfidence().toString());
-//            System.out.println("Tx Hex: " + transaction.getTxId().toString());
-//            System.out.println("Tx: " + transaction.toString());
+            System.out.println("Date and Time: " + transaction.getUpdateTime().toString());
+            System.out.println("Amount Sent to me: " + transaction.getValueSentToMe(tx).toFriendlyString());
+            System.out.println("Amount Sent from me: " + transaction.getValueSentFromMe(tx).toFriendlyString());
+        //    long fee = (transaction.getInputSum().getValue() > 0 ? transaction.getInputSum().getValue() - transaction.getOutputSum().getValue() : 0);
+            System.out.println("Fee: " + Coin.valueOf(fee).toFriendlyString());
+            System.out.println("Transaction Depth: " + transaction.getConfidence().getDepthInBlocks());
+            System.out.println("Transaction Blocks: " + transaction.getConfidence().toString());
+            System.out.println("Tx Hex: " + transaction.getTxId().toString());
+            System.out.println("Tx: " + transaction.toString());
         }
     }
 
