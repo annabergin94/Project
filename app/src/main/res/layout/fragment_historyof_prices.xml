@@ -10,53 +10,48 @@
 
     <com.jjoe64.graphview.GraphView
             android:id="@+id/graph"
-            android:layout_width="382dp"
+            android:layout_width="376dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_height="380dp"
-            app:layout_constraintHorizontal_bias="0.44"
+            android:layout_height="446dp"
+            app:layout_constraintHorizontal_bias="0.744"
             android:layout_marginStart="2dp"
             android:layout_marginEnd="5dp"
-            android:layout_marginTop="60dp"
-            app:layout_constraintTop_toBottomOf="@+id/graphTitle"/>
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="128dp"/>
     <Button
             android:text="@string/main_menu"
             android:textAllCaps="false"
             android:onClick="backToMainMenu"
             android:textSize="18sp"
-            android:layout_height="47dp"
+            android:layout_height="59dp"
             android:id="@+id/callingPlaceholderFrag"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginLeft="150dp"
-            android:layout_marginRight="150dp"
-            android:layout_width="127dp"
+            android:layout_width="142dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginBottom="24dp"/>
+            android:layout_marginBottom="24dp" app:layout_constraintTop_toBottomOf="@+id/graph"
+            app:layout_constraintVertical_bias="0.716" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
 
     <TextView
             android:text="BTC/USD prices since 2013"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="221dp"
+            android:layout_height="28dp"
             android:id="@+id/graphTitle"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="44dp"
             android:textSize="20sp"
             android:textStyle="bold"
-            app:layout_constraintStart_toEndOf="@+id/imageView"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.28"/>
-
+            app:layout_constraintBottom_toTopOf="@+id/graph" android:layout_marginBottom="12dp"
+            app:layout_constraintTop_toTopOf="parent" app:layout_constraintVertical_bias="0.727"
+            android:layout_marginEnd="92dp"/>
     <ImageView
             android:layout_width="54dp"
             android:layout_height="44dp"
             app:srcCompat="@drawable/bitcoinicon"
-            app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginStart="32dp"
             android:id="@+id/imageView"
             app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="31dp"
-            app:layout_constraintBottom_toTopOf="@+id/graph"/>
+            android:layout_marginTop="16dp" app:layout_constraintEnd_toStartOf="@+id/graphTitle"
+            android:layout_marginEnd="28dp" android:layout_marginBottom="24dp"
+            app:layout_constraintBottom_toTopOf="@+id/graph" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintHorizontal_bias="1.0" app:layout_constraintVertical_bias="0.0"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

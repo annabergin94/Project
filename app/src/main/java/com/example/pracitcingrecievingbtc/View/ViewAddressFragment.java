@@ -5,10 +5,7 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.*;
 import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,7 +17,7 @@ import android.content.ClipboardManager;
 // a subclass of Fragment to view address in a Fragment for the MainActivity to display
 public class ViewAddressFragment extends Fragment {
 
-    Button btnCopy;
+    ImageButton btnCopy;
     TextView tvMyAddress;
     ClipboardManager clipboard;
     ClipData cd;
@@ -35,9 +32,8 @@ public class ViewAddressFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_view_address, container, false);
 
-        btnCopy = (Button) view.findViewById(R.id.btnCopy);
+        btnCopy = (ImageButton) view.findViewById(R.id.btnCopy);
         tvMyAddress = (TextView) view.findViewById(R.id.tvMyAddress);
-        tvMyAddress.setTextColor(Color.MAGENTA);
         tvMyAddress.setText(((MainActivity)getActivity()).getBitcoinWalletPresenter().printMyWalletAddress());
 
         btnPaste = (Button) view.findViewById(R.id.btnPaste);

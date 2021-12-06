@@ -1,7 +1,6 @@
 package com.example.pracitcingrecievingbtc.View;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
@@ -25,7 +24,7 @@ public class TransactionHistoryFragment extends Fragment {
     private static final String TAG = TransactionHistoryFragment.class.getSimpleName();
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_receive_bitcoin, container, false);
+        View view = inflater.inflate(R.layout.fragment_transaction_history, container, false);
 
        transactionHistory();
         tvRecentTransactions = view.findViewById(R.id.tvRecentTransactions);
@@ -50,8 +49,8 @@ public class TransactionHistoryFragment extends Fragment {
                     " Amount sent to me: " + transaction.getValueSentToMe(tx).toFriendlyString() + "\n" +
                     " Amount Sent from me: " + transaction.getValueSentFromMe(tx).toFriendlyString() + "\n" +
                     " Fee: " + Coin.valueOf(fee).toFriendlyString() + "\n" +
-                    "---------------------------------------------------------------------" +
-                    "\n";
+                    "---------------------------------------------------------------------"
+            + "\n";
             i++;
 //            // testing
 //            System.out.println("Date and Time: " + transaction.getUpdateTime().toString());

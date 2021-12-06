@@ -11,7 +11,7 @@
         android:background="?attr/background_color">
 
     <Button
-            android:text="Current Address"
+            android:text="Wallet address"
             android:textAllCaps="false"
             android:onClick="viewAddress"
             tools:ignore="OnClick"
@@ -43,7 +43,7 @@
             android:textSize="18sp"/>
 
     <Button
-            android:text="Transaction History"
+            android:text="Transactions"
             android:textAllCaps="false"
             android:onClick="receiveBitcoin"
             tools:ignore="onClick"
@@ -57,7 +57,7 @@
             android:textSize="18sp"/>
 
     <Button
-            android:text="Bitcoin Price History"
+            android:text="Bitcoin price history"
             android:textAllCaps="false"
             android:onClick="viewPrices"
             tools:onClick="ignore"
@@ -77,6 +77,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/tvAvailableBalance"
+            android:textStyle="bold"
             android:inputType="numberDecimal"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -112,6 +113,7 @@
 
     <TextView
             android:text="£10"
+            android:textStyle="bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/tvRealBalance"
