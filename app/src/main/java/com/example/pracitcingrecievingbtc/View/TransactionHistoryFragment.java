@@ -39,19 +39,19 @@ public class TransactionHistoryFragment extends Fragment {
         // get the recent transactions from the wallet
         List<Transaction> recentTransactions = ((MainActivity)this.getActivity()).getBitcoinWalletPresenter().getRecentTransactions();
         // counter
-        int i = 1;
+        int i = 99;
         // for each of the recent transactions add them to the string variable transactionList to print
         for (Transaction transaction : recentTransactions) {
             long fee = (transaction.getInputSum().getValue() > 0 ? transaction.getInputSum().getValue() - transaction.getOutputSum().getValue() : 0);
             // storing the transactions in a string so that it can be passed to setText() to display on UI
             transactionList = transactionList +
                     " " + i + ". Date: " + transaction.getUpdateTime().toString().substring(4,10) + "\n" +
-                    "      Amount sent to me: " + transaction.getValueSentToMe(tx).toFriendlyString() + "\n" +
-                    "      Amount Sent from me: " + transaction.getValueSentFromMe(tx).toFriendlyString() + "\n" +
-                    "      Fee: " + Coin.valueOf(fee).toFriendlyString() + "\n" +
-                    "---------------------------------------------------------------------"
+                    "      Amount received: " + transaction.getValueSentToMe(tx).toFriendlyString() + "\n" +
+                    "      Amount sent: " + transaction.getValueSentFromMe(tx).toFriendlyString() + "\n" +
+             //       "      Fee: " + Coin.valueOf(fee).toFriendlyString() + "\n" +
+                    "-------------------------------------------------------------"
             + "\n";
-            i++;
+            i--;
 //            // testing
             System.out.println("Date and Time: " + transaction.getUpdateTime().toString());
             System.out.println("Amount Sent to me: " + transaction.getValueSentToMe(tx).toFriendlyString());

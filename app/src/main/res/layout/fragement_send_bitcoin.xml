@@ -20,11 +20,12 @@
               android:textSize="20sp"
               android:textStyle="bold"
               app:layout_constraintTop_toTopOf="parent"
-              app:layout_constraintBottom_toTopOf="@+id/etAmountToSend"
-              app:layout_constraintVertical_bias="0.877"
               app:layout_constraintEnd_toEndOf="parent"
-              app:layout_constraintStart_toStartOf="parent"/>
-
+              app:layout_constraintStart_toEndOf="@+id/imageView3"
+              app:layout_constraintHorizontal_bias="0.076"
+              android:layout_marginTop="48dp"
+              app:layout_constraintBottom_toTopOf="@+id/etAmountToSend"
+              app:layout_constraintVertical_bias="0.372"/>
     <EditText android:layout_height="38dp"
               android:layout_width="311dp"
               android:layout_centerHorizontal="true"
@@ -38,10 +39,10 @@
               app:layout_constraintStart_toStartOf="parent"
               app:layout_constraintEnd_toEndOf="parent"
               android:background="@drawable/etbackground"
-              android:layout_marginBottom="12dp"
-              app:layout_constraintBottom_toTopOf="@+id/tvAvailableBalance"
               android:paddingLeft="10dp"
-              android:paddingRight="10dp"/>
+              android:paddingRight="10dp"
+              android:layout_marginBottom="41dp"
+              app:layout_constraintBottom_toTopOf="@+id/tvAvailableBalance"/>
 
     <TextView android:layout_height="wrap_content"
               android:layout_width="wrap_content"
@@ -53,9 +54,9 @@
               android:textSize="16sp"
               android:inputType="numberDecimal"
               app:layout_constraintStart_toStartOf="parent"
-              app:layout_constraintEnd_toEndOf="parent"
               app:layout_constraintBottom_toTopOf="@+id/tvRecipientAddress"
-              android:layout_marginBottom="60dp"/>
+              app:layout_constraintEnd_toEndOf="parent"
+              tools:layout_editor_absoluteY="205dp"/>
 
     <TextView android:layout_height="wrap_content"
               android:layout_width="wrap_content"
@@ -69,8 +70,8 @@
               android:textStyle="bold"
               app:layout_constraintStart_toStartOf="parent"
               app:layout_constraintEnd_toEndOf="parent"
-              app:layout_constraintTop_toTopOf="parent"
-              app:layout_constraintBottom_toBottomOf="parent"/>
+              android:layout_marginTop="36dp"
+              app:layout_constraintTop_toBottomOf="@+id/tvAvailableBalance"/>
 
     <EditText android:layout_height="30dp"
               android:layout_width="311dp"
@@ -82,14 +83,11 @@
               android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
               app:layout_constraintStart_toStartOf="parent"
               app:layout_constraintEnd_toEndOf="parent"
-              android:layout_marginTop="32dp"
+              android:layout_marginTop="24dp"
               android:background="@drawable/etbackground"
               app:layout_constraintTop_toBottomOf="@+id/tvRecipientAddress"
-              app:layout_constraintBottom_toTopOf="@+id/btnSendBitcoin"
-              app:layout_constraintVertical_bias="0.0"
               android:textAlignment="center"
-              android:layout_marginBottom="45dp"/>
-
+    />
     <Button android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:layout_centerHorizontal="true"
@@ -100,9 +98,12 @@
             android:layout_below="@+id/tvRecipientAddress"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.476"
+            app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintBottom_toTopOf="@+id/backToMainMenu"
-            android:layout_marginBottom="64dp"/>
+            android:layout_marginBottom="48dp"
+            android:layout_marginTop="40dp"
+            app:layout_constraintTop_toBottomOf="@+id/etRecipientAddress"
+            app:layout_constraintVertical_bias="1.0"/>
 
     <Button android:layout_height="wrap_content"
             android:layout_width="wrap_content"
@@ -116,19 +117,16 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginBottom="48dp"/>
-
+            android:layout_marginBottom="52dp" app:layout_constraintHorizontal_bias="0.467"/>
     <ImageView
             android:src="@drawable/softcoinicon"
             android:layout_width="78dp"
             android:layout_height="72dp"
             android:id="@+id/imageView3"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            android:layout_marginBottom="80dp"
-            app:layout_constraintBottom_toTopOf="@+id/etAmountToSend"
-            app:layout_constraintVertical_bias="0.0"/>
+            android:layout_marginTop="24dp" app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.063" android:layout_marginBottom="108dp"
+            app:layout_constraintBottom_toTopOf="@+id/etAmountToSend"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

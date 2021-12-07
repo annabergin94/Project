@@ -98,9 +98,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
             tvRealBalance = view.findViewById(R.id.tvRealBalance);
-            double result = Double.parseDouble(f.format(((MainActivity)this.getActivity()).getBitcoinWalletPresenter().getBalanceEstimated(),2,3, 3)) * 42863.24323705;
+            double result = Double.parseDouble(f.format(((MainActivity)this.getActivity()).getBitcoinWalletPresenter().getBalanceEstimated(),2,3, 3)) * 51679.10;
             double roundedResult = Math.round(result*100.0)/100.0;
-            tvRealBalance.setText("£" + String.format(String.valueOf(roundedResult)));
+            tvRealBalance.setText("$" + String.format(String.valueOf(roundedResult)));
 
             btnSwitchTheme = view.findViewById(R.id.btnSwitchTheme);
             btnSwitchTheme.setOnCheckedChangeListener((buttonView, isChecked) -> {
