@@ -36,11 +36,12 @@ public class ViewAddressFragment extends Fragment {
         tvMyAddress = (TextView) view.findViewById(R.id.tvMyAddress);
         tvMyAddress.setText(((MainActivity)getActivity()).getBitcoinWalletPresenter().printMyWalletAddress());
 
-        btnPaste = (Button) view.findViewById(R.id.btnPaste);
-        etPasteAddress = (EditText) view.findViewById(R.id.etPasteAddress);
-
         btnCopy.setOnClickListener(v -> copy()); // copy address
-        btnPaste.setOnClickListener(v -> paste()); // paste for testing since prototype
+
+        // for user testing
+//        btnPaste = (Button) view.findViewById(R.id.btnPaste);
+//        etPasteAddress = (EditText) view.findViewById(R.id.etPasteAddress);
+//        btnPaste.setOnClickListener(v -> paste()); // paste for testing since prototype
 
         return view;
     }
@@ -56,14 +57,15 @@ public class ViewAddressFragment extends Fragment {
         Toast.makeText(getActivity(), "Address copied!", Toast.LENGTH_SHORT).show();
     }
 
-    public void paste(){
-        // get clipboard data from clipboard manager
-        ClipData cd2 = clipboard.getPrimaryClip();
-        ClipData.Item item=cd2.getItemAt(0);
-        String copied =item.getText().toString();
-        etPasteAddress.setText(copied);
-        Toast.makeText(getActivity(), "Pasting address!", Toast.LENGTH_SHORT).show();
-    }
+    // for user testing
+//    public void paste(){
+//        // get clipboard data from clipboard manager
+//        ClipData cd2 = clipboard.getPrimaryClip();
+//        ClipData.Item item=cd2.getItemAt(0);
+//        String copied =item.getText().toString();
+//        etPasteAddress.setText(copied);
+//        Toast.makeText(getActivity(), "Pasting address!", Toast.LENGTH_SHORT).show();
+//    }
 
     @Override
     public void onStart() {

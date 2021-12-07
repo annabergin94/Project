@@ -19,7 +19,7 @@ public class SendBitcoinFragment extends Fragment implements View.OnClickListene
     private static final String TAG = SendBitcoinFragment.class.getSimpleName();
     EditText etAmountToSend; // user to enter amount to send
     EditText etRecipientAddress; // user to enter recipient address
-    Button btnSendBitcoin; // send bitcoin button
+    ImageButton btnSendBitcoin; // send bitcoin button
     TextView tvAvailableBalance;
     BtcFormat f = BtcFormat.getCoinInstance(); // format balance
 

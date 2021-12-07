@@ -55,7 +55,7 @@ public class HistoryOfPricesFragment extends Fragment {
 
         public void settingLabels(){
         graph.getGridLabelRenderer().setVerticalAxisTitle("Bitcoin prices (USD)");
-        graph.getGridLabelRenderer().setHorizontalAxisTitle("Years");
+        graph.getGridLabelRenderer().setHorizontalAxisTitle("Years (mm/dd/yyyy)");
     }
 
     public void readCSV() {
