@@ -113,6 +113,7 @@ public class BitcoinWalletPresenter implements Contract.Presenter {
         return loadedWallet;
     }
 
+    // a helper method that combines the helper methods used for implementing the Bitcoin protocol
     public void myWalletInitialisedFromNetwork() {
         checkingIfBlockchainSPVFileExists();
         downloadingTheBlockchainInSPVMode();
@@ -133,18 +134,12 @@ public class BitcoinWalletPresenter implements Contract.Presenter {
         try {
             blockStore = new SPVBlockStore(networkParams, blockchainFileSPVMode);
             chain = new BlockChain(networkParams, this.myWallet, blockStore);
-            Log.d(TAG, "The blockchain is at a height: " + chain.getBestChainHeight());
         } catch (BlockStoreException e) {
             e.printStackTrace();
         }
     }
 
-    // a helper method to print wallet address
-    public String printMyWalletAddress(){
-        return myWallet.currentReceiveAddress().toString();
-    }
-
-    // a helper method to
+    // a helper method to sync the blockchain and connect it to the created wallet
     public void downloadingPeerListeners(){
         // BitcoinJ recommends using this constructor to create a PeerGroup for a given context and chain.
         // Blocks will be passed to the chain as they are broadcast and downloaded.
@@ -166,14 +161,10 @@ public class BitcoinWalletPresenter implements Contract.Presenter {
         groupOfDistinctPeers.stopAsync(); // stop syncing the blockchain
     }
 
-    public PeerGroup getGroupOfDistinctPeers() {
-        return groupOfDistinctPeers;
-    }
-
     // listens for coins sent to the user's wallet
-    private void setupWalletListeners(Wallet wallet) {
-        wallet.addCoinsReceivedEventListener((wallet1, tx, prevBalance, newBalance) -> {
-            view.displayMyBalance(wallet.getBalance().toFriendlyString());
+    private void setupWalletListeners(Wallet myWallet) {
+        myWallet.addCoinsReceivedEventListener((wallet1, tx, prevBalance, newBalance) -> {
+            view.displayMyBalance(myWallet.getBalance().toFriendlyString());
             Log.d(TAG, "The wallet receives coins");
             Log.d(TAG, "The transaction id is " + tx.getTxId().toString());
             Log.d(TAG, "Previous wallet balance: " + prevBalance);
@@ -182,6 +173,8 @@ public class BitcoinWalletPresenter implements Contract.Presenter {
         });
     }
 
+    // a send method that is passed the recipient address and amount of Bitcoins
+    // passed user inputs in the Send UI
     public void send(String address, String amount) throws Exception {
         Address to = Address.fromString(networkParams, address);
         Log.d(TAG, "Send money to: " + to);
@@ -200,16 +193,30 @@ public class BitcoinWalletPresenter implements Contract.Presenter {
         }
     }
 
-    public Coin getBalanceEstimated() {
-        return myWallet.getBalance(Wallet.BalanceType.ESTIMATED);
+    // A getter used to print the available wallet balance
+    public Coin getAvailableBalance() {
+        return myWallet.getBalance(Wallet.BalanceType.AVAILABLE);
     }
 
+    // A getter used to print a list of the transactions in chronological order on the Transaction UI
     public List<Transaction> getRecentTransactions() {
         return myWallet.getTransactionsByTime();
     }
 
+    // A getter used to print a list of the history of wallet address for Test 2
+    // this proves that a new address is automatically generated after every transaction
+    public List<Address> getAllWalletAddresses() {
+        return myWallet.getIssuedReceiveAddresses();
+    }
+
+    // A getter to use the wallet to print the transactions in the Transaction UI
     public Wallet getMyWallet() {
         return myWallet;
+    }
+
+    // a helper method used to display the current wallet address
+    public String printMyWalletAddress(){
+        return myWallet.currentReceiveAddress().toString();
     }
 
 }

@@ -2,8 +2,6 @@ package com.example.pracitcingrecievingbtc.View;
 
 import android.content.ClipData;
 import android.content.Context;
-import android.content.res.Resources;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.widget.*;
 import androidx.fragment.app.Fragment;

@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import androidx.fragment.app.Fragment;
 import com.example.pracitcingrecievingbtc.R;
-import com.jjoe64.graphview.DefaultLabelFormatter;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.helper.DateAsXAxisLabelFormatter;
 import com.jjoe64.graphview.series.DataPoint;
@@ -43,10 +42,6 @@ public class HistoryOfPricesFragment extends Fragment {
             seriesPoints.appendData(new DataPoint(x, y), true, bitcoinPrices.size());
         }
         graph.addSeries(seriesPoints);
-        graph.getGridLabelRenderer().setLabelFormatter(new DateAsXAxisLabelFormatter(getActivity()));
-        graph.getGridLabelRenderer().setNumHorizontalLabels(3); // only 4 because of the space
-        // as we use dates as labels, the human rounding to nice readable numbers is not necessary
-        graph.getGridLabelRenderer().setHumanRounding(false);
         settingLabels();
         seriesPoints.setColor(Color.MAGENTA);
         seriesPoints.setThickness(2);
@@ -54,8 +49,13 @@ public class HistoryOfPricesFragment extends Fragment {
     }
 
         public void settingLabels(){
+        graph.getGridLabelRenderer().setLabelFormatter(new DateAsXAxisLabelFormatter(getActivity()));
+        graph.getGridLabelRenderer().setNumHorizontalLabels(3); // only 4 because of the space
+            // as we use dates as labels, the human rounding to nice readable numbers is not necessary
+            graph.getGridLabelRenderer().setHumanRounding(false);
         graph.getGridLabelRenderer().setVerticalAxisTitle("Bitcoin prices (USD)");
-        graph.getGridLabelRenderer().setHorizontalAxisTitle("Years (mm/dd/yyyy)");
+        graph.getGridLabelRenderer().setHorizontalAxisTitle("\n" + "\n" + "Years (mm/dd/yyyy)");
+        graph.getGridLabelRenderer().setTextSize(50);
     }
 
     public void readCSV() {

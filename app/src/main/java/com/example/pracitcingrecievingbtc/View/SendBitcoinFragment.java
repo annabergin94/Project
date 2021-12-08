@@ -1,7 +1,6 @@
 package com.example.pracitcingrecievingbtc.View;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,7 +43,7 @@ public class SendBitcoinFragment extends Fragment implements View.OnClickListene
 
         // view. used to call the id because we are in a fragment
         tvAvailableBalance = view.findViewById(R.id.tvAvailableBalance);
-        String out = f.format(((MainActivity)this.getActivity()).getBitcoinWalletPresenter().getBalanceEstimated(),2,3,3) + " BTC available";
+        String out = f.format(((MainActivity)this.getActivity()).getBitcoinWalletPresenter().getAvailableBalance(),2,3,3) + " BTC available";
         tvAvailableBalance.setText(out);
 
         // instantiate button
@@ -77,6 +76,13 @@ public class SendBitcoinFragment extends Fragment implements View.OnClickListene
         String address = etRecipientAddress.getText().toString();
         String amount = etAmountToSend.getText().toString();
         Coin coinAmount = Coin.parseCoin(amount);
+
+        if(etRecipientAddress.length()==42){
+            String toastMessage = "Recipient addresses must be less than 42 characters!";
+            int duration = Toast.LENGTH_LONG;
+            Toast toast = Toast.makeText((this.getActivity()).getApplicationContext(), toastMessage, duration);
+            toast.show();
+        }
 
         // if the user has entered an amount of coins to send
         if (coinAmount.isPositive()) {

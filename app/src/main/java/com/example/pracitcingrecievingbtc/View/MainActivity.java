@@ -93,12 +93,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             // view. used to call the id because we are in a fragment
             tvAvailableBalance = view.findViewById(R.id.tvAvailableBalance);
-            String out = f.format(((MainActivity)this.getActivity()).getBitcoinWalletPresenter().getBalanceEstimated(),2,3, 3) + " BTC";
+            String out = f.format(((MainActivity)this.getActivity()).getBitcoinWalletPresenter().getAvailableBalance(),2,3, 3) + " BTC";
             tvAvailableBalance.setText("Balance: " + out);
 
 
             tvRealBalance = view.findViewById(R.id.tvRealBalance);
-            double result = Double.parseDouble(f.format(((MainActivity)this.getActivity()).getBitcoinWalletPresenter().getBalanceEstimated(),2,3, 3)) * 51679.10;
+            double result = Double.parseDouble(f.format(((MainActivity)this.getActivity()).getBitcoinWalletPresenter().getAvailableBalance(),2,3, 3)) * 51679.10;
             double roundedResult = Math.round(result*100.0)/100.0;
             tvRealBalance.setText("$" + String.format(String.valueOf(roundedResult)));
 

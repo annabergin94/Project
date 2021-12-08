@@ -10,13 +10,13 @@
 
     <com.jjoe64.graphview.GraphView
             android:id="@+id/graph"
-            android:layout_width="375dp"
+            android:layout_width="356dp"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_height="434dp"
+            android:layout_height="420dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintHorizontal_bias="0.542"
             app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="120dp"/>
+            android:layout_marginTop="120dp" android:paddingRight="20dp" android:paddingBottom="10dp"/>
 
     <ImageButton
             android:id="@+id/backToMainMenu"
@@ -32,6 +32,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginTop="20dp"/>
+
     <TextView
             android:text="BTC/USD prices since 2013"
             android:layout_width="324dp"
@@ -45,13 +46,16 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="1.0"
             android:fontFamily="@font/amiko"
-            android:foregroundGravity="center|center_horizontal" android:gravity="center_horizontal|center_vertical"
+            android:foregroundGravity="center|center_horizontal"
+            android:gravity="center_horizontal|center_vertical"
             app:layout_constraintStart_toEndOf="@+id/imageView"
             app:layout_constraintEnd_toEndOf="parent"/>
+
     <ImageView
             android:layout_width="45dp"
             android:layout_height="40dp"
             app:srcCompat="@drawable/bitcoinicon"
+            android:textColor="?attr/text_color"
             android:id="@+id/imageView"
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginBottom="28dp"
