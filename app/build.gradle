@@ -1,4 +1,3 @@
-
 // plugins needed to build the module
 plugins{
 // sets up Android-specific settings of the build process

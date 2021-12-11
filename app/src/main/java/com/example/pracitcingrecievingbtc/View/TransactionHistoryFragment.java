@@ -50,7 +50,7 @@ public class TransactionHistoryFragment extends Fragment {
             // storing the transactions in a string so that it can be passed to setText() to display on UI
             transactionList = transactionList +
                     " " + i + ". Date: " + transaction.getUpdateTime().toString().substring(4,10) + "\n" +
-                    "      Amount received: " + transaction.getValueSentToMe(tx).toFriendlyString() + "\n" +
+                    "      Change: " + transaction.getValueSentToMe(tx).toFriendlyString() + "\n" +
                     "      Amount sent: " + transaction.getValueSentFromMe(tx).toFriendlyString() + "\n" +
              //       "      Fee: " + Coin.valueOf(fee).toFriendlyString() + "\n" +
                     "-------------------------------------------------------------"

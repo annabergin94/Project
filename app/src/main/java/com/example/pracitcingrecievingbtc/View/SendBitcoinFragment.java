@@ -19,7 +19,7 @@ public class SendBitcoinFragment extends Fragment implements View.OnClickListene
     EditText etAmountToSend; // user to enter amount to send
     EditText etRecipientAddress; // user to enter recipient address
     ImageButton btnSendBitcoin; // send bitcoin button
-    TextView tvAvailableBalance;
+    TextView tvAvailableBalance; // displays balance
     BtcFormat f = BtcFormat.getCoinInstance(); // format balance
 
     String amountBeingSent = "0.0";
@@ -43,7 +43,8 @@ public class SendBitcoinFragment extends Fragment implements View.OnClickListene
 
         // view. used to call the id because we are in a fragment
         tvAvailableBalance = view.findViewById(R.id.tvAvailableBalance);
-        String out = f.format(((MainActivity)this.getActivity()).getBitcoinWalletPresenter().getAvailableBalance(),2,3,3) + " BTC available";
+        // using the BTC format class to display the Bitcoin in a format that is easy for the user to understand
+        String out = f.format(((MainActivity) this.getActivity()).getBitcoinWalletPresenter().getAvailableBalance(), 2, 3, 3) + " BTC available";
         tvAvailableBalance.setText(out);
 
         // instantiate button
@@ -65,48 +66,62 @@ public class SendBitcoinFragment extends Fragment implements View.OnClickListene
 
     @Override
     public void onClick(View view) {
-        if(view.getId() == R.id.btnSendBitcoin) {
-           sendTransaction();
-            }
+        if (view.getId() == R.id.btnSendBitcoin) {
+            sendTransaction();
         }
+    }
 
 
-    public void sendTransaction()  {
-
+    public void sendTransaction() {
+        //  storing the users amount and address input as String variables
         String address = etRecipientAddress.getText().toString();
         String amount = etAmountToSend.getText().toString();
+        // passing the double amount entered by the user to the
         Coin coinAmount = Coin.parseCoin(amount);
 
-        if(etRecipientAddress.length()==42){
-            String toastMessage = "Recipient addresses must be less than 42 characters!";
+        // if the address is 42 (which is set as the max length in the xml) and the amount is positive or 0
+        if (etRecipientAddress.length() == 42 && coinAmount.isPositive() || etRecipientAddress.length() == 42 && coinAmount.equals(0)) {
+            // notify the user the address must be less than 42 characters
+            // ---> in the future it would be good to implement code that checked if the address was actually a real Bitcoin address
+            String toastMessage = "Addresses must be less than 42 characters!";
             int duration = Toast.LENGTH_LONG;
             Toast toast = Toast.makeText((this.getActivity()).getApplicationContext(), toastMessage, duration);
             toast.show();
         }
-
-        // if the user has entered an amount of coins to send
-        if (coinAmount.isPositive()) {
+        // if the user enters a positive amount to send and enters an address less than 42 characters
+        else if (coinAmount.isPositive() && etRecipientAddress.length() < 42) {
+            // update the edit text so it goes back to 0
             etAmountToSend.setText("0.0");
-            CharSequence toastMessage = "Sending your transaction";
+            // notify the user that the transaction is being sent
+            CharSequence toastMessage = "Sending your transaction!";
             int duration = Toast.LENGTH_LONG;
             Toast toast = Toast.makeText((this.getActivity()).getApplicationContext(), toastMessage, duration);
             toast.show();
-            // try to perform the transaction by calling the send method on the wallet
+            // send the transaction, catching the error if it doesn't work
             try {
-               ((MainActivity) this.getActivity()).getBitcoinWalletPresenter().send(address, amount);
+                ((MainActivity) this.getActivity()).getBitcoinWalletPresenter().send(address, amount);
             } catch (Exception e) {
                 e.printStackTrace();
             }
+            // transactions been broadcast to the network, notify the user
             toastMessage = "Transaction complete!";
             toast = Toast.makeText(this.getActivity().getApplicationContext(), toastMessage, duration);
             toast.show();
         }
-        // no coin amount entered, notify user
+        // if the user doesn't enter an amount or address, or the address is too long
         else {
-            CharSequence text = "You need to enter a positive amount of coins to send!";
-            int duration = Toast.LENGTH_LONG;
-            Toast toast = Toast.makeText(this.getActivity().getApplicationContext(), text, duration);
-            toast.show();
+            if (etRecipientAddress.length() == 42 || etRecipientAddress.length() == 0) {
+                CharSequence text = "Amount must be greater than 0 and address less than 42 characters!";
+                int duration = Toast.LENGTH_LONG;
+                Toast toast = Toast.makeText(this.getActivity().getApplicationContext(), text, duration);
+                toast.show();
+            } else {
+                // the address is less than 42 chars long
+                CharSequence text = "Amount must be greater than 0!";
+                int duration = Toast.LENGTH_LONG;
+                Toast toast = Toast.makeText(this.getActivity().getApplicationContext(), text, duration);
+                toast.show();
+            }
         }
     }
 }

@@ -82,7 +82,7 @@
               android:textColorHint="@color/black"
               android:hint="@string/enter_recipient_address"
               android:maxLength="42"
-              android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+              android:inputType="textShortMessage"
               app:layout_constraintStart_toStartOf="parent"
               app:layout_constraintEnd_toEndOf="parent"
               android:layout_marginTop="20dp"

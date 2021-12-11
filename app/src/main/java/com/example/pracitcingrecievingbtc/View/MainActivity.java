@@ -27,9 +27,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     // called when the activity is first created to do all of the normal static setup
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        checkingDayOrNightMode(); // checking if the app is in light or dark mode
+
+        // calling the helper method that sets the default theme to light
+        checkingDayOrNightMode();
+
         super.onCreate(savedInstanceState);
         context = getApplicationContext();
+
         Log.d(TAG, "1. Create a BitcoinWalletPresenter object that creates or loads the wallet and syncs the blockchain");
         bitcoinWalletPresenter = new BitcoinWalletPresenter(context);
         Log.d(TAG, "2. The wallet has been created/loaded and blockchain synced");

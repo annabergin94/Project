@@ -40,7 +40,6 @@ public class BitcoinWalletPresenter implements Contract.Presenter {
 
     public BitcoinWalletPresenter(Context context) {
         BriefLogFormatter.init(); // Activating BitcoinJ's logging using a Java logging formatter that writes more compact output than default
-        this.view = view;
         this.context = context;
         settingUpNetworkAndFiles(); // connecting to testnet, creating a local file for the wallet and blockchain
         myWallet = initialisingWallet(); // create or load wallet
@@ -55,29 +54,33 @@ public class BitcoinWalletPresenter implements Contract.Presenter {
 
     }
 
+    // initialise the wallet by checking if it exists
     public Wallet initialisingWallet() {
         Wallet myWallet;
+        // exists, load it
         if (myWalletFile.exists()) {
             myWallet = loadingWallet();
             Log.d(TAG, "Wallet exists, loading the wallet");
         } else {
+            // doesn't exist, create it
             myWallet = creatingWallet();
             Log.d(TAG, "Wallet doesn't exist, creating it");
         }
-        // the wallet must be autosaved
+        // autosave the file
         myWallet.autosaveToFile(myWalletFile, 200, TimeUnit.MILLISECONDS, null); // saving the file by passing its name and what it includes
-        Log.d(TAG, "A wallet " + myWalletFile.getName() + "with " + myWallet.getKeyChainGroupSize() + " keys.");
-        Log.d(TAG, "My wallet includes the following contents " + myWallet);
+        Log.d(TAG, "A wallet " + myWalletFile.getName() + "exists with the following info: " + myWallet);
         return myWallet;
     }
 
+    // not wallet has been found so we create one
     public Wallet creatingWallet() {
         Log.d(TAG, "Creating a new wallet");
-        Wallet createdWallet = null;
+        Wallet createdWallet;
         // creating an empty wallet with a randomly chosen seed and no transactions keys will be derived from the seed
         createdWallet = Wallet.createDeterministic(networkParams, outputScriptType);
-        createdWallet.setDescription("Project testing wallet");
-        System.out.println(createdWallet.getIssuedReceiveAddresses()); // returns the keys issued
+        createdWallet.setDescription("Softcoin wallet prototype");
+        // returns the keys issued
+        System.out.println(createdWallet.getIssuedReceiveAddresses());
         try {
             createdWallet.saveToFile(myWalletFile);
             Log.d(TAG, "Created new wallet ");
@@ -123,7 +126,7 @@ public class BitcoinWalletPresenter implements Contract.Presenter {
     // a helper method to check if a blockchain file already exists
     public void checkingIfBlockchainSPVFileExists(){
         if (blockchainFileSPVMode.exists()) {
-            Log.d(TAG, "An existing blockchain has been found. It is " + blockchainFileSPVMode.length() + " bytes");
+            Log.d(TAG, "An existing blockchain has been found!");
         } else {
             Log.d(TAG, "We cannot find any blockchain file. The sync will begin now and may take 1 hour.");
         }
@@ -153,42 +156,48 @@ public class BitcoinWalletPresenter implements Contract.Presenter {
         // listening to events and indicating when a peer disconnects
         groupOfDistinctPeers.addDisconnectedEventListener((peer, peerCount) ->
                 Log.d(TAG, "There are currently " + peerCount + " peers connected. The peer lost is " + peer.getAddress()));
-        groupOfDistinctPeers.addPeerDiscovery(new DnsDiscovery(networkParams)); // look for peers
-        groupOfDistinctPeers.setMaxConnections(10); // setting max num of peers to connect too, but need 8 to broadcast a transaction to network
-        groupOfDistinctPeers.addWallet(myWallet); // adding wallet with keys before downloading the blockchain to make sure relevant parts are downloaded (if add wallet keys earlier than the current chain head, the relevant parts of the chain won't be downloaded
-        groupOfDistinctPeers.startAsync(); // start syncing blockchain
+        // looking for peers
+        groupOfDistinctPeers.addPeerDiscovery(new DnsDiscovery(networkParams));
+        // setting max num of peers to connect too, but need 8 to broadcast a transaction to network
+        groupOfDistinctPeers.setMaxConnections(10);
+        // adding wallet with keys before downloading the blockchain to make sure relevant parts are downloaded
+        // (if add wallet keys earlier than the current chain head, the relevant parts of the chain won't be downloaded)
+        groupOfDistinctPeers.addWallet(myWallet);
+        // start syncing the blockchain in SPV mode which means only the headers of blocks willl be downloaded
+        groupOfDistinctPeers.startAsync();
+        // prints the % of the blockchain left in the download
         groupOfDistinctPeers.downloadBlockChain();
-        groupOfDistinctPeers.stopAsync(); // stop syncing the blockchain
+        // stops syncing once the blockchain has been downloaded
+        groupOfDistinctPeers.stopAsync();
     }
 
     // listens for coins sent to the user's wallet
     private void setupWalletListeners(Wallet myWallet) {
         myWallet.addCoinsReceivedEventListener((wallet1, tx, prevBalance, newBalance) -> {
             view.displayMyBalance(myWallet.getBalance().toFriendlyString());
-            Log.d(TAG, "The wallet receives coins");
-            Log.d(TAG, "The transaction id is " + tx.getTxId().toString());
-            Log.d(TAG, "Previous wallet balance: " + prevBalance);
-            Log.d(TAG, "New wallet balance" + newBalance);
-            Log.d(TAG, tx.toString());
         });
     }
 
     // a send method that is passed the recipient address and amount of Bitcoins
     // passed user inputs in the Send UI
     public void send(String address, String amount) throws Exception {
+        // creating recipient address object
         Address to = Address.fromString(networkParams, address);
-        Log.d(TAG, "Send money to: " + to);
+        Log.d(TAG, "Recipients address: " + to);
+        // creating a coin object that is passed the amount the user enters into the UI
         Coin value = Coin.parseCoin(amount);
-        Log.d(TAG, "Send " + amount + "coins" + to);
+        Log.d(TAG, "Sending " + amount + "coins" + to);
+        // checks that there is enough BTC available before a
         try {
+            // broadcasting the transaction to the network using the sendCoins() from the Wallet class
             Wallet.SendResult result = myWallet.sendCoins(groupOfDistinctPeers, to, value);
-            Log.d(TAG, "coins sent");
+            Log.d(TAG, "Coins have been sent.");
             myWallet.saveToFile(myWalletFile);
-            Log.d(TAG, "save to wallet");
+            Log.d(TAG, "Saves the updated wallet with the transaction request.");
             result.broadcastComplete.get();
-            Log.d(TAG, "broadcast transaction");
+            Log.d(TAG, "The transaction has been broadcast to the network.");
         } catch (InsufficientMoneyException e) {
-            Log.e(TAG, "wallet does not contain enough to send this amount");
+            Log.e(TAG, "Sorry, you've not got enough Bitcoins to complete this transaction!");
             e.printStackTrace();
         }
     }
@@ -219,6 +228,10 @@ public class BitcoinWalletPresenter implements Contract.Presenter {
         return myWallet.currentReceiveAddress().toString();
     }
 
+    // for junit test connecting to network
+    public NetworkParameters getNetworkParams() {
+        return networkParams;
+    }
 }
 
 

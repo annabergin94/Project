@@ -24,7 +24,9 @@
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginLeft="70dp"
             android:layout_marginRight="70dp"
-            android:layout_marginTop="144dp" android:fontFamily="@font/amiko"/>
+            android:layout_marginTop="144dp"
+            android:fontFamily="@font/amiko"/>
+
     <TextView
             android:layout_width="382dp"
             android:layout_height="44dp"
@@ -43,7 +45,8 @@
             android:layout_marginBottom="20dp"
             app:layout_constraintBottom_toTopOf="@+id/tvAddressUserInfo"
             android:gravity="center_horizontal|center_vertical"
-            app:layout_constraintVertical_bias="0.275" android:fontFamily="@font/amiko"/>
+            app:layout_constraintVertical_bias="0.275"
+            android:fontFamily="@font/amiko"/>
 
 
     <ImageButton
@@ -58,6 +61,7 @@
             android:layout_marginTop="24dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintHorizontal_bias="0.498"/>
+
     <ImageButton
             android:id="@+id/callingPlaceholderFrag"
             android:layout_width="150dp"
@@ -69,9 +73,13 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/btnCopy"
             android:onClick="backToMainMenu"
-            app:layout_constraintEnd_toEndOf="parent" android:layout_marginTop="144dp"
-            app:layout_constraintHorizontal_bias="0.517" app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintVertical_bias="0.366" android:layout_marginBottom="20dp"/>
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="144dp"
+            app:layout_constraintHorizontal_bias="0.517"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintVertical_bias="0.366"
+            android:layout_marginBottom="20dp"/>
+
     <TextView
             android:text="@string/share_this_address_with_anyone_and_they_can_send_you_payments"
             android:textColor="?attr/text_color"
@@ -85,7 +93,9 @@
             android:gravity="center_horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="272dp" android:fontFamily="@font/amiko"/>
+            android:layout_marginTop="272dp"
+            android:fontFamily="@font/amiko"/>
+
     <ImageView
             android:src="@drawable/softcoinicon"
             android:layout_width="73dp"
