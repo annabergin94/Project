@@ -66,6 +66,8 @@ public class TransactionHistoryFragment extends Fragment {
             System.out.println("Transaction Blocks: " + transaction.getConfidence().toString());
             System.out.println("Tx Hex: " + transaction.getTxId().toString());
             System.out.println("Tx: " + transaction);
+
+            System.out.println("Address history: " + ((MainActivity)this.getActivity()).getBitcoinWalletPresenter().getAllWalletAddresses());
         }
     }
 

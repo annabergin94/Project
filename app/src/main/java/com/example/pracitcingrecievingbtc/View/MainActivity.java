@@ -11,7 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.fragment.app.Fragment;
-import com.example.pracitcingrecievingbtc.Presenter.BitcoinWalletPresenter;
+import com.example.pracitcingrecievingbtc.Presenter.BitcoinWalletService;
 import com.example.pracitcingrecievingbtc.R;
 import org.bitcoinj.utils.BtcFormat;
 
@@ -19,7 +19,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private static final String TAG = MainActivity.class.getSimpleName();
     public static Context context;
-    public BitcoinWalletPresenter bitcoinWalletPresenter;
+    public BitcoinWalletService bitcoinWalletPresenter;
     private ViewAddressFragment viewAddressFrag;
     private SendBitcoinFragment sendBitcoinFrag;
     private TransactionHistoryFragment receiveBitcoinFrag;
@@ -34,8 +34,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         context = getApplicationContext();
 
-        Log.d(TAG, "1. Create a BitcoinWalletPresenter object that creates or loads the wallet and syncs the blockchain");
-        bitcoinWalletPresenter = new BitcoinWalletPresenter(context);
+        Log.d(TAG, "1. Create a BitcoinWalletService object that creates or loads the wallet and syncs the blockchain");
+        bitcoinWalletPresenter = new BitcoinWalletService(context);
         Log.d(TAG, "2. The wallet has been created/loaded and blockchain synced");
         setContentView(R.layout.activity_main);
         Log.d(TAG, "3. Launch the main user interface");
@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Log.d(TAG, "6. Finished updating the wallet from the blockchain");
         }
 
-    public BitcoinWalletPresenter getBitcoinWalletPresenter() {
+    public BitcoinWalletService getBitcoinWalletPresenter() {
         return bitcoinWalletPresenter;
     }
 
@@ -176,7 +176,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void checkingDayOrNightMode() {
         if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) {
             // when night mode is equal to yes set dark theme
-            setTheme(R.style.Theme_Dark); // when dark mode is enabled, we use the dark theme
+            setTheme(R.style.Theme_Dark); // when dark mode is enabled, use the dark theme
             Log.d(TAG, "theme is dark");
         } else {
             setTheme(R.style.Theme_Light);  // default app theme

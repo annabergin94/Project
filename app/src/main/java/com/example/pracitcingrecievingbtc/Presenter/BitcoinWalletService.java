@@ -2,7 +2,6 @@ package com.example.pracitcingrecievingbtc.Presenter;
 
 import android.content.Context; // connection between Android System and App Project https://www.geeksforgeeks.org/what-is-context-in-android/
 import android.util.Log; // helps debugging by printing statements in the logcat
-import com.example.pracitcingrecievingbtc.Contracts.Contract;
 import com.google.common.base.Joiner; // part of Guava, central to BitcoinJ, appends results ie., skips spaces and returns a string
 import org.bitcoinj.core.*; // contains classes for network messages like Block and Transaction, peer connectivity via PeerGroup, and block chain management
 import org.bitcoinj.net.discovery.DnsDiscovery; // supports peer discovery through DNS
@@ -21,9 +20,13 @@ import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-public class BitcoinWalletPresenter implements Contract.Presenter {
 
-    private static final String TAG = BitcoinWalletPresenter.class.getSimpleName();
+
+// a service class performs long running opertions in the background of an application
+// https://developer.android.com/guide/components/services#:~:text=The%20Service%20class%20is%20the%20base%20class%20for,of%20any%20activity%20that%20your%20application%20is%20running.
+public class BitcoinWalletService {
+
+    private static final String TAG = BitcoinWalletService.class.getSimpleName();
     private NetworkParameters networkParams;
     private File myWalletFile;
     private File blockchainFileSPVMode;
@@ -32,17 +35,16 @@ public class BitcoinWalletPresenter implements Contract.Presenter {
     private Context context;
     private int peerCount;
     private Script.ScriptType outputScriptType;
-    private Contract.View view;
     BlockStore blockStore; // to load blocks
     BlockChain chain = null; // will be used to implement the SPV mode of the Bitcoin protocol
     // can verify transactions without downloading the whole blockchain, just the headers
 
 
-    public BitcoinWalletPresenter(Context context) {
+    public BitcoinWalletService(Context context) {
         BriefLogFormatter.init(); // Activating BitcoinJ's logging using a Java logging formatter that writes more compact output than default
         this.context = context;
         settingUpNetworkAndFiles(); // connecting to testnet, creating a local file for the wallet and blockchain
-        myWallet = initialisingWallet(); // create or load wallet
+        myWallet = initialisingWallet(); // creating or loading the wallet
         myWalletInitialisedFromNetwork(); // syncing the blockchain
     }
 
@@ -174,7 +176,6 @@ public class BitcoinWalletPresenter implements Contract.Presenter {
     // listens for coins sent to the user's wallet
     private void setupWalletListeners(Wallet myWallet) {
         myWallet.addCoinsReceivedEventListener((wallet1, tx, prevBalance, newBalance) -> {
-            view.displayMyBalance(myWallet.getBalance().toFriendlyString());
         });
     }
 
@@ -226,11 +227,6 @@ public class BitcoinWalletPresenter implements Contract.Presenter {
     // a helper method used to display the current wallet address
     public String printMyWalletAddress(){
         return myWallet.currentReceiveAddress().toString();
-    }
-
-    // for junit test connecting to network
-    public NetworkParameters getNetworkParams() {
-        return networkParams;
     }
 }
 
