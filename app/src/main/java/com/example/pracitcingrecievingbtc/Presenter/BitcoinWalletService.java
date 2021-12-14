@@ -48,6 +48,10 @@ public class BitcoinWalletService {
         myWalletInitialisedFromNetwork(); // syncing the blockchain
     }
 
+    public BitcoinWalletService(){
+
+    }
+
     // a helper method for connecting to the test net, creating a file for the wallet and blockchain locally
     public void settingUpNetworkAndFiles(){
         networkParams = TestNet3Params.get(); // request testnet

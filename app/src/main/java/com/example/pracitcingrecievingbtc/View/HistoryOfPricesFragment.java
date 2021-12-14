@@ -83,4 +83,6 @@ public class HistoryOfPricesFragment extends Fragment {
             e.printStackTrace();
         }
     }
+
+
 }

@@ -20,7 +20,7 @@ android{
 // lowest API level supported chosen based on BitcoinJ documentation
         minSdkVersion 23
 // maximum API level the app has been tested on
-        targetSdkVersion 31
+        targetSdkVersion 30
 // app version number
         versionCode 1
 // user-friendly string for app version
@@ -46,15 +46,28 @@ android{
     buildFeatures {
         viewBinding true
     }
+
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/license.txt'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/notice.txt'
+        exclude 'META-INF/ASL2.0'
+        exclude 'META-INF/LICENSE.md'
+        exclude 'META-INF/LICENSE-notice.md'
+    }
 }
 
 dependencies{
     // Android SDK
-    implementation'androidx.appcompat:appcompat:1.3.1'
+    implementation'androidx.appcompat:appcompat:1.4.0'
     implementation'com.google.android.material:material:1.4.0'
-    implementation'androidx.constraintlayout:constraintlayout:2.1.1'
+    implementation'androidx.constraintlayout:constraintlayout:2.1.2'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    implementation 'androidx.fragment:fragment:1.4.0-rc01'
+    implementation 'androidx.fragment:fragment:1.4.0'
     implementation 'androidx.activity:activity:1.4.0'
     implementation 'androidx.navigation:navigation-fragment:2.3.5'
     implementation 'androidx.navigation:navigation-ui:2.3.5'
@@ -72,6 +85,15 @@ dependencies{
 
     // Graph View
     implementation 'com.jjoe64:graphview:4.2.1'
+    // read csv
     implementation 'com.opencsv:opencsv:3.9'
-    androidTestImplementation 'org.junit.jupiter:junit-jupiter:5.7.0'// reading CSV file
+
+    // testing
+    androidTestImplementation 'org.junit.jupiter:junit-jupiter:5.8.2'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.2'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+    debugImplementation 'androidx.fragment:fragment-testing:1.4.0'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support:support-annotations:24.0.0'
 }

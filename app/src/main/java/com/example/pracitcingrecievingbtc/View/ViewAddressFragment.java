@@ -19,10 +19,9 @@ public class ViewAddressFragment extends Fragment {
     TextView tvMyAddress;
     ClipboardManager clipboard;
     ClipData cd;
-    private static final String TAG = ViewAddressFragment.class.getSimpleName();
 
-    Button btnPaste;
-    EditText etPasteAddress;
+  //  Button btnPaste;
+  //  EditText etPasteAddress;
 
     // major diff with activities need to create a view object and return the view
     @Override

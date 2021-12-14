@@ -32,5 +32,11 @@
         <item name="text_color">#000000</item>
         <item name="button_color">#AA00FF</item>
     </style>
+    <style name="Theme.Light.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+    <style name="Theme.Light.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
+    <style name="Theme.Light.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
 
 </resources>

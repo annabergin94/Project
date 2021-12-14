@@ -11,10 +11,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.fragment.app.Fragment;
+
 import com.example.pracitcingrecievingbtc.Presenter.BitcoinWalletService;
 import com.example.pracitcingrecievingbtc.R;
 import org.bitcoinj.utils.BtcFormat;
 
+
+// this class controls what the is displayed to the user
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static final String TAG = MainActivity.class.getSimpleName();
@@ -24,11 +27,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private SendBitcoinFragment sendBitcoinFrag;
     private TransactionHistoryFragment receiveBitcoinFrag;
 
-    // called when the activity is first created to do all of the normal static setup
+    // called when the application is open
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        // calling the helper method that sets the default theme to light
+        // calling the helper method that sets the defaul0t theme to light
         checkingDayOrNightMode();
 
         super.onCreate(savedInstanceState);

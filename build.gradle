@@ -9,7 +9,7 @@ buildscript{
     }
 // contains plugin dependencies for Gradle
     dependencies{
-        classpath "com.android.tools.build:gradle:4.1.3"
+        classpath 'com.android.tools.build:gradle:4.2.0'
       //  classpath"com.android.support:support-annotations:24.1.1" depreciated
 
 //https://www.vogella.com/tutorials/Retrolambda/article.html
