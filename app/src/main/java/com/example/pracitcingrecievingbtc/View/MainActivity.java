@@ -12,7 +12,7 @@ import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.fragment.app.Fragment;
 
-import com.example.pracitcingrecievingbtc.Presenter.BitcoinWalletService;
+import com.example.pracitcingrecievingbtc.Presenter.BitcoinSetUp;
 import com.example.pracitcingrecievingbtc.R;
 import org.bitcoinj.utils.BtcFormat;
 
@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private static final String TAG = MainActivity.class.getSimpleName();
     public static Context context;
-    public BitcoinWalletService bitcoinWalletPresenter;
+    public BitcoinSetUp bitcoinWalletPresenter;
     private ViewAddressFragment viewAddressFrag;
     private SendBitcoinFragment sendBitcoinFrag;
     private TransactionHistoryFragment receiveBitcoinFrag;
@@ -37,8 +37,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         context = getApplicationContext();
 
-        Log.d(TAG, "1. Create a BitcoinWalletService object that creates or loads the wallet and syncs the blockchain");
-        bitcoinWalletPresenter = new BitcoinWalletService(context);
+        Log.d(TAG, "1. Create a BitcoinSetUp object that creates or loads the wallet and syncs the blockchain");
+        bitcoinWalletPresenter = new BitcoinSetUp(context);
         Log.d(TAG, "2. The wallet has been created/loaded and blockchain synced");
         setContentView(R.layout.activity_main);
         Log.d(TAG, "3. Launch the main user interface");
@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Log.d(TAG, "6. Finished updating the wallet from the blockchain");
         }
 
-    public BitcoinWalletService getBitcoinWalletPresenter() {
+    public BitcoinSetUp getBitcoinWalletPresenter() {
         return bitcoinWalletPresenter;
     }
 

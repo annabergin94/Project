@@ -15,9 +15,11 @@ import org.junit.runner.RunWith;
 
         ActivityScenario scenario;
 
+        // specifying the activity being tested
         @Rule
         public ActivityScenarioRule<MainActivity> activityRule = new ActivityScenarioRule<>(MainActivity.class);
 
+        // launching the activity
         @Test
         public void testActivity () {
             scenario = activityRule.getScenario();

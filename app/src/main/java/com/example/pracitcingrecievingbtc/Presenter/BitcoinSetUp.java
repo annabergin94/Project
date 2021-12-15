@@ -24,9 +24,9 @@ import java.util.concurrent.TimeUnit;
 
 // a service class performs long running opertions in the background of an application
 // https://developer.android.com/guide/components/services#:~:text=The%20Service%20class%20is%20the%20base%20class%20for,of%20any%20activity%20that%20your%20application%20is%20running.
-public class BitcoinWalletService {
+public class BitcoinSetUp {
 
-    private static final String TAG = BitcoinWalletService.class.getSimpleName();
+    private static final String TAG = BitcoinSetUp.class.getSimpleName(); // debugging tag
     private NetworkParameters networkParams;
     private File myWalletFile;
     private File blockchainFileSPVMode;
@@ -38,60 +38,55 @@ public class BitcoinWalletService {
     BlockStore blockStore; // to load blocks
     BlockChain chain = null; // will be used to implement the SPV mode of the Bitcoin protocol
     // can verify transactions without downloading the whole blockchain, just the headers
+    private Coin value;
+    private Address to;
+    private Wallet loadedWallet;
 
 
-    public BitcoinWalletService(Context context) {
-        BriefLogFormatter.init(); // Activating BitcoinJ's logging using a Java logging formatter that writes more compact output than default
+    // this all happens when the user opens the application, but before the Home UI is displayed
+    public BitcoinSetUp(Context context) {
+        // BitcoinJ's Java logging formatter to write more compact output in the terminal
+        BriefLogFormatter.init();
+        // android instantiate the context
         this.context = context;
-        settingUpNetworkAndFiles(); // connecting to testnet, creating a local file for the wallet and blockchain
+        // connect to test network
+        networkParams = TestNet3Params.get();
+        // create local files for wallet and blockchain
+        myWalletFile = new File(context.getFilesDir(), "TestWallet.wallet");
+        blockchainFileSPVMode = new File(this.context.getFilesDir(), "TestSPV.dat");
+        // call initialisingWallet() to check if a wallet already exists and create/load the wallet
+
         myWallet = initialisingWallet(); // creating or loading the wallet
         myWalletInitialisedFromNetwork(); // syncing the blockchain
     }
 
-    public BitcoinWalletService(){
+    public BitcoinSetUp(){
 
     }
 
-    // a helper method for connecting to the test net, creating a file for the wallet and blockchain locally
-    public void settingUpNetworkAndFiles(){
-        networkParams = TestNet3Params.get(); // request testnet
-        myWalletFile = new File(context.getFilesDir(), "TestWallet.wallet");
-        blockchainFileSPVMode = new File(this.context.getFilesDir(), "TestSPV.dat"); // a node on blockchain stores headers
-
-    }
-
-    // initialise the wallet by checking if it exists
+    // initialising the wallet, loading it if it exists, creating it if it doesn't
     public Wallet initialisingWallet() {
-        Wallet myWallet;
-        // exists, load it
         if (myWalletFile.exists()) {
-            myWallet = loadingWallet();
-            Log.d(TAG, "Wallet exists, loading the wallet");
+            myWallet = loadingWallet(); // exists
         } else {
-            // doesn't exist, create it
-            myWallet = creatingWallet();
-            Log.d(TAG, "Wallet doesn't exist, creating it");
+            myWallet = creatingWallet(); // doesn't exist
         }
-        // autosave the file
+        // saving the wallet
         myWallet.autosaveToFile(myWalletFile, 200, TimeUnit.MILLISECONDS, null); // saving the file by passing its name and what it includes
         Log.d(TAG, "A wallet " + myWalletFile.getName() + "exists with the following info: " + myWallet);
         return myWallet;
     }
 
-    // not wallet has been found so we create one
+    // creating an empty wallet with a randomly chosen seed and no transactions
     public Wallet creatingWallet() {
-        Log.d(TAG, "Creating a new wallet");
-        Wallet createdWallet;
-        // creating an empty wallet with a randomly chosen seed and no transactions keys will be derived from the seed
-        createdWallet = Wallet.createDeterministic(networkParams, outputScriptType);
+        Wallet createdWallet = Wallet.createDeterministic(networkParams, outputScriptType);
         createdWallet.setDescription("Softcoin wallet prototype");
-        // returns the keys issued
-        System.out.println(createdWallet.getIssuedReceiveAddresses());
         try {
+            // save the wallet to the file created locally
             createdWallet.saveToFile(myWalletFile);
-            Log.d(TAG, "Created new wallet ");
+            Log.d(TAG, "A wallet has been created and saved locally!");
         } catch (IOException e) {
-            Log.e(TAG, "Could not save wallet ");
+            Log.e(TAG, "Couldn't save the created wallet!");
             e.printStackTrace();
         }
         DeterministicSeed seed = createdWallet.getKeyChainSeed();
@@ -104,16 +99,14 @@ public class BitcoinWalletService {
 
     // once a wallet has been created, it is stored locally
     public Wallet loadingWallet() {
-        Log.d(TAG, "Loading wallet");
-        Wallet loadedWallet = null;
         try {
-            Log.d(TAG, "the current wallet file: " + myWalletFile.getName() + " has a size " + myWalletFile.length() + " bytes");
             loadedWallet = Wallet.loadFromFile(myWalletFile);
             // add listeners to receive bitcoin and send bitcoin
             setupWalletListeners(loadedWallet);
             Log.d(TAG, "Loaded wallet file from disk");
             // wallet address is the hashed version of the public key, like an e-mail which is used to receive funds
             Log.d(TAG, "Current wallet address is: " + loadedWallet.currentReceiveAddress());
+            Log.d(TAG, "The history of wallet addresses is: " + loadedWallet.getIssuedReceiveAddresses());
             Log.d(TAG, "Current wallet balance is: " + loadedWallet.getBalance());
         } catch (UnreadableWalletException e) {
             Log.e(TAG, "Sorry could not read wallet");
@@ -183,26 +176,22 @@ public class BitcoinWalletService {
         });
     }
 
-    // a send method that is passed the recipient address and amount of Bitcoins
-    // passed user inputs in the Send UI
+    // pass the recipient address and amount of Bitcoins which are user inputs from the Send UI
     public void send(String address, String amount) throws Exception {
         // creating recipient address object
-        Address to = Address.fromString(networkParams, address);
-        Log.d(TAG, "Recipients address: " + to);
+        to = Address.fromString(networkParams, address);
         // creating a coin object that is passed the amount the user enters into the UI
-        Coin value = Coin.parseCoin(amount);
-        Log.d(TAG, "Sending " + amount + "coins" + to);
+        value = Coin.parseCoin(amount);
         // checks that there is enough BTC available before a
         try {
             // broadcasting the transaction to the network using the sendCoins() from the Wallet class
             Wallet.SendResult result = myWallet.sendCoins(groupOfDistinctPeers, to, value);
-            Log.d(TAG, "Coins have been sent.");
+            // now the coins have been sent, update the wallet with the transaction
             myWallet.saveToFile(myWalletFile);
-            Log.d(TAG, "Saves the updated wallet with the transaction request.");
+            // transaction broadcast to the network
             result.broadcastComplete.get();
-            Log.d(TAG, "The transaction has been broadcast to the network.");
         } catch (InsufficientMoneyException e) {
-            Log.e(TAG, "Sorry, you've not got enough Bitcoins to complete this transaction!");
+            System.out.println("Sorry, you've not got enough Bitcoins to complete this transaction!");
             e.printStackTrace();
         }
     }
