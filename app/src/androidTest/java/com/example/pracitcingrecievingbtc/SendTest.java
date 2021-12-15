@@ -40,7 +40,7 @@
 //
 //@RunWith(AndroidJUnit4.class)
 //@SmallTest
-//public class ViewAddressFragmentTest {
+//public class FragmentPlaceholderTest {
 //
 //    @Rule
 //    public ExpectedException testingExceptions = ExpectedException.none();

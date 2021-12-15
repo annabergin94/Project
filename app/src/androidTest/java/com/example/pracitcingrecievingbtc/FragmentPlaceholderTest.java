@@ -10,14 +10,16 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import static androidx.test.espresso.Espresso.onView;
+import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.isEnabled;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 
-// check the activity launches without crashing
+
+// checking all the view interfaces exist
 @RunWith(AndroidJUnit4.class)
-    @SmallTest
-    public class MainActivityTest {
+@SmallTest
+public class FragmentPlaceholderTest {
 
         ActivityScenario scenario;
 
@@ -26,10 +28,19 @@ import static androidx.test.espresso.matcher.ViewMatchers.withId;
         @Rule
         public ActivityScenarioRule<MainActivity> activityRule = new ActivityScenarioRule<>(MainActivity.class);
 
-        // WHEN, THEN
-        // check the activity launches without crashing
+        // WHEN
+        // launching the activity being tested
         @Test
         public void testActivity () {
             scenario = activityRule.getScenario();
         }
-    }
+
+        // THEN
+        @Test
+        public void checkingViewsExist(){
+            onView(withId(R.id.btnCallHistoricalPriceFrag)).check(matches(isEnabled()));
+            onView(withId(R.id.btnCallingViewAddressFrag)).check(matches(isEnabled()));
+            onView(withId(R.id.btnCallingSendBitcoinFrag)).check(matches(isEnabled()));
+            onView(withId(R.id.btnCallingReceiveBitcoinFrag)).check(matches(isEnabled()));
+        }
+}
