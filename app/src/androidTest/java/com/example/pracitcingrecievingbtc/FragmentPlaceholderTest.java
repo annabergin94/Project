@@ -30,7 +30,7 @@ public class FragmentPlaceholderTest {
 
         // WHEN
         // launching the activity being tested
-        @Test
+
         public void testActivity () {
             scenario = activityRule.getScenario();
         }
