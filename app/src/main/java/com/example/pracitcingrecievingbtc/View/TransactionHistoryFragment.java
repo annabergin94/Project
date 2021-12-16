@@ -72,6 +72,11 @@ public class TransactionHistoryFragment extends Fragment {
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+    }
+
+    @Override
     public void onPause() {
         super.onPause();
     }

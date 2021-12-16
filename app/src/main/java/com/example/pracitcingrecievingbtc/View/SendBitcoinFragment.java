@@ -124,4 +124,9 @@ public class SendBitcoinFragment extends Fragment implements View.OnClickListene
             }
         }
     }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+    }
 }

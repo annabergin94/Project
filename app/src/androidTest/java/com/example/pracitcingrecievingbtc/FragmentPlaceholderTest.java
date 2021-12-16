@@ -43,4 +43,5 @@ public class FragmentPlaceholderTest {
             onView(withId(R.id.btnCallingSendBitcoinFrag)).check(matches(isEnabled()));
             onView(withId(R.id.btnCallingReceiveBitcoinFrag)).check(matches(isEnabled()));
         }
+
 }

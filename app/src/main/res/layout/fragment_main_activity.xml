@@ -47,7 +47,8 @@
             android:background="?attr/background_color"
             app:layout_constraintTop_toBottomOf="@+id/btnCallingSendBitcoinFrag"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" android:layout_marginTop="5dp"/>
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="5dp"/>
 
 
     <ImageButton
@@ -62,7 +63,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/btnCallingReceiveBitcoinFrag"
-            app:layout_constraintHorizontal_bias="0.517" app:layout_constraintVertical_bias="0.0"
+            app:layout_constraintHorizontal_bias="0.517"
+            app:layout_constraintVertical_bias="0.0"
             android:layout_marginTop="5dp"/>
 
     <TextView
@@ -75,7 +77,8 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:textSize="22sp" android:fontFamily="@font/amiko"
-            app:layout_constraintHorizontal_bias="0.477" app:layout_constraintTop_toBottomOf="@+id/appLogo"
+            app:layout_constraintHorizontal_bias="0.477"
+            app:layout_constraintTop_toBottomOf="@+id/appLogo"
             android:layout_marginTop="28dp"/>
     <ImageView
             android:src="@drawable/softcoinlogo"
@@ -86,6 +89,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginTop="40dp"/>
+
     <androidx.appcompat.widget.SwitchCompat
             android:text="light/dark mode"
             android:layout_width="163dp"
@@ -98,6 +102,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintVertical_bias="0.0"
             android:textSize="24sp" android:fontFamily="@font/amiko"/>
+
     <TextView
             android:text="$10"
             android:textStyle="bold"
