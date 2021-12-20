@@ -18,11 +18,11 @@ import java.io.IOException;
 import java.io.InputStreamReader;;
 import java.util.*;
 
-public class HistoryOfPricesFragment extends Fragment {
+public class BitcoinPriceFrag extends Fragment {
 
-    private static final String TAG = "Graph";
+    private static final String TAG = BitcoinPriceFrag.class.getSimpleName(); // prints class name to for debugging
     ArrayList<Double> bitcoinPrices = new ArrayList<>();
-    ArrayList<Calendar> date = new ArrayList<>(); // changed type to cal
+    ArrayList<Calendar> date = new ArrayList<>();
     GraphView graph;
     LineGraphSeries<DataPoint> seriesPoints; // for the co-ordinates
     double y;
@@ -98,6 +98,4 @@ public class HistoryOfPricesFragment extends Fragment {
     public void onResume() {
         super.onResume();
     }
-
-
 }

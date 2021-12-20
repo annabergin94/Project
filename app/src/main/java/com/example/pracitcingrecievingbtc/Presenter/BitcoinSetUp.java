@@ -22,8 +22,7 @@ import java.util.concurrent.TimeUnit;
 
 
 
-// a service class performs long running opertions in the background of an application
-// https://developer.android.com/guide/components/services#:~:text=The%20Service%20class%20is%20the%20base%20class%20for,of%20any%20activity%20that%20your%20application%20is%20running.
+// this class performs is needed for the wallet
 public class BitcoinSetUp {
 
     private static final String TAG = BitcoinSetUp.class.getSimpleName(); // debugging tag
@@ -36,7 +35,7 @@ public class BitcoinSetUp {
     private int peerCount;
     private Script.ScriptType outputScriptType;
     BlockStore blockStore; // to load blocks
-    BlockChain chain = null; // will be used to implement the SPV mode of the Bitcoin protocol
+    BlockChain chain = null; // use to implement the SPV mode of the Bitcoin protocol
     // can verify transactions without downloading the whole blockchain, just the headers
     private Coin value;
     private Address to;
@@ -54,14 +53,8 @@ public class BitcoinSetUp {
         // create local files for wallet and blockchain
         myWalletFile = new File(context.getFilesDir(), "TestWallet.wallet");
         blockchainFileSPVMode = new File(this.context.getFilesDir(), "TestSPV.dat");
-        // call initialisingWallet() to check if a wallet already exists and create/load the wallet
-
-        myWallet = initialisingWallet(); // creating or loading the wallet
+        myWallet = initialisingWallet(); // checks if a wallet already exists and create/load the wallet
         myWalletInitialisedFromNetwork(); // syncing the blockchain
-    }
-
-    public BitcoinSetUp(){
-
     }
 
     // initialising the wallet, loading it if it exists, creating it if it doesn't
@@ -77,7 +70,7 @@ public class BitcoinSetUp {
         return myWallet;
     }
 
-    // creating an empty wallet with a randomly chosen seed and no transactions
+    // creating an empty wallet with a randomly chosen seed (12 word phrase) and no transactions
     public Wallet creatingWallet() {
         Wallet createdWallet = Wallet.createDeterministic(networkParams, outputScriptType);
         createdWallet.setDescription("Softcoin wallet prototype");
@@ -109,7 +102,7 @@ public class BitcoinSetUp {
             Log.d(TAG, "The history of wallet addresses is: " + loadedWallet.getIssuedReceiveAddresses());
             Log.d(TAG, "Current wallet balance is: " + loadedWallet.getBalance());
         } catch (UnreadableWalletException e) {
-            Log.e(TAG, "Sorry could not read wallet");
+            Log.e(TAG, "Sorry, we can't read the wallet. Please check if the file is corrupted.");
             e.printStackTrace();
         }
         return loadedWallet;
@@ -125,9 +118,9 @@ public class BitcoinSetUp {
     // a helper method to check if a blockchain file already exists
     public void checkingIfBlockchainSPVFileExists(){
         if (blockchainFileSPVMode.exists()) {
-            Log.d(TAG, "An existing blockchain has been found!");
+            Log.d(TAG, "An blockchain file has been found!");
         } else {
-            Log.d(TAG, "We cannot find any blockchain file. The sync will begin now and may take 1 hour.");
+            Log.d(TAG, "Sorry we can't find a blockchain file. Syncing will begin now and take around one and a half hours!");
         }
     }
 
@@ -137,6 +130,7 @@ public class BitcoinSetUp {
             blockStore = new SPVBlockStore(networkParams, blockchainFileSPVMode);
             chain = new BlockChain(networkParams, this.myWallet, blockStore);
         } catch (BlockStoreException e) {
+            Log.d(TAG, "BlockStoreException, you might be out of disk space!");
             e.printStackTrace();
         }
     }
@@ -148,26 +142,23 @@ public class BitcoinSetUp {
         groupOfDistinctPeers = new PeerGroup(networkParams, chain);
         // registering a listener that is invoked when blocks are downloaded
         groupOfDistinctPeers.addBlocksDownloadedEventListener((peer, block, filteredBlock, blocksLeft) ->
-                Log.d(TAG, "The address of the peer downloaded is " + peer.getAddress()));
+                Log.d(TAG, "Downloaded peers address: " + peer.getAddress()));
         // listening to events of peers being discovered peers are nodes on the network
         groupOfDistinctPeers.addDiscoveredEventListener(peerAddresses ->
-                Log.d(TAG, "There are currently " + peerCount + " peers. The new peer is " + peerAddresses));
+                Log.d(TAG, "Number of peers connected = " + peerCount + " peers. New peer connected is " + peerAddresses));
         // listening to events and indicating when a peer disconnects
         groupOfDistinctPeers.addDisconnectedEventListener((peer, peerCount) ->
-                Log.d(TAG, "There are currently " + peerCount + " peers connected. The peer lost is " + peer.getAddress()));
+                Log.d(TAG, "Number of peers connected = " + peerCount + " peers connected. Peer disconnected is " + peer.getAddress()));
         // looking for peers
         groupOfDistinctPeers.addPeerDiscovery(new DnsDiscovery(networkParams));
-        // setting max num of peers to connect too, but need 8 to broadcast a transaction to network
+        // setting max num of peers connections to 10, 8 needed to broadcast a transaction to network
         groupOfDistinctPeers.setMaxConnections(10);
         // adding wallet with keys before downloading the blockchain to make sure relevant parts are downloaded
-        // (if add wallet keys earlier than the current chain head, the relevant parts of the chain won't be downloaded)
+        // (if wallet keys are added earlier than the current chain head, the relevant parts of the chain won't be downloaded)
         groupOfDistinctPeers.addWallet(myWallet);
-        // start syncing the blockchain in SPV mode which means only the headers of blocks willl be downloaded
-        groupOfDistinctPeers.startAsync();
-        // prints the % of the blockchain left in the download
-        groupOfDistinctPeers.downloadBlockChain();
-        // stops syncing once the blockchain has been downloaded
-        groupOfDistinctPeers.stopAsync();
+        groupOfDistinctPeers.startAsync(); // syncs the blockchain in SPV mode (headers only)
+        groupOfDistinctPeers.downloadBlockChain(); // prints the % of the blockchain downloaded
+        groupOfDistinctPeers.stopAsync(); // stop syncing, blockchain downloaded
     }
 
     // listens for coins sent to the user's wallet
@@ -178,21 +169,16 @@ public class BitcoinSetUp {
 
     // pass the recipient address and amount of Bitcoins which are user inputs from the Send UI
     public void send(String address, String amount) throws Exception {
-        // creating recipient address object
-        to = Address.fromString(networkParams, address);
-        // creating a coin object that is passed the amount the user enters into the UI
-        value = Coin.parseCoin(amount);
-        // checks that there is enough BTC available before a
+        to = Address.fromString(networkParams, address); // creating recipient address object
+        value = Coin.parseCoin(amount); // creating a coin object using the double amount entered by the user in the Send UI
+        // checking there is enough coins in the wallet
         try {
             // broadcasting the transaction to the network using the sendCoins() from the Wallet class
             Wallet.SendResult result = myWallet.sendCoins(groupOfDistinctPeers, to, value);
-            // now the coins have been sent, update the wallet with the transaction
-            myWallet.saveToFile(myWalletFile);
-            // transaction broadcast to the network
-            result.broadcastComplete.get();
+            myWallet.saveToFile(myWalletFile); // now the coins have been sent, update the wallet with the transaction
+            result.broadcastComplete.get();  // transaction broadcast to the network
         } catch (InsufficientMoneyException e) {
-            System.out.println("Sorry, you've not got enough Bitcoins to complete this transaction!");
-            e.printStackTrace();
+            Log.d(TAG, "Sorry, you've not got enough Bitcoins to complete this transaction!");
         }
     }
 
@@ -202,23 +188,23 @@ public class BitcoinSetUp {
     }
 
     // A getter used to print a list of the transactions in chronological order on the Transaction UI
-    public List<Transaction> getRecentTransactions() {
+    public List<Transaction> getTransactions() {
         return myWallet.getTransactionsByTime();
     }
 
-    // A getter used to print a list of the history of wallet address for Test 2
-    // this proves that a new address is automatically generated after every transaction
+    // used to print the history of addresses as a test in the thesis to show that
+    // a new address is automatically generated after every transaction
     public List<Address> getAllWalletAddresses() {
         return myWallet.getIssuedReceiveAddresses();
     }
 
-    // A getter to use the wallet to print the transactions in the Transaction UI
+    // to print transactions of the wallet on the Transaction UI
     public Wallet getMyWallet() {
         return myWallet;
     }
 
-    // a helper method used to display the current wallet address
-    public String printMyWalletAddress(){
+    // to print the current address
+    public String myWalletAddress(){
         return myWallet.currentReceiveAddress().toString();
     }
 }

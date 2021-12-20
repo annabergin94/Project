@@ -13,7 +13,7 @@ import android.content.ClipboardManager;
 
 
 // a subclass of Fragment to view address in a Fragment for the MainActivity to display
-public class ViewAddressFragment extends Fragment {
+public class AddressFrag extends Fragment {
 
     ImageButton btnCopy;
     TextView tvMyAddress;
@@ -31,7 +31,7 @@ public class ViewAddressFragment extends Fragment {
 
         btnCopy = (ImageButton) view.findViewById(R.id.btnCopy);
         tvMyAddress = (TextView) view.findViewById(R.id.tvMyAddress);
-        tvMyAddress.setText(((MainActivity)getActivity()).getBitcoinWalletPresenter().printMyWalletAddress());
+        tvMyAddress.setText(((MainActivity)getActivity()).getSetUp().myWalletAddress());
 
         btnCopy.setOnClickListener(v -> copy()); // copy address
 

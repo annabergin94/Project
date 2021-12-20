@@ -17,81 +17,74 @@ import com.example.pracitcingrecievingbtc.R;
 import org.bitcoinj.utils.BtcFormat;
 
 
-// this class controls what the is displayed to the user
+// this class controls what the app displays to the user
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private static final String TAG = MainActivity.class.getSimpleName();
+    private static final String TAG = MainActivity.class.getSimpleName(); // prints class name to for debugging
     public static Context context;
-    public BitcoinSetUp bitcoinWalletPresenter;
-    private ViewAddressFragment viewAddressFrag;
-    private SendBitcoinFragment sendBitcoinFrag;
-    private TransactionHistoryFragment receiveBitcoinFrag;
+    public BitcoinSetUp setUp;
+    private AddressFrag addressFrag;
+    private SendFrag sendFrag;
+    private TransactionsFrag transactionsFrag;
 
     // called when the application is open
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-        // calling the helper method that sets the defaul0t theme to light
-        checkingDayOrNightMode();
-
+        checkingDayOrNightMode();  // calling the helper method that sets the display to light/dark
         super.onCreate(savedInstanceState);
-        context = getApplicationContext();
-
-        Log.d(TAG, "1. Create a BitcoinSetUp object that creates or loads the wallet and syncs the blockchain");
-        bitcoinWalletPresenter = new BitcoinSetUp(context);
-        Log.d(TAG, "2. The wallet has been created/loaded and blockchain synced");
+        context = getApplicationContext(); // returns the context of the app, layer running behind the app
+        Log.d(TAG, "BitcoinSetUp constructor creates/loads wallet and blockchain.");
+        setUp = new BitcoinSetUp(context);
+        Log.d(TAG, "Set up is complete!");
         setContentView(R.layout.activity_main);
-        Log.d(TAG, "3. Launch the main user interface");
-
-        // return the intent that start the activity and the fragment
-        String nameOfFragment = getIntent().getStringExtra("fragmentName");
-        Log.d(TAG, "specified fragment name is: " + nameOfFragment);
-
-        // adding the placeholder fragment at run time to the container, checking container available first
-        if ((savedInstanceState == null) && (nameOfFragment == null)) {
-            Log.d(TAG, "4. Adding the placeholder fragment to main activity with buttons");
+        Log.d(TAG, "Launching the Home UI.");
+        String nameOfFrag = getIntent().getStringExtra("fragmentName"); // return the intent that start the activity and the fragment
+        Log.d(TAG, "The fragment is  " + nameOfFrag);
+        // checking the container is available to add the Home UI at run time
+        if ((savedInstanceState == null) && (nameOfFrag == null)) {
+            Log.d(TAG, "Adding fragment for the Home UI with buttons, balance, logo.");
             getSupportFragmentManager().beginTransaction()
                     .setReorderingAllowed(true)
-                    .add(R.id.container, new PlaceholderFragment())
+                    .add(R.id.container, new HomeFrag())
                     .commit();
         }
-            Log.d(TAG, "5. Updating the wallet from the blockchain");
-            bitcoinWalletPresenter.myWalletInitialisedFromNetwork();
-            Log.d(TAG, "6. Finished updating the wallet from the blockchain");
+            Log.d(TAG, "Updating the wallet from the blockchain");
+            setUp.myWalletInitialisedFromNetwork();
+            Log.d(TAG, "Update complete!");
         }
 
-    public BitcoinSetUp getBitcoinWalletPresenter() {
-        return bitcoinWalletPresenter;
+    public BitcoinSetUp getSetUp() {
+        return setUp;
     }
 
     public void onClick(View view) {
-        if (view.getId() == R.id.btnCallingViewAddressFrag) {
+        int id = view.getId();
+        if (id==R.id.btnCallingAddressFrag) {
             viewAddress(view);
         }
-        if(view.getId()==R.id.backToMainMenu){
+        if(id==R.id.btnCallingHome){
             backToMainMenu(view);
         }
-        if(view.getId()==R.id.btnCallingSendBitcoinFrag){
+        if(id==R.id.btnCallingSend){
             sendBitcoin(view);
         }
-        if(view.getId()==R.id.btnCallingReceiveBitcoinFrag){
+        if(id==R.id.btnCallingTransactions){
             receiveBitcoin(view);
         }
-        if (view.getId() == R.id.btnCallHistoricalPriceFrag) {
+        if (id== R.id.btnCallingBitcoinPrices) {
             viewPrices(view);
         }
     }
 
-    // static fragment as a placeholder on the main UI
-    // must be static to be properly recreated from instance state
-    public static class PlaceholderFragment extends Fragment {
+    // static fragment as a placeholder on the main UI, must be static to be properly recreated from instance state
+    public static class HomeFrag extends Fragment {
 
         BtcFormat f = BtcFormat.getCoinInstance(); // format balance
         SwitchCompat btnSwitchTheme;
-        TextView tvAvailableBalance;
-        TextView tvRealBalance;
+        TextView tvBalanceBitcoins;
+        TextView tvBalanceDollars;
 
-        public PlaceholderFragment() {
+        public HomeFrag() {
         }
 
         @Override
@@ -99,62 +92,57 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             View view = inflater.inflate(R.layout.fragment_main_activity, container, false);
 
             // view. used to call the id because we are in a fragment
-            tvAvailableBalance = view.findViewById(R.id.tvAvailableBalance);
-            String out = f.format(((MainActivity)this.getActivity()).getBitcoinWalletPresenter().getAvailableBalance(),2,3, 3) + " BTC";
-            tvAvailableBalance.setText("Balance: " + out);
-
-
-            tvRealBalance = view.findViewById(R.id.tvRealBalance);
-            double result = Double.parseDouble(f.format(((MainActivity)this.getActivity()).getBitcoinWalletPresenter().getAvailableBalance(),2,3, 3)) * 51679.10;
+            tvBalanceBitcoins = view.findViewById(R.id.tvAvailableBalance);
+            String out = f.format(((MainActivity)this.getActivity()).getSetUp().getAvailableBalance(),2,3, 3) + " BTC";
+            tvBalanceBitcoins.setText("Balance: " + out);
+            tvBalanceDollars = view.findViewById(R.id.tvRealBalance);
+            double result = Double.parseDouble(f.format(((MainActivity)this.getActivity()).getSetUp().getAvailableBalance(),2,3, 3)) * 51679.10;
             double roundedResult = Math.round(result*100.0)/100.0;
-            tvRealBalance.setText("$" + String.format(String.valueOf(roundedResult)));
-
+            tvBalanceDollars.setText("$" + String.format(String.valueOf(roundedResult)));
             btnSwitchTheme = view.findViewById(R.id.btnSwitchTheme);
             btnSwitchTheme.setOnCheckedChangeListener((buttonView, isChecked) -> {
                 if (isChecked) {
-                    // when switch button is click set night mode
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES); // when switch button is click set night mode
                 } else {
-                    // unchecked set light mode
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);  // unchecked set light mode
                 }
             });
             return view;
         }
     }
 
-    // replace container fragment with the view wallet address fragment
+    // replace home frag with address frag
     public void viewAddress(View view) {
-        viewAddressFrag = new ViewAddressFragment();
+        addressFrag = new AddressFrag();
         getSupportFragmentManager().beginTransaction()
                 .setReorderingAllowed(true)
-                .replace(R.id.container, viewAddressFrag)
+                .replace(R.id.container, addressFrag)
                 .commit(); // perform the transaction as soon as its available on the UI thread
     }
 
-    // replace container fragment with the sending Bitcoin fragment
+    // replace home frag with send frag
     public void sendBitcoin(View view) {
-        sendBitcoinFrag = new SendBitcoinFragment();
+        sendFrag = new SendFrag();
         getSupportFragmentManager().beginTransaction()
                 .setReorderingAllowed(true)
-                .replace(R.id.container, sendBitcoinFrag)
+                .replace(R.id.container, sendFrag)
                 .commit();
     }
 
-    // replace container fragment with the receiving Bitcoin fragment
+    // replace home frag with transaction frag
     public void receiveBitcoin(View view) {
-        receiveBitcoinFrag = new TransactionHistoryFragment();
+        transactionsFrag = new TransactionsFrag();
         getSupportFragmentManager().beginTransaction()
                 .setReorderingAllowed(true)
-                .replace(R.id.container, receiveBitcoinFrag)
+                .replace(R.id.container, transactionsFrag)
                 .commit();
     }
 
-    // replace container fragment with the history of bitcoin prices fragment
+    // replace home frag with price history frag
     public void viewPrices(View view){
         getSupportFragmentManager().beginTransaction()
                 .setReorderingAllowed(true)
-                .replace(R.id.container, new HistoryOfPricesFragment())
+                .replace(R.id.container, new BitcoinPriceFrag())
                 .commit();
     }
 
@@ -168,22 +156,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    // called when a user presses back to main menu on any UI
+    // replace any frag with home UI
     public void backToMainMenu(View view) {
         getSupportFragmentManager().beginTransaction() // display fragment on main
                 .setReorderingAllowed(true)
-                .replace(R.id.container, new PlaceholderFragment())
+                .replace(R.id.container, new HomeFrag())
                 .commit();
     }
 
+    // checking and setting the theme of the app
     public void checkingDayOrNightMode() {
         if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) {
             // when night mode is equal to yes set dark theme
             setTheme(R.style.Theme_Dark); // when dark mode is enabled, use the dark theme
-            Log.d(TAG, "theme is dark");
+            Log.d(TAG, "Dark theme!");
         } else {
             setTheme(R.style.Theme_Light);  // default app theme
-            Log.d(TAG, "theme is light");
+            Log.d(TAG, "Light theme!");
         }
     }
 }

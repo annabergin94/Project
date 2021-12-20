@@ -1,4 +1,56 @@
-//package com.example.pracitcingrecievingbtc;
+package com.example.pracitcingrecievingbtc;
+
+import androidx.test.core.app.ActivityScenario;
+import androidx.test.ext.junit.rules.ActivityScenarioRule;
+import androidx.test.ext.junit.runners.AndroidJUnit4;
+import androidx.test.filters.SmallTest;
+import com.example.pracitcingrecievingbtc.View.MainActivity;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+
+import static androidx.test.espresso.Espresso.onView;
+import static androidx.test.espresso.action.ViewActions.*;
+import static androidx.test.espresso.assertion.ViewAssertions.matches;
+import static androidx.test.espresso.matcher.ViewMatchers.*;
+import static org.hamcrest.Matchers.containsString;
+
+
+// checking all the view interfaces exist
+@RunWith(AndroidJUnit4.class)
+@SmallTest
+public class SendTest {
+
+    ActivityScenario scenario;
+
+    // GIVEN
+    // specifying the activity being tested
+    @Rule
+    public ActivityScenarioRule<MainActivity> activityRule = new ActivityScenarioRule<>(MainActivity.class);
+
+    // WHEN
+    // launching the activity being tested
+
+    public void testActivity () {
+        scenario = activityRule.getScenario();
+    }
+
+    // THEN
+    // https://developer.android.com/codelabs/android-basics-kotlin-write-instrumentation-tests#3
+    // withId is a view component with the id passed to it
+    @Test
+    public void sendTest(){
+        onView(withId(R.id.btnCallingSend)).perform(click());
+        onView(withId(R.id.etAmountToSend)).perform(typeText("0.0005"));
+        onView(withId(R.id.etRecipientAddress)).perform(typeText("aaaaaBaaaaBaaaIllllIssssIeeeeSddddEssssDSS"));
+        onView(withId(R.id.btnSendBitcoin)).perform(closeSoftKeyboard(), scrollTo(), click());
+        onView(withId(R.id.etAmountToSend)).check(matches(withText(containsString("0.0"))));
+    }
+
+}
+
+
+
 //
 //import android.app.Activity;
 //import androidx.appcompat.app.AppCompatDelegate;
@@ -104,69 +156,4 @@
 
 //
 //
-////    ActivityScenario scenario;
-////
-////    // https://developer.android.com/reference/androidx/test/ext/junit/rules/ActivityScenarioRule
-////    @Rule
-////    public ActivityScenarioRule<MainActivity> activityScenarioRule = new ActivityScenarioRule<>(MainActivity.class);
-////
-////    public void testFragmentManager() {
-////        FragmentActivity activity = getActivity();
-////        assertNotNull(activity.getSupportFragmentManager());
-////    }
-//
-//
-//
-////    @Test
-////    public void test() {
-////        scenario = activityScenarioRule.getScenario();
-////        scenario.onActivity(Activity::getFragmentManager
-////    }
-//
-//
-//
-//
-//
-//
-////    @Test
-////    public void checkingDayOrNightMode() {
-////        activityScenarioRule.getScenario().onActivity(MainActivity::checkingDayOrNightMode) {
-////        }
-////    }
-//
-//// timed out
-////    @Test
-////        public void test() throws InterruptedException {
-////            activityScenarioRule.getScenario().onActivity(activity -> {
-////                onView(withId(R.id.sendBitcoinFrag)).check(matches(not(isDisplayed())));
-////      //          onView(withId(R.id.historyOfPrices)).check(matches(not(isDisplayed())));
-////     //           onView(withId(R.id.placeholderFrag)).check(matches(isDisplayed()));
-////      //          onView(withId(R.id.transactionFrag)).check(matches(not(isDisplayed())));
-////      //          onView(withId(R.id.addressFrag)).check(matches(not(not(isDisplayed()))));
-////            });
-////        }
-////
-////
-////
-////
-////
-////     tues night
-////    public void testGetResourceString() {
-////        assertNotNull(mActivity.getResources().getString(R.string.a_new_address_will_appear_here_everytime_you_send_or_receive_bitcoin));
-////    }
-////
-//// mon night
-////    @Rule
-//////    public ActivityScenarioRule<MainActivity> activityRule = new ActivityScenarioRule<>(MainActivity.class);
-//// //   public FragmentTestRule<?, FragmentWithoutActivityDependency> mFragmentTestRule = FragmentTestRule.create(FragmentWithoutActivityDependency.class);
-////
-////    @Before
-////    public void setUp() {
-////        ActivityScenario.launch(FragmentTestActivity::class.java)
-////    }
-////
-////    @Test
-////    public void testingClicks(){
-////        onView(withId(R.id.btnCallHistoricalPriceFrag)).perform(click());
-////    }
-////
+

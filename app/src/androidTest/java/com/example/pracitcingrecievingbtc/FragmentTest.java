@@ -11,7 +11,6 @@ import org.junit.runner.RunWith;
 
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
-import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.*;
 import static org.hamcrest.Matchers.not;
 
@@ -44,13 +43,13 @@ public class FragmentTest {
     // works
     @Test
     public void checkingTransactionFrag() {
-        onView(withId(R.id.btnCallingReceiveBitcoinFrag)).perform(click());
+        onView(withId(R.id.btnCallingTransactions)).perform(click());
     }
 
     // works
     @Test
     public void checkingSendFrag () {
-        onView(withId(R.id.btnCallingSendBitcoinFrag)).perform(click());
+        onView(withId(R.id.btnCallingSend)).perform(click());
     }
 
 //    @Test

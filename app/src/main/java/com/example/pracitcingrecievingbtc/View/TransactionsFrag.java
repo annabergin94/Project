@@ -7,19 +7,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.example.pracitcingrecievingbtc.R;
-import org.bitcoinj.core.Coin;
 import org.bitcoinj.core.Transaction;
 import org.bitcoinj.core.TransactionBag;
-import org.bitcoinj.utils.BtcFormat;
 
 import java.util.List;
 
-public class TransactionHistoryFragment extends Fragment {
+public class TransactionsFrag extends Fragment {
 
     TextView tvRecentTransactions; // displaying the transactions on the UI
     String transactionList = ""; // variable to print transactions
 
-    private static final String TAG = TransactionHistoryFragment.class.getSimpleName();
+    private static final String TAG = TransactionsFrag.class.getSimpleName();
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_transaction_history, container, false);
@@ -37,10 +35,10 @@ public class TransactionHistoryFragment extends Fragment {
     public void transactionHistory(){
 
         // a transaction bag of all transactions in my wallet
-        TransactionBag tx= ((MainActivity)this.getActivity()).getBitcoinWalletPresenter().getMyWallet();
+        TransactionBag tx= ((MainActivity)this.getActivity()).getSetUp().getMyWallet();
 
         // get the recent transactions from the wallet
-        List<Transaction> recentTransactions = ((MainActivity)this.getActivity()).getBitcoinWalletPresenter().getRecentTransactions();
+        List<Transaction> recentTransactions = ((MainActivity)this.getActivity()).getSetUp().getTransactions();
         // counter, in future not hard coded
         int i = 99;
         // for each of the recent transactions add them to the string variable transactionList to print
@@ -67,7 +65,7 @@ public class TransactionHistoryFragment extends Fragment {
             System.out.println("Tx Hex: " + transaction.getTxId().toString());
             System.out.println("Tx: " + transaction);
 
-            System.out.println("Address history: " + ((MainActivity)this.getActivity()).getBitcoinWalletPresenter().getAllWalletAddresses());
+            System.out.println("Address history: " + ((MainActivity)this.getActivity()).getSetUp().getAllWalletAddresses());
         }
     }
 

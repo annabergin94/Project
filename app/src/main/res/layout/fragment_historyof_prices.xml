@@ -19,7 +19,7 @@
             android:layout_marginTop="120dp" android:paddingRight="20dp" android:paddingBottom="10dp"/>
 
     <ImageButton
-            android:id="@+id/backToMainMenu"
+            android:id="@+id/btnCallingHome"
             android:layout_width="131dp"
             android:layout_height="52dp"
             android:src="@drawable/homeicon"

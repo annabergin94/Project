@@ -13,9 +13,9 @@ import org.bitcoinj.core.Coin;
 import org.bitcoinj.utils.BtcFormat;
 
 
-public class SendBitcoinFragment extends Fragment implements View.OnClickListener {
+public class SendFrag extends Fragment implements View.OnClickListener {
 
-    private static final String TAG = SendBitcoinFragment.class.getSimpleName();
+    private static final String TAG = SendFrag.class.getSimpleName();
     EditText etAmountToSend; // user to enter amount to send
     EditText etRecipientAddress; // user to enter recipient address
     ImageButton btnSendBitcoin; // send bitcoin button
@@ -44,7 +44,7 @@ public class SendBitcoinFragment extends Fragment implements View.OnClickListene
         // view. used to call the id because we are in a fragment
         tvAvailableBalance = view.findViewById(R.id.tvAvailableBalance);
         // using the BTC format class to display the Bitcoin in a format that is easy for the user to understand
-        String out = f.format(((MainActivity) this.getActivity()).getBitcoinWalletPresenter().getAvailableBalance(), 2, 3, 3) + " BTC available";
+        String out = f.format(((MainActivity) this.getActivity()).getSetUp().getAvailableBalance(), 2, 3, 3) + " BTC available";
         tvAvailableBalance.setText(out);
 
         // instantiate button
@@ -99,7 +99,7 @@ public class SendBitcoinFragment extends Fragment implements View.OnClickListene
             toast.show();
             // send the transaction, catching the error if it doesn't work
             try {
-                ((MainActivity) this.getActivity()).getBitcoinWalletPresenter().send(address, amount);
+                ((MainActivity) this.getActivity()).getSetUp().send(address, amount);
             } catch (Exception e) {
                 e.printStackTrace();
             }

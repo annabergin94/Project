@@ -38,10 +38,9 @@ public class FragmentPlaceholderTest {
         // THEN
         @Test
         public void checkingViewsExist(){
-            onView(withId(R.id.btnCallHistoricalPriceFrag)).check(matches(isEnabled()));
-            onView(withId(R.id.btnCallingViewAddressFrag)).check(matches(isEnabled()));
-            onView(withId(R.id.btnCallingSendBitcoinFrag)).check(matches(isEnabled()));
-            onView(withId(R.id.btnCallingReceiveBitcoinFrag)).check(matches(isEnabled()));
+            onView(withId(R.id.btnCallingBitcoinPrices)).check(matches(isEnabled()));
+            onView(withId(R.id.btnCallingAddressFrag)).check(matches(isEnabled()));
+            onView(withId(R.id.btnCallingSend)).check(matches(isEnabled()));
+            onView(withId(R.id.btnCallingTransactions)).check(matches(isEnabled()));
         }
-
 }
