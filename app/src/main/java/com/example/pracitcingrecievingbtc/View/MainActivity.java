@@ -22,10 +22,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private static final String TAG = MainActivity.class.getSimpleName(); // prints class name to for debugging
     public static Context context;
-    public BitcoinSetUp setUp;
+    private BitcoinSetUp setUp;
     private AddressFrag addressFrag;
     private SendFrag sendFrag;
     private TransactionsFrag transactionsFrag;
+    private BitcoinPriceFrag priceGraphFrag;
 
     // called when the application is open
     @Override
@@ -49,7 +50,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     .commit();
         }
             Log.d(TAG, "Updating the wallet from the blockchain");
-            setUp.myWalletInitialisedFromNetwork();
+            setUp.connectingWalletToBlockchain();
             Log.d(TAG, "Update complete!");
         }
 
@@ -66,10 +67,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             backToMainMenu(view);
         }
         if(id==R.id.btnCallingSend){
-            sendBitcoin(view);
+            viewSend(view);
         }
         if(id==R.id.btnCallingTransactions){
-            receiveBitcoin(view);
+            viewTransactions(view);
         }
         if (id== R.id.btnCallingBitcoinPrices) {
             viewPrices(view);
@@ -121,7 +122,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     // replace home frag with send frag
-    public void sendBitcoin(View view) {
+    public void viewSend(View view) {
         sendFrag = new SendFrag();
         getSupportFragmentManager().beginTransaction()
                 .setReorderingAllowed(true)
@@ -130,7 +131,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     // replace home frag with transaction frag
-    public void receiveBitcoin(View view) {
+    public void viewTransactions(View view) {
         transactionsFrag = new TransactionsFrag();
         getSupportFragmentManager().beginTransaction()
                 .setReorderingAllowed(true)
@@ -140,9 +141,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     // replace home frag with price history frag
     public void viewPrices(View view){
+        priceGraphFrag = new BitcoinPriceFrag();
         getSupportFragmentManager().beginTransaction()
                 .setReorderingAllowed(true)
-                .replace(R.id.container, new BitcoinPriceFrag())
+                .replace(R.id.container, priceGraphFrag)
                 .commit();
     }
 

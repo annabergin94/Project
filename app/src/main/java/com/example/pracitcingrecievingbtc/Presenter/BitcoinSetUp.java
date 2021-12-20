@@ -25,7 +25,7 @@ import java.util.concurrent.TimeUnit;
 // this class performs is needed for the wallet
 public class BitcoinSetUp {
 
-    private static final String TAG = BitcoinSetUp.class.getSimpleName(); // debugging tag
+    private final String TAG = BitcoinSetUp.class.getSimpleName(); // debugging tag
     private NetworkParameters networkParams;
     private File myWalletFile;
     private File blockchainFileSPVMode;
@@ -54,7 +54,7 @@ public class BitcoinSetUp {
         myWalletFile = new File(context.getFilesDir(), "TestWallet.wallet");
         blockchainFileSPVMode = new File(this.context.getFilesDir(), "TestSPV.dat");
         myWallet = initialisingWallet(); // checks if a wallet already exists and create/load the wallet
-        myWalletInitialisedFromNetwork(); // syncing the blockchain
+        connectingWalletToBlockchain(); // syncing the blockchain
     }
 
     // initialising the wallet, loading it if it exists, creating it if it doesn't
@@ -95,7 +95,7 @@ public class BitcoinSetUp {
         try {
             loadedWallet = Wallet.loadFromFile(myWalletFile);
             // add listeners to receive bitcoin and send bitcoin
-            setupWalletListeners(loadedWallet);
+            settingUpWalletListeners(loadedWallet);
             Log.d(TAG, "Loaded wallet file from disk");
             // wallet address is the hashed version of the public key, like an e-mail which is used to receive funds
             Log.d(TAG, "Current wallet address is: " + loadedWallet.currentReceiveAddress());
@@ -109,10 +109,10 @@ public class BitcoinSetUp {
     }
 
     // a helper method that combines the helper methods used for implementing the Bitcoin protocol
-    public void myWalletInitialisedFromNetwork() {
+    public void connectingWalletToBlockchain() {
         checkingIfBlockchainSPVFileExists();
-        downloadingTheBlockchainInSPVMode();
-        downloadingPeerListeners();
+        downloadingBlockchain();
+        settingUpPeerListeners();
     }
 
     // a helper method to check if a blockchain file already exists
@@ -125,7 +125,7 @@ public class BitcoinSetUp {
     }
 
     // a helper method to download the blockchain
-    public void downloadingTheBlockchainInSPVMode(){
+    public void downloadingBlockchain(){
         try {
             blockStore = new SPVBlockStore(networkParams, blockchainFileSPVMode);
             chain = new BlockChain(networkParams, this.myWallet, blockStore);
@@ -136,7 +136,7 @@ public class BitcoinSetUp {
     }
 
     // a helper method to sync the blockchain and connect it to the created wallet
-    public void downloadingPeerListeners(){
+    public void settingUpPeerListeners(){
         // BitcoinJ recommends using this constructor to create a PeerGroup for a given context and chain.
         // Blocks will be passed to the chain as they are broadcast and downloaded.
         groupOfDistinctPeers = new PeerGroup(networkParams, chain);
@@ -162,7 +162,7 @@ public class BitcoinSetUp {
     }
 
     // listens for coins sent to the user's wallet
-    private void setupWalletListeners(Wallet myWallet) {
+    private void settingUpWalletListeners(Wallet myWallet) {
         myWallet.addCoinsReceivedEventListener((wallet1, tx, prevBalance, newBalance) -> {
         });
     }
@@ -192,11 +192,11 @@ public class BitcoinSetUp {
         return myWallet.getTransactionsByTime();
     }
 
-    // used to print the history of addresses as a test in the thesis to show that
-    // a new address is automatically generated after every transaction
-    public List<Address> getAllWalletAddresses() {
-        return myWallet.getIssuedReceiveAddresses();
-    }
+//    // used to print the history of addresses as a test in the thesis to show that
+//    // a new address is automatically generated after every transaction
+//    public List<Address> getAllWalletAddresses() {
+//        return myWallet.getIssuedReceiveAddresses();
+//    }
 
     // to print transactions of the wallet on the Transaction UI
     public Wallet getMyWallet() {
