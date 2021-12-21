@@ -1,4 +1,4 @@
-package com.example.pracitcingrecievingbtc.View;
+package com.example.pracitcingrecievingbtc.UIs;
 
 import android.content.ClipData;
 import android.content.Context;

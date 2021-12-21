@@ -85,6 +85,7 @@ dependencies{
 
     // Graph View
     implementation 'com.jjoe64:graphview:4.2.1'
+
     // read csv
     implementation 'com.opencsv:opencsv:3.9'
 

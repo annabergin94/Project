@@ -1,4 +1,4 @@
-package com.example.pracitcingrecievingbtc.View;
+package com.example.pracitcingrecievingbtc.UIs;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -12,7 +12,7 @@ import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.fragment.app.Fragment;
 
-import com.example.pracitcingrecievingbtc.Presenter.BitcoinSetUp;
+import com.example.pracitcingrecievingbtc.BitcoinSetUp.BitcoinSetUp;
 import com.example.pracitcingrecievingbtc.R;
 import org.bitcoinj.utils.BtcFormat;
 

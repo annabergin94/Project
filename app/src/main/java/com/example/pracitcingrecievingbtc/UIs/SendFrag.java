@@ -1,4 +1,4 @@
-package com.example.pracitcingrecievingbtc.View;
+package com.example.pracitcingrecievingbtc.UIs;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

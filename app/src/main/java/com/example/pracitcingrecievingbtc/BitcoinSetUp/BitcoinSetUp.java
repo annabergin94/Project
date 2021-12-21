@@ -1,4 +1,4 @@
-package com.example.pracitcingrecievingbtc.Presenter;
+package com.example.pracitcingrecievingbtc.BitcoinSetUp;
 
 import android.content.Context; // connection between Android System and App Project https://www.geeksforgeeks.org/what-is-context-in-android/
 import android.util.Log; // helps debugging by printing statements in the logcat
