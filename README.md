@@ -41,7 +41,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-Softcoin is a prototype of a Bitcoin wallet application developed as part of my final project on the Software Development MSc at the University of Glasgow. The BitcoinJ documentation, GitHub and answers to questions on forums supported most of the development of the application. The Android aspect of the development was based on online tutorials from Google codelabs and a course on Udemy which gave a beginners guide to developing an Android application. 
+Softcoin is a prototype of a Bitcoin wallet application. The BitcoinJ documentation, GitHub and answers to questions on forums supported most of the development of the application. The Android aspect of the development was based on online tutorials from Google codelabs and a course on Udemy which gave a beginners guide to developing an Android application. 
 
 
 
